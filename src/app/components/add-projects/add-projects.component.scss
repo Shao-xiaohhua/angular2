@@ -1,0 +1,35 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+.item {
+  margin-bottom: 10px;
+  padding: 0;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid $light-gray;
+  border-radius: 4px;
+  font-size: 16px;
+  @include text-overflow();
+  background-color: rgba(255,255,255,.6);
+  cursor: pointer;
+  &:hover {
+    color: $navy;
+  }
+  &.active {
+    color: $red;
+    border-left: 5px solid $red;
+    background-color: #fff;
+  }
+  .state-icon {
+    display: block;
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .del {
+    width: 30px;
+    text-align: center;
+    font-size: 20px;
+    color: $dark-gray;
+  }
+}

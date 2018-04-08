@@ -1,0 +1,53 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.sign-box {
+  position: relative;
+  background-color: #fff;
+}
+.sign-header {
+  position: relative;
+  padding: 20px;
+  font-size: 16px;
+  color: $text-color;
+}
+.sign-reset {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  color: #ddd;
+}
+.sign-body {
+  min-height: 60px;
+  .sign-img {
+    height: 120px;
+    text-align: center;
+    img {
+      height: 100%;
+    }
+  }
+}
+.sign-config {
+  padding: 20px;
+}
+.sign-slide-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  .fa {
+    margin-left: 5px;
+    vertical-align: -2px;
+    font-size: 20px;
+    color: #999;
+  }
+  &:hover {
+    color: $text-color;
+    .fa {
+      color: $text-color;
+    }
+  }
+}

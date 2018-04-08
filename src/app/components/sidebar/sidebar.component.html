@@ -1,0 +1,32 @@
+<div class="sidebar-panel" c>
+  <perfect-scrollbar [config]="config">
+    <div class="queue-control">
+      <div class="info">
+        <h2 class="num">
+          <small>当前叫号</small>10031</h2>
+        <h2 class="num">
+          <small>已服务数</small>37</h2>
+        <h2 class="num">
+          <small>上一叫号</small>10024</h2>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-danger" type="button" (click)="callNo()">
+          <i class="fa fa-bell"></i>&nbsp;&nbsp;叫号</button>
+        <button class="btn btn-warning" type="button" (click)="clear()">
+          <i class="fa fa-history"></i>&nbsp;&nbsp;过号</button>
+      </div>
+    </div>
+    <!-- <div class="project-folder">
+      <h4>公证事项</h4>
+      <ul class="list-group">
+        <li class="list-group-item active" *ngFor="let item of projects">
+          <span class="pull-right del">&times;</span>
+          <span class="pull-left state-icon">
+            <i class="fa fa-play"></i>
+          </span>{{ item.projectName }}</li>
+      </ul>
+      <button routerLink="/project" class="btn btn-primary btn-block add" type="button">
+        <i class="fa fa-plus"></i>&nbsp;&nbsp;增加新事项</button>
+    </div> -->
+  </perfect-scrollbar>
+</div>

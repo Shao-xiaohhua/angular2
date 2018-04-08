@@ -1,0 +1,360 @@
+<perfect-scrollbar [config]="config" style="background-color: #fff;" class="animated fadeInUp">
+  <div class="ibox no-margins">
+    <div class="ibox-content">
+      <div>
+        <h2>
+          <i class="fa fa-tasks"></i>
+          申请人身份核验
+          <a href="{{ helpLink }}/help/#text_250735" target="_blank">
+            <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+          </a>
+        </h2>
+        <small>请按要求拍照核验</small>
+      </div>
+      <div class="identify-wrap m-t-lg clearfix" *ngIf="identList.length > 0">
+        <div
+          class="identify-list"
+          *ngFor="let item of identList; let i = index"
+        >
+          <div
+            class="ident-list"
+            [class.ident-wait]="item.status === 'Doing'"
+            [class.ident-error]="item.status === 'Failed'"
+          >
+            <div
+              class="ident-circle ident-circle-lg"
+              [ngStyle]="{'background-image': 'url('+ (item.photoURL?item.photoURL:(item.gender === 'Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) +')'}"
+              [tooltip]="'匹配度' + item.percent + '%'"
+            >
+              <svg xmlns="http://www.w3.org/200/svg" height="110" width="110">
+                <circle cx="55" cy="55" r="53" fill="none" stroke="#eee" stroke-width="5" stroke-linecap="round" />
+                <circle
+                  [ngStyle]="{
+                    'stroke-dasharray': 53 * 2 * 3.14 * item.percent / 100 + ',10000',
+                    'stroke': item.percent > 50 ? '#1ab394' : '#ed5565'
+                  }"
+                  class="inside-cir"
+                  cx="55"
+                  cy="55"
+                  r="52"
+                  fill="none"
+                  stroke-width="5"
+                />
+              </svg>
+            </div>
+            <div class="name">{{ item.name }}</div>
+            <div class="type">{{ item.role === 'Applicant' ? '申请人' : item.role === 'Agent' ? '代理人' : '关系人' }}</div>
+            <div class="btn-group" *ngIf="item.status == 'Doing'">
+              <button class="btn btn-primary"
+              [disabled]="!item.photoURL"
+              (click)="identModalShow(); openPhoto(i)" tooltip="人脸识别" container="body"><img src="./assets/images/camera.png" alt=""></button>
+              <button class="btn btn-success"
+              [disabled]="!item.photoURL"
+              (click)="fingerModalShow(); openPhoto(i)" tooltip="指纹识别" container="body"><img src="./assets/images/mark.png" alt=""></button>
+              <button class="btn btn-info" (click)="uploadModalShow(item)" tooltip="补充材料" container="body"><i class="fa fa-upload"></i></button>
+            </div>
+            <div class="identify-action animated fadeInUp" *ngIf="item.status !== 'Doing'">
+              <div class="state">
+                <div class="text success" *ngIf="item.status === 'Success'"><i class="fa fa-check-circle"></i>通过验证</div>
+                <div class="text failed"*ngIf="item.status === 'Failed'"><i class="fa fa-times-circle"></i>验证失败</div>
+                <div class="spacing"></div>
+                <div class="download" (click)="report(item.ref);"><i class="fa fa-print" tooltip="下载识别报告单" container="body"></i></div>
+              </div>
+              <div class="reset" (click)="resetBtn(i)">重新验证？</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="action-bar">
+        <a class="btn btn-warning m-r-sm"  (click)="report();">
+          <i class="fa fa-print"></i>&nbsp;打印全部身份核验单
+        </a>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<!-- <ng-template #template> -->
+<div bsModal #identModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" keyboard="false">
+  <div class="modal-dialog" style="width: 960px;">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);border: none;">
+      <!-- <div class="close" (click)="identModalHide()">&times;</div> -->
+      <div class="photo-wrap clearfix">
+        <div class="aside-left" *ngIf="identList">
+          <div class="header-title">申请人核验清单 ({{currentIndex+1}}/{{identList.length}})</div>
+          <div class="photo-content photo-aside-left">
+            <perfect-scrollbar [config]="config">
+              <div
+                class="ident-item clearfix"
+                *ngFor="let item of identList; let i = index"
+                [class.wait]="item.status === 'Doing'"
+                [class.active]="identList[currentIndex] === item"
+                (click)="selectedItem(i)">
+                <div class="ident-circle pull-left" [ngStyle]="{'background-image': 'url('+ (item.photoURL?item.photoURL:(item.gender === 'Male' ? './assets/images/default-male.png':'./assets/images/default-female.png')) +')'}">
+                  <svg xmlns="http://www.w3.org/200/svg" height="80" width="80">
+                    <circle cx="40" cy="40" r="38" fill="none" stroke="#eee" stroke-width="5" stroke-linecap="round" />
+                    <circle [ngStyle]="{
+                          'stroke-dasharray': 38 * 2 * 3.14 * item.percent / 100 + ',10000',
+                          'stroke': item.percent > 50 ? '#1ab394' : '#ed5565'
+                        }" class="inside-cir" cx="40" cy="40" r="37" fill="none" stroke-width="5" />
+                  </svg>
+                </div>
+                <div class="ident-info">
+                  <div class="name">{{ item.name }}</div>
+                  <div class="type">{{ item.role === 'Applicant' ? '申请人' : item.role === 'Agent' ? '代理人' : '关系人' }}</div>
+                  <ng-container [ngSwitch]="item.status">
+                    <div class="verify success" *ngSwitchCase="'Success'"><i class="fa fa-check-circle"></i>通过验证</div>
+                    <div class="verify error" *ngSwitchCase="'Failed'"><i class="fa fa-times-circle"></i>验证失败</div>
+                    <div class="verify wait" *ngSwitchDefault><i class="fa fa-clock-o"></i>等待验证</div>
+                  </ng-container>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+        <div class="aside-right" *ngIf="identList[currentIndex]">
+          <div class="header-title shot-title clearfix">
+             请确保申请人正脸在画面中，点击开始核验按钮
+          </div>
+          <div class="photo-content">
+            <div class="report-face animated fadeInUp" *ngIf="identList[currentIndex].hasInfoData && !identList[currentIndex].isLoading">
+              <div class="report-auth" style="background-image: url(assets/images/auth.png);"></div>
+              <div class="result">
+                <div *ngIf="identList[currentIndex].status === 'Success'">
+                  <!-- <i class="fa fa-check-circle text-info"></i> -->
+                  <!-- <h2 class="title">恭喜，{{ identList[currentIndex].name }}已通过验证</h2> -->
+                  <i class="fa fa-check-circle text-info"></i>
+                  <h2 class="title">公安部第一研究所认证通过！</h2>
+                </div>
+                <div *ngIf="identList[currentIndex].status === 'Failed'">
+                  <!-- <i class="fa fa-times-circle text-danger"></i>
+                  <h2 class="title">抱歉，{{ identList[currentIndex].name }}未通过验证</h2> -->
+                  <i class="fa fa-times-circle text-danger"></i>
+                  <h2 class="title">公安部第一研究所认证未通过！</h2>
+                </div>
+                <p class="desc">匹配度结果为：{{ identList[currentIndex].percent }}%</p>
+                <div class="action">
+                  <button class="btn btn-success btn-sm m-r-sm" (click)="compareFace();">重新验证？</button>
+                  <button class="btn btn-default btn-sm" (click)="identModal.hide(); fingerModal.show(); checkIdent();">指纹识别</button>
+                </div>
+              </div>
+              <div class="report-info">
+                <div class="report-pics">
+                  <div class="report-left-pic">
+                    <h4>系统识别头像</h4>
+                    <div class="report-pic">
+                      <div class="pic" [ngStyle]="{'background-image': 'url('+ identList[currentIndex].realPic +')'}"></div>
+                    </div>
+                  </div>
+                  <div class="report-right-pic">
+                    <h4>证件头像</h4>
+                    <div class="report-pic">
+                      <div class="pic" [ngStyle]="{'background-image': 'url('+ (identList[currentIndex].photoURL?identList[currentIndex].photoURL:(identList[currentIndex].gender === 'Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) +')'}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="report-data">
+                  <div class="report-title"><i class="fa fa-vcard-o"></i>核验结果报告单</div>
+                  <div class="item">申请人：{{ identList[currentIndex].name }}</div>
+                  <div class="item">核验时间：{{ identList[currentIndex].verificationDate }}</div>
+                  <div class="item">核验结果：{{ identList[currentIndex].status === 'Success' ? '通过核验' : '验证失败' }}</div>
+                  <div class="item">核验方式：人脸识别</div>
+                  <div class="item">匹配度：{{ identList[currentIndex].percent }}%</div>
+                </div>
+              </div>
+            </div>
+            <div class="photo-wait" *ngIf="!identList[currentIndex].hasInfoData">
+              <div class="photo-action">
+                <div class="photo-action-cir">
+                  <div class="photo-action-wrap" style="background: url(assets/images/face_pic.jpg) no-repeat top center;">
+                    <span
+                      class="photo-action-line"
+                      style="background: url(assets/images/com_line.png) no-repeat top center;"
+                      [class.photo-action-ani]="identList[currentIndex].isLoading"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <p class="photo-intro" *ngIf="!identList[currentIndex].isLoading">人脸识别</p>
+              <p class="photo-intro" *ngIf="identList[currentIndex].isLoading">人脸识别中...</p>
+            </div>
+          </div>
+          <div class="action-group">
+            <button class="btn btn-success startup" (click)="compareFace()" [disabled]="identList[currentIndex].isLoading || identList[currentIndex].hasInfoData">
+              <i class="fa fa-camera"></i>
+              {{ identList[currentIndex].isLoading ? '核验中...' : '开始人像识别' }}
+            </button>
+            <button class="btn btn-default shutdown" (click)="identModal.hide(); submit()"><i class="fa fa-check"></i>关闭</button>
+          </div>
+        </div>
+      </div>
+      <!-- <app-photograph
+        [deviceId]="highshotId"
+        [showDevice]="showHighShotDevice"
+        [isIdent]="true"
+        [currentIdentItem]="identList[currentIndex]"
+        [identList]="identList"
+        photoTitle="请确保申请人正脸在画面中，点击按钮拍照"
+        (onSelect)="selectedItem($event)"
+        (captureData)="captureImage($event)"
+      ></app-photograph> -->
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+<!-- <ng-template #template> -->
+  <div bsModal #fingerModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 960px;">
+      <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);border: none;">
+        <!-- <div class="close" (click)="fingerModalHide()">&times;</div> -->
+        <div class="photo-wrap clearfix">
+          <div class="aside-left" *ngIf="identList">
+            <div class="header-title">申请人核验清单</div>
+            <!-- ({{identListOverCount}}/{{identList.length}}) -->
+            <div class="photo-content photo-aside-left">
+              <perfect-scrollbar [config]="config">
+                <div
+                  class="ident-item clearfix"
+                  *ngFor="let item of identList; let i = index"
+                  [class.wait]="item.status === 'Doing'"
+                  [class.active]="identList[currentIndex] === item"
+                  (click)="selectedItem(i)">
+                  <div class="ident-circle pull-left" [ngStyle]="{'background-image': 'url('+ (item.photoURL?item.photoURL:(item.gender === 'Male' ? './assets/images/default-male.png':'./assets/images/default-female.png')) +')'}">
+                    <svg xmlns="http://www.w3.org/200/svg" height="80" width="80">
+                      <circle cx="40" cy="40" r="38" fill="none" stroke="#eee" stroke-width="5" stroke-linecap="round" />
+                      <circle [ngStyle]="{
+                            'stroke-dasharray': 38 * 2 * 3.14 * item.percent / 100 + ',10000',
+                            'stroke': item.percent > 50 ? '#1ab394' : '#ed5565'
+                          }" class="inside-cir" cx="40" cy="40" r="37" fill="none" stroke-width="5" />
+                    </svg>
+                  </div>
+                  <div class="ident-info">
+                    <div class="name">{{ item.name }}</div>
+                    <div class="type">{{ item.role === 'Applicant' ? '申请人' : item.role === 'Agent' ? '代理人' : '关系人' }}</div>
+                    <div [ngSwitch]="item.status">
+                      <div class="verify success" *ngSwitchCase="'Success'"><i class="fa fa-check-circle"></i>通过验证</div>
+                      <div class="verify error" *ngSwitchCase="'Failed'"><i class="fa fa-times-circle"></i>验证失败</div>
+                      <div class="verify wait" *ngSwitchDefault><i class="fa fa-clock-o"></i>等待验证</div>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+          <div class="aside-right" *ngIf="identList[currentIndex]">
+            <div class="header-title shot-title clearfix">
+               请确保申请人手指放入指纹识别槽，点击指纹识别按钮开始识别
+            </div>
+            <div class="photo-content">
+              <div class="report animated fadeInUp" *ngIf="identList[currentIndex].hasFingerData && !identList[currentIndex].isFingerLoading">
+                <div class="report-auth" style="background-image: url(assets/images/auth.png);"></div>
+                <div class="result">
+                  <ng-container *ngIf="identList[currentIndex].status === 'Success'">
+                    <i class="fa fa-check-circle text-info"></i>
+                    <h2 class="title">公安部第一研究所认证通过！</h2>
+                  </ng-container>
+                  <ng-container *ngIf="identList[currentIndex].status === 'Failed'">
+                    <i class="fa fa-times-circle text-danger"></i>
+                    <h2 class="title">公安部第一研究所认证未通过！</h2>
+                  </ng-container>
+                  <p class="desc">匹配度结果为：{{ identList[currentIndex].percent }}%</p>
+                  <div class="action">
+                    <button class="btn btn-success btn-sm m-r-sm" (click)="compareFinger()">重新验证？</button>
+                    <button class="btn btn-default btn-sm" (click)="fingerModal.hide(); identModal.show(); checkIdent();">人像识别</button>
+                  </div>
+                </div>
+                <div class="report-info">
+                  <div class="report-title">
+                    <i class="fa fa-vcard-o"></i>核验结果报告单</div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="item">申请人：{{ identList[currentIndex].name }}</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="item">核验时间：{{ identList[currentIndex].verificationDate }}</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="item">核验结果：{{ identList[currentIndex].status === 'Success' ? '通过核验' : '验证失败' }}</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="item">核验方式：指纹识别</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="item">匹配度：{{ identList[currentIndex].percent }}%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="photo-wait" *ngIf="!identList[currentIndex].hasFingerData">
+                <div class="photo-action">
+                  <div class="photo-action-cir">
+                    <div class="photo-action-wrap" style="background: url(assets/images/finger_pic.jpg) no-repeat top center;">
+                      <span
+                        class="photo-action-line"
+                        style="background: url(assets/images/com_line.png) no-repeat top center;"
+                        [class.photo-action-ani]="identList[currentIndex].isFingerLoading"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+                <p class="photo-intro" *ngIf="!identList[currentIndex].isFingerLoading">指纹识别</p>
+                <p class="photo-intro" *ngIf="identList[currentIndex].isFingerLoading">指纹识别中...</p>
+              </div>
+            </div>
+            <div class="action-group">
+              <button class="btn btn-success startup" (click)="compareFinger()" [disabled]="identList[currentIndex].isFingerLoading">
+                <i class="fa fa-camera"></i>
+                {{ identList[currentIndex].isLoading ? '识别中...' : '开始指纹识别' }}
+              </button>
+              <button class="btn btn-default shutdown" (click)="fingerModal.hide(); submit()"><i class="fa fa-check"></i>关闭</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </ng-template> -->
+
+<!-- <ng-template #template> -->
+<div bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog attachment" style="width: 960px;">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);border: none;">
+      <div class="close" (click)="uploadModal.hide()">&times;</div>
+      <h3 class="title">请上传补充材料</h3>
+      <div class="content">
+        <perfect-scrollbar [config]="config" style="background-color: #fff;" class="animated fadeInUp">
+          <dm-detail  [view]="view" [entity]="entity" [entityId]="entityId" [type]="type" [business]="business" [config]="config"></dm-detail>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+
+<div bsModal #leaveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-body leave-body">
+          <div class="leave-modal" style="background-image: url(assets/images/ask_icon.png);">
+            <h4>确定要离开吗？</h4>
+            <p class="desc">
+              暂未点击上传按钮，离开可能不会保存您的信息
+            </p>
+            <div class="leave-btn clearfix">
+              <button (click)="leave();redirctProject ();" class="btn btn-xs btn-success pull-right">离开</button>
+              <button
+                class="btn btn-xs btn-default pull-right m-r"
+                (click)="leaveModal.hide()"
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,32 @@
+<div class="ibox no-margins preview">
+  <div class="ibox-content">
+    <h2>
+      <i class="fa fa-tasks"></i>
+      公证告知书预览
+      <a href="{{ helpLink }}/help/#text_250736" target="_blank">
+        <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+      </a>
+    </h2>
+    <!-- <small>请仔细核对告知书内容是否与办证信息相符</small> -->
+    <div class="doc-wrap">
+      <perfect-scrollbar [config]="config">
+        <div class="common-p-20" *ngIf="status === 'Completed' || status === 'Submitted'">
+          <app-sign [signConfig]="signConfig" (event)="resetSign($event)"></app-sign>
+        </div>
+        <ng-container *ngIf="noteContent">
+          <div class="tips" [innerHTML]="noteContent"></div>
+        </ng-container>
+      </perfect-scrollbar>
+    </div>
+    <div class="action-bar">
+      <button class="btn btn-primary m-r-sm"  container="body" (click)="changeContent(currenConfig.mothed)" [disabled]="isChange">{{ currenConfig.buttonName }}</button>
+      <button class="btn btn-default m-r-sm" tooltip="功能暂未启用" container="body">智能告知</button>
+      <a (click)="print()" class="btn btn-warning m-r-sm">
+        <i class="fa fa-print"></i>&nbsp;打印告知书</a>
+      <a class="btn btn-success" (click)="startTip()" *ngIf="!isDone && status === 'Draft'">
+        <i class="fa fa-volume-up"></i>&nbsp;开始告知</a>
+      <a class="btn btn-primary animated flipInX" (click)="submitTip()" *ngIf="isDone && status === 'Draft'">
+        <i class="fa fa-check"></i>&nbsp;确认已告知</a>
+    </div>
+  </div>
+</div>

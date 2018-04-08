@@ -1,0 +1,76 @@
+<perfect-scrollbar [config]="config">
+  <div id="vertical-timeline" class="vertical-container light-timeline no-margins tasks-list" *ngIf="taskList">
+    <div class="vertical-timeline-block" *ngFor="let item of taskList; let i = index">
+      <div class="vertical-timeline-icon" [ngClass]="taskColor[i]">
+        <i class="fa" [ngClass]="item.icon"></i>
+      </div>
+      <div class="vertical-timeline-content">
+        <h1 class="group-name clearfix" (click)="slideTask(i)">
+          {{ item.title }} ( {{ calcTaskOver(item.items) }}/{{ item.items ? item.items.length : 0 }} )
+          <div class="group-slide stat-percent text-navy">
+            {{ item.isSlide ? '展开' : '收起' }}
+            <i
+              class="fa"
+              [class.fa-angle-down]="!item.isSlide"
+              [class.fa-angle-up]="item.isSlide"
+            ></i>
+          </div>
+        </h1>
+        <div class="tasks js_tasks">
+          <a
+            *ngFor="let list of item.items"
+            (click)="gotoTask(list.link, list.id)"
+            class="item"
+          >
+            <div class="task-heading">
+              <div
+                class="state"
+                [class.completed]="list.status === 'Success'"
+                [class.stopped]="list.status === 'Error'"
+                [class.running]="list.status === 'Doing'"
+                [class.waited]="list.status === 'Wait'"
+              >
+                <i
+                  class="fa"
+                  [class.fa-check-circle]="list.status === 'Success'"
+                  [class.fa-times-circle]="list.status === 'Error'"
+                  [class.fa-play-circle]="list.status === 'Doing'"
+                  [class.fa-circle-thin]="list.status === 'Wait'"
+                ></i>
+              </div>
+              <div class="name">
+                <h2 class="title">{{ list.title }}</h2>
+                <div
+                  class="task-progress"
+                  *ngIf="list.status === 'Success' || list.status === 'Error'"
+                >
+                  <span
+                    class="label"
+                    [class.label-primary]="list.status === 'Success'"
+                    [class.label-info]="list.status === 'Error'"
+                  >
+                    {{list.date }}
+                  </span>
+                </div>
+                <div
+                  class="task-progress"
+                  *ngIf="list.status !== 'Success' && list.status !== 'Error'"
+                >
+                  <span
+                    class="label"
+                    [class.label-success]="list.status === 'Doing'"
+                  >
+                    {{ list.status === 'Doing' ? '处理中' : list.status === 'Wait' ? '待处理' : '处理成功' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="task-body">
+              <span [class.text-warning]="list.status === 'Error'">{{ list.desc }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>

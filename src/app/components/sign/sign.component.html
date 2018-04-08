@@ -1,0 +1,24 @@
+<div class="sign-box">
+  <div class="sign-header clearfix">
+    <div class="title pull-left">电子签名</div>
+    <div *ngIf="!isSlide" class="time pull-right">{{ signConfig.autographDate }}</div>
+  </div>
+  <div class="js-sign-slide">
+    <div class="sign-body">
+      <div class="sign-img" *ngIf="!signConfig.isResetSign">
+        <img [src]="signConfig.autograph" alt="" *ngIf="signConfig.autograph != null && signConfig.autograph != ''">
+      </div>
+      <div class="sign-reset" *ngIf="signConfig.isResetSign">
+        <i class="fa fa-pencil"></i>
+        等待重新签名...
+      </div>
+    </div>
+    <div class="sign-config">
+      <button class="btn btn-success" [disabled]="signConfig.isResetSign" (click)="resetSign()" *ngIf="signConfig.autograph != null && signConfig.autograph != ''">重签</button>
+    </div>
+  </div>
+  <div class="sign-slide-btn" (click)="slide(!isSlide)">
+    {{ isSlide ? '展开' : '收起' }}
+    <i class="fa" [ngClass]="{'fa-angle-down': isSlide, 'fa-angle-up': !isSlide}"></i>
+  </div>
+</div>

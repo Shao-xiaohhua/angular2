@@ -1,0 +1,20 @@
+<div class="regulator">
+  <div class="loading"  *ngIf="loading">
+    <div class="sk-spinner sk-spinner-wave">
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+    <h2>正在请求事项核验码</h2>
+  </div>
+  <div class="success clearfix" *ngIf="!loading">
+    <div class="state pull-left"><i class="fa fa-check-circle"></i></div>
+    <div class="info pull-left">
+      <h1 class="title">{{ checkCode }}</h1>
+      <h3 class="desc">核验码已生成</h3>
+      <small><countdown [config]="countdown"><div class="time">$!s!</div></countdown> 秒后将跳转至事项任务清单</small>
+    </div>
+  </div>
+</div>

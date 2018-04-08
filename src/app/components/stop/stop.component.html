@@ -1,0 +1,220 @@
+<perfect-scrollbar class="animated fadeInUp" [config]="config" *ngIf="stopProcessView === 'form'">
+  <div class="ibox no-margins">
+    <div class="ibox-content">
+      <div>
+        <h2>不予办理公证</h2>
+      </div>
+      <div class="m-t">
+        <div>
+          <h4>1.选择不予办理公证原因</h4>
+          <div class="i-checks" *ngFor="let categoryitem of categoryList">
+            <label class="apply-check">
+              <input type="checkbox" (click)="setCategory(categoryitem)">
+              <span>{{ categoryitem.name }}</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h4>2.具体原因及承办人认为需要说明的情况</h4>
+          <!-- [(ngModel)]="str" [ngModelOptions]="{standalone: true}" -->
+          <textarea class="apply-textarea" [(ngModel)]="checkNote"></textarea>
+        </div>
+        <div class="clearfix m-t">
+          <div class="pull-right">
+            <a class="btn btn-primary" (click)="goto('note')">下一步</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<div class="animated fadeInUp" style="height: 100%;" *ngIf="stopProcessView === 'note'">
+  <div class="ibox no-margins" style="height: 100%;">
+    <div class="ibox-content apply-content" style="height: 100%;">
+      <div class="apply-title">
+        <h2>不予办理公证报告</h2>
+      </div>
+      <div class="apply-note">
+        <perfect-scrollbar [config]="config">
+          <div class="apply-note-box" #notPassDoc>
+              <h1 class="title text-center font-bold">不予办理公证报告</h1>
+              <p></p>
+              <div class="info">
+                <p>
+                  兹有申请人{{ partyName }} 于{{ caseData.properties.createDate | date }}向本处申请办理公证
+                </p>
+                <p>
+                  本处立案案号为：{{ caseData.properties.caseNumber }}。本处受理后，承办人审查过程中发现此项公证存在《公证程序规则》第四十八条规定的下列第 <ng-container *ngFor="let categoryitem of categoryList"><ng-container *ngIf="isHave(selectList, categoryitem.id)">{{ categoryitem.code }} </ng-container></ng-container> 项应当不予办理的情形：
+                </p>
+                <p *ngFor="let categoryitem of categoryList">
+                  <ng-container>{{ categoryitem.name }};</ng-container>
+                </p>
+                <p>
+                  具体原因及承办人认为需要说明的情况：
+                </p>
+                <p>{{ checkNote }}</p>
+                <p>
+                  鉴于以上原因，承办人认为本处应当不予办理上述 {{ caseData.properties.caseNumber }} {{ caseData.$displays.caseType }} 公证，并酌情退还部分/全部已收取的公证费     元。（不予办理公证决定书将书面通知申请人或其代理人）
+                </p>
+              </div>
+              <p></p>
+              <div class="insc text-right">
+                <p>
+                  承办公证员:
+                  <span>{{ caseData.$displays.notary }}</span>
+                </p>
+                <p>
+                  日期
+                  <span>{{ currentDate | date }}</span>
+              </p>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+      <div class="apply-btns clearfix m-t">
+        <div class="pull-left">
+          <a class="btn btn-default" (click)="goto('form')">上一步</a>
+        </div>
+        <div class="pull-right">
+          <a class="btn btn-primary" (click)="saveNote()">提交</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ibox no-margins animated fadeInUp" style="height: 100%;" *ngIf="stopProcessView === 'result'">
+  <div class="ibox-content" style="height: 100%;">
+    <div class="apply-result" *ngIf="docId && status !== 'CheckNotPass'">
+      <i class="fa fa-check-circle"></i>
+      <h1 class="title">恭喜，提交成功，请您耐心等待</h1>
+      <div class="desc">
+        <div class="btn btn-success">确定</div>
+      </div>
+    </div>
+    <div class="apply-result" *ngIf="!docId && status !== 'CheckNotPass'">
+      <i class="fa fa-times-circle"></i>
+      <h1 class="title">抱歉，无法完成申请，建议重新提交</h1>
+      <div class="desc">
+        <div (click)="goto('note')" class="btn btn-success">重新提交</div>
+      </div>
+    </div>
+    <div class="apply-result" *ngIf="status === 'CheckNotPass'">
+      <i class="fa fa-clock-o"></i>
+      <h1 class="title">审批中，请耐心等待</h1>
+      <div class="desc">胡晓谨 提交于 2018-03-02 10:45
+        <a href="javascript:;">查看报告单</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<perfect-scrollbar class="animated fadeInUp" [config]="config" *ngIf="stopProcessView === 'stop-form'">
+  <div class="ibox no-margins">
+    <div class="ibox-content">
+      <div>
+        <h2>终止公证</h2>
+      </div>
+      <div class="m-t">
+        <div>
+          <h4>1.选择终止公证原因</h4>
+          <div class="i-checks" *ngFor="let categoryitem of categoryList">
+            <label class="apply-check">
+              <input type="checkbox" (click)="setCategory(categoryitem)">
+              <span>{{ categoryitem.name }}</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h4>2.具体原因及承办人认为需要说明的情况</h4>
+          <!-- [(ngModel)]="str" [ngModelOptions]="{standalone: true}" -->
+          <textarea class="apply-textarea" [(ngModel)]="stopNote"></textarea>
+        </div>
+        <div class="clearfix m-t">
+          <div class="pull-right">
+            <a class="btn btn-primary" (click)="goto('stop-note')">下一步</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<div class="animated fadeInUp" style="height: 100%;" *ngIf="stopProcessView === 'stop-note'">
+  <div class="ibox no-margins" style="height: 100%;">
+    <div class="ibox-content apply-content" style="height: 100%;">
+      <div class="apply-title">
+        <h2>终止公证报告</h2>
+      </div>
+      <div class="apply-note">
+        <perfect-scrollbar [config]="config">
+          <div class="apply-note-box" #stopDoc>
+              <h1 class="title text-center font-bold">终止公证报告</h1>
+              <p></p>
+              <div class="info">
+                <p>
+                  兹有申请人{{ partyName }} 于{{ caseData.properties.createDate | date }}向本处申请办理公证
+                </p>
+                <p>
+                  本处立案案号为：{{ caseData.properties.caseNumber }}。本处受理后，承办人审查过程中发现此项公证存在《公证程序规则》第四十八条规定的下列第 <ng-container *ngFor="let categoryitem of categoryList"><ng-container *ngIf="isHave(selectList, categoryitem.id)">{{ categoryitem.code }} </ng-container></ng-container> 项应当不予办理的情形：
+                </p>
+                <p *ngFor="let categoryitem of categoryList">
+                  <ng-container>{{ categoryitem.name }};</ng-container>
+                </p>
+                <p>
+                  具体原因及承办人认为需要说明的情况：
+                </p>
+                <p>{{ stopNote }}</p>
+                <p>
+                  鉴于以上原因，承办人认为本处应当终止办理上述 {{ caseData.properties.caseNumber }} {{ caseData.$displays.caseType }} 公证，并酌情退还部分/全部已收取的公证费     元。（不予办理公证决定书将书面通知申请人或其代理人）
+                </p>
+              </div>
+              <p></p>
+              <div class="insc text-right">
+                <p>
+                  承办公证员:
+                  <span>{{ caseData.$displays.notary }}</span>
+                </p>
+                <p>
+                  日期
+                  <span>{{ currentDate | date }}</span>
+              </p>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+      <div class="apply-btns clearfix m-t">
+        <div class="pull-left">
+          <a class="btn btn-default" (click)="goto('stop-form')">上一步</a>
+        </div>
+        <div class="pull-right">
+          <a class="btn btn-primary" (click)="stopApply()">提交</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ibox no-margins animated fadeInUp" style="height: 100%;" *ngIf="stopProcessView === 'stop-result'">
+  <div class="ibox-content" style="height: 100%;">
+      <div class="apply-result" *ngIf="docId && status !== 'StopApplying'">
+          <i class="fa fa-check-circle"></i>
+          <h1>提交成功，请您耐心等待</h1>
+          <div class="desc">{{ stopDate }} 公证员{{ stoper }}提交</div>
+          <div class="desc">
+              <div class="btn btn-success" (click)="router.navigate(['/project/home/settings']);">确定</div>
+            </div>
+        </div>
+        <div class="apply-result apply-result-error" *ngIf="!docId && status !== 'StopApplying'">
+          <i class="fa fa-times-circle"></i>
+          <h1>提交失败，您可以重新提交</h1>
+          <a href="javascript:;" class="desc" (click)="goto('stop-note')">返回重新提交</a>
+        </div>
+        <div class="apply-result" *ngIf="status === 'StopApplying'">
+          <i class="fa fa-clock-o"></i>
+          <h1>正在审批中，请耐心等待</h1>
+          <div class="desc"><a href="javascript:;">查看报告详情</a></div>
+        </div>
+  </div>
+</div>

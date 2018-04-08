@@ -1,0 +1,7 @@
+<div>
+  <div class="form-group">
+    <label >{{widget.label}}:</label>
+    <div *ngIf="widget.displayAs" style="margin-left:10px; padding-top: 10px;" [innerHTML]="widget.displayAs">&nbsp;</div>
+    <div *ngIf="!widget.displayAs" style="margin-left:10px; height: 54px; padding-top: 10px;">&nbsp;</div>
+  </div>
+</div>

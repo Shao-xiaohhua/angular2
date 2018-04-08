@@ -1,0 +1,25 @@
+<div [formGroup]="form" [class.has-error]="!isValid">
+  <div class="form-group">
+    <label [attr.for]="widget.fieldName">{{widget.label}}</label>
+    <span *ngIf="!isValid && (isDirty || isTouched)" class="control-label">&nbsp;&nbsp; 不能为空</span>
+    <ueditor
+    [(ngModel)]="form.value[widget.fieldName]"
+    [formControlName]="widget.fieldName"
+    [id]="widget.fieldName"
+    [config]="config"
+    (onReady)="onReadyUE($event)"
+    loadingTip="加载中。。。"
+    #full></ueditor>
+
+    <!-- <umeditor
+    [formControlName]="widget.fieldName"
+    [path]="'./../../../../assets/umeditor/'"
+    [id]="widget.fieldName"
+    [config]="config"
+    (onReady)="onReadyUE($event)"
+    loadingTip="加载中。。。"
+    [(ngModel)]="form.value[widget.fieldName]"
+    #full></umeditor> -->
+  </div>
+
+</div>

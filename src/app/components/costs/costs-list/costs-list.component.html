@@ -1,0 +1,14 @@
+<ul class="costs-list" *ngIf="costList">
+  <li *ngFor="let cost of costList" (click)="selectCost(cost)" [class.active]="cost.name === currentCost">
+    {{ cost.name }}
+  </li>
+</ul>
+
+<div class="consts-inp">
+  <input type="text" class="form-control" placeholder="请填写备注信息" [(ngModel)]="todo">
+</div>
+
+<div class="costs-btn text-right">
+  <button class="btn btn-success" (click)="confirm()">确定</button>
+</div>
+

@@ -1,0 +1,270 @@
+<div class="client pull-left" [class.client-sm]="!isConfigBtn">
+  <div class="avatar-wrap">
+    <div class="avatar" [style.background-image]="'url(' + (clientData.photoURL?clientData.photoURL:(clientData.gender ==='Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) + ')'"></div>
+    <div class="checked-mask"><i class="fa fa-check-circle"></i></div>
+    <div *ngIf="clientData.proxy && isProxyBtn" class="sub-wrap" [tooltip]="'代理人：' + clientData.proxy.name" container="body" placement="bottom">
+      <div class="avatar" [style.background-image]="'url(' + (clientData.proxy.photoURL?clientData.proxy.photoURL:(clientData.proxy.gender ==='Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) + ')'"></div>
+    </div>
+  </div>
+  <div class="name">{{ clientData.name }}</div>
+  <ul class="action">
+    <li *ngIf="clientData.proxy" (click)="delProxy()" class="bg-warning" tooltip="删除代理人" container="body"><i class="fa fa-user-times"></i></li>
+    <li *ngIf="!clientData.proxy" (click)="bsModal.show(); resetProxyInfo();" class="bg-primary" tooltip="添加代理人" container="body"><i class="fa fa-user-plus"></i></li>
+    <li *ngIf="isConfigBtn" class="bg-success" (click)="teamInfoModal.show()" tooltip="查看详细" container="body"><i class="fa fa-eye"></i></li>
+    <li *ngIf="isConfigBtn" class="bg-danger" (click)="removeClient()" tooltip="删除申请人" container="body"><i class="fa fa-times"></i></li>
+  </ul>
+  <div class="mask"></div>
+</div>
+
+<!-- <ng-template #template> -->
+<div bsModal #teamInfoModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content modal-addteam-sm modal-addteam-content">
+      <div class="text-center">
+        <h2>申请人信息</h2>
+        <p>请仔细核对身份证件信息是否与读取信息相符</p>
+      </div>
+      <div class="matter-modal" *ngIf="clientData">
+        <div class="card-table-wrap">
+          <table class="card-inp-table" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>姓名</td>
+              <td>{{ clientData.name }}</td>
+            </tr>
+            <tr>
+              <td>住址</td>
+              <td>{{ clientData.address }}</td>
+            </tr>
+            <tr>
+              <td>性别</td>
+              <td>{{ clientData.gender === 'Male' ? '男' : '女' }}</td>
+            </tr>
+            <tr>
+              <td>证件类型</td>
+              <td>
+                {{
+                  clientData.idType === 'IdCard' ? '身份证' :
+                  clientData.idType === 'ResidenceBooklet' ? '户口簿' :
+                  clientData.idType === 'Passport' ? '护照' :
+                  clientData.idType === 'HongkongMacaoTaiWanIdCard' ? '港澳台永久性居民身份证' :
+                  clientData.idType === 'MainlandTravelPermitForTaiwanResidents' ? '台湾居民来往大陆通行证' :
+                  clientData.idType === 'MainlandTravelPermitForHongkongMacaoResidents' ? '港澳居民来往内地通行证' :
+                  '其他'
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td>证件编号</td>
+              <td>{{ clientData.idNumber }}</td>
+            </tr>
+            <tr>
+              <td>签发机关</td>
+              <td>{{ clientData.signOffice }}</td>
+            </tr>
+            <tr>
+              <td>联系地址</td>
+              <td>{{ clientData.address }}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="m-t form-horizontal">
+          <div class="form-group" style="margin-left: 0; margin-right: 0">
+            <label class="control-label">拼音:</label>
+            <input type="text" class="form-control" placeholder="请输入姓名全拼" [(ngModel)]="clientData.pinyin" >
+          </div>
+          <div class="form-group" style="margin-left: 0; margin-right: 0">
+            <label>联系电话</label>
+            <input class="form-control" type="text" placeholder="请输入联系电话" [(ngModel)]="clientData.mobile">
+          </div>
+          <div class="form-group" style="margin-left: 0; margin-right: 0">
+              <label class=" control-label" >人员类型:</label>
+                <select class="form-control partyCategory" [id]="clientData.id">
+                </select>
+            </div>
+        </div>
+        <div class="m-t m-b clearfix">
+          <div class="pull-left police-icon" style="background-image: url(assets/images/gong_an.png);"></div>
+          <div class="pull-left police-text">公安部第一研究所官方认证</div>
+          <button class="btn btn-w-m btn-primary pull-right" (click)="teamInfoModal.hide()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+<div bsModal #bsModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content animated flipInY add-modal">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" (click)="bsModal.hide(); clearProxyInfo();" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h1 class="title">添加代理人</h1>
+        <p>请仔细核对身份证件信息是否与读取信息相符</p>
+      </div>
+      <div class="modal-body">
+        <tabset [justified]="true">
+          <tab heading='新增-身份证录入'>
+            <div class="reg-reader" *ngIf="!hasDataInfo">
+              <app-card-reader [clear]="clear" [deviceId]="'cardReaderId'" (idCard)="readIdCard($event)"></app-card-reader>
+            </div>
+            <fieldset class="form-horizontal" *ngIf="hasDataInfo">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">与申请人关系:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.relation" (input)="clientChange()" placeholder="请输入与申请人关系">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">姓名:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">{{ proxyInfo.name }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">拼音:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="请输入姓名全拼" [(ngModel)]="proxyInfo.pinyin" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">性别:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">{{ proxyInfo.gender === 'Male' ? '男' : '女' }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">证件号码:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">{{ proxyInfo.idNumber }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">签发机关:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">{{ proxyInfo.signOffice }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">与申请人关系:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">{{ proxyInfo.address }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">联系电话:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="请输入申请人电话号码" [(ngModel)]="proxyInfo.mobile" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">人员类型:</label>
+                  <div class="col-sm-9">
+                    <select class="form-control proxySelect">
+                    </select>
+                  </div>
+                </div>
+            </fieldset>
+          </tab>
+          <tab heading='新增-填写信息录入'>
+            <fieldset class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">与申请人关系:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.relation" (input)="clientChange()" placeholder="请输入与申请人关系">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">姓名:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.name" (input)="clientChange()" placeholder="请输入申请人真实姓名全称">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">拼音:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="请输入姓名全拼" [(ngModel)]="proxyInfo.pinyin" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">性别:</label>
+                <!-- <div class="col-sm-10">
+                  <label class="checkbox-inline">
+                    <input type="radio" value="Male" name="sex" checked> 男 </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="Female" name="sex"> 女 </label>
+                </div> -->
+                <div class="col-sm-9">
+                  <select class="form-control" [(ngModel)]="proxyInfo.gender" (input)="clientChange()">
+                    <option value="Male">男</option>
+                    <option value="Female">女</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">证件类型:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" [(ngModel)]="proxyInfo.idType" (input)="clientChange()">
+                    <option value="IdCard">中国身份证</option>
+                    <option value="ResidenceBooklet">户口簿</option>
+                    <option value="Passport">护照</option>
+                    <option value="HongkongMacaoTaiWanIdCard">港澳台永久性居民身份证</option>
+                    <option value="MainlandTravelPermitForTaiwanResidents">台湾居民来往大陆通行证</option>
+                    <option value="MainlandTravelPermitForHongkongMacaoResidents">港澳居民来往内地通行证</option>
+                    <option value="Other">其他</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">证件号码:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.idNumber" (input)="clientChange()" placeholder="请输入证件号码并仔细核对">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">签发机关:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.signOffice" (input)="clientChange()" placeholder="请输入证件签发机关">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">通讯地址:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.address" (input)="clientChange()" placeholder="请输入申请人通讯地址">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">联系电话:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="proxyInfo.mobile" (input)="clientChange()" placeholder="请输入申请人电话号码">
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">人员类型:</label>
+                  <div class="col-sm-9">
+                    <select class="form-control proxySelect">
+                    </select>
+                  </div>
+                </div>
+              <!-- <button class="btn btn-success pull-right">
+                <i class="fa fa-camera"></i>&nbsp;&nbsp;OCR自动录入信息（测试）</button> -->
+            </fieldset>
+          </tab>
+          <!-- <tab heading='选择-已存在申请人'>
+            <fieldset>
+              <div class="form-group">
+                <label class="control-label" for="start">选择申请人:</label>
+                <app-select2 [options]="selectOptions" [(ngModel)]="optionSelected" multiple></app-select2>
+              </div>
+            </fieldset>
+          </tab> -->
+        </tabset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" (click)="bsModal.hide(); clearProxyInfo();">取消</button>
+        <button type="button" [disabled]="!isAddProxy" class="btn btn-primary" (click)="bsModal.hide(); addProxy()">添加代理人</button>
+      </div>
+    </div>
+  </div>
+</div>

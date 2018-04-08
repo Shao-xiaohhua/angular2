@@ -1,0 +1,138 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.records-form {
+  padding-top: 25px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  > div {
+    height: 100%;
+  }
+  .ibox {
+    margin-bottom: 0;
+    width: 40%;
+  }
+  .control-label {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+}
+.client-type {
+  .title {
+    margin: 0;
+    font-size: 18px;
+  }
+  .client-list {
+    margin: 0 0 0 -20px;
+    padding: 0;
+    list-style: none;
+    @include clearfix();
+    li {
+      float: left;
+      margin: 20px 20px 0 20px;
+      width: 120px;
+      height: 150px;
+    }
+  }
+}
+.records-btn {
+  display: flex;
+  justify-content: flex-start;
+  .btn {
+    margin-right: 8px;
+  }
+  .other-case {
+    width: 138px;
+    select {
+      padding: 0 15px;
+      outline: none;
+      height: 34px;
+      border: 1px solid #e7eaec;
+    }
+  }
+}
+.with-refresh {
+  position: relative;
+  .refresh-btn {
+    z-index: 100;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-right: 28px;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .records-form .ibox {
+    width: 80%;
+  }
+}
+
+.toggle-btn {
+  width: 20%;
+}
+
+.case-type-wrap {
+  margin-bottom: 15px;
+  display: flex;
+  width: 100%;
+  .index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 34px;
+    border: 1px solid #e7eaec;
+    border-right: 0;
+    font-size: 16px;
+    color: $text-color;
+  }
+  .case-type {
+    position: relative;
+    flex: 1;
+  }
+  .delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 34px;
+    cursor: pointer;
+    border: 1px solid #e7eaec;
+    border-left: 0;
+    font-size: 18px;
+    color: #dcdcdc;
+    &:hover {
+      color: $navy;
+    }
+  }
+}
+.case-type-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px dashed #e7eaec;
+  font-size: 16px;
+  color: $blue;
+  &:hover {
+    border: 2px dashed $blue;
+  }
+}
+.case-textarea {
+  outline: none;
+  resize: none;
+  padding: 15px;
+  width: 100%;
+  height: 150px;
+  border: 1px solid #e7eaec;
+  font-size: 16px;
+}

@@ -1,0 +1,44 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="profile-element" dropdown>
+          <div class="logo">
+            <img alt="image" src="{{notaryOffice.logo}}">
+            <div class="block m-t-xs m-b"> <strong class="logo-text">{{notaryOffice.name}}</strong> </div>
+          </div>
+          <ul class="animated fadeInRight dropdown-menu" *dropdownMenu>
+            <li><a href="#">个人信息</a></li>
+            <li class="divider"></li>
+            <li><a (click)="logout()">注销</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+          <i class="fa fa-laptop" style="font-size:28px;"></i>
+        </div>
+      </li>
+      <ng-container *ngIf="menu">
+        <li *ngFor="let m of menu.children">
+          <ng-container *ngIf="m.action; then routerTemplate else blankLinkTemplate"></ng-container>
+          <ng-template #blankLinkTemplate>
+            <a href="#"><i *ngIf="m.icon" [ngClass]="m.icon"></i> <span class="nav-label">{{m.name}}</span></a>
+            <ul *ngIf="m.children" class="nav nav-second-level collapse">
+                <li *ngFor="let childMenu of m.children" [ngClass]="{active: activeRoute(childMenu.action)}"><a [routerLink]="'/project/' + childMenu.action">{{childMenu.name}}</a></li>
+            </ul>
+          </ng-template>
+          <ng-template #routerTemplate>
+            <a [routerLink]="m.action"><i *ngIf="m.icon" [ngClass]="m.icon"></i> <span class="nav-label">{{m.name}}</span></a>
+          </ng-template>
+        </li>
+      </ng-container>
+      <li [ngClass]="{active: activeRoute('pandect-list')}">
+        <a [routerLink]="['/project/pandect-list']"><i class="fa fa-flag"></i><span class="nav-label">事项过程检查</span></a>
+      </li>
+      <!--<li [ngClass]="{active: activeRoute('project')}">
+        <a [routerLink]="['/project/all']"><i class="fa fa-inbox"></i> <span class="nav-label">事项列表</span></a>
+      </li>-->
+    </ul>
+
+  </div>
+</nav>
+

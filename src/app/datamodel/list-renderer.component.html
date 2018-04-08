@@ -1,0 +1,67 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>列表 <small class="m-l-sm">列表信息</small></h5>
+                        <app-ibox-toggle></app-ibox-toggle>
+                    </div>
+                    <div class="ibox-content">
+                        <dm-operation [page]="this"></dm-operation>
+                        <data-table #dmGrid id="dm-grid"
+                            headerTitle=""
+                            [items]="items"
+                            [selectOnRowClick]="true"
+                            [itemCount]="total"
+                            [selectColumn]="true"
+                            [multiSelect]="false"
+                            [limit]="pageSize"
+                            [indexColumnHeader]="'#'"
+                            (reload)="query($event)"
+                            (rowClick)="rowClick($event)"
+                            (rowDoubleClick)="rowDoubleClick($event)"
+                            [rowTooltip]="rowTooltip"
+                            [translations]="translations"
+                            >
+                            <data-table-column *ngFor="let column of view.columns"
+                                [property]="column.field"
+                                [header]="column.header"
+                                [sortable]="true"
+                                [resizable]="true"></data-table-column>
+                            <data-table-column
+                                [property]="'dateCreated'"
+                                [header]="'Date'"
+                                [sortable]="true">
+                                <ng-template #dataTableCell let-item="item">
+                                    <span>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                </ng-template>
+                            </data-table-column>
+                            <data-table-column
+                                [property]="'jobTitle'"
+                                [header]="'Job title'"
+                                [visible]="false">
+                            </data-table-column>
+                            <data-table-column
+                                [property]="'active'"
+                                [header]="'操作'"
+                                [width]="100"
+                                [resizable]="true">
+                                <ng-template #dataTableHeader let-item="item">
+                                    <span style="color: rgb(232, 0, 0)">操作</span>
+                                </ng-template>
+                                <ng-template #dataTableCell let-item="item">
+                                    <span style="color: grey">
+                                    <span class="glyphicon glyphicon-ok" *ngIf="item.active"></span>
+                                    <span class="glyphicon glyphicon-remove" *ngIf="!item.active" (click)="trash(item.id)"></span>
+                                    </span>
+                                </ng-template>
+                            </data-table-column>
+                        </data-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+

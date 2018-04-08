@@ -1,0 +1,93 @@
+<div class="draft animated fadeInUp" [class.fullscreen]="isFullscreen">
+  <div class="control">
+    <perfect-scrollbar [config]="config" style="background-color:#fff;">
+      <div class="ibox no-margins">
+        <div class="ibox-content">
+          <div class="notes-title">
+            <h2 class="m-b-lg">
+              <i class="fa fa-tasks"></i>
+              谈话笔录
+              <a href="{{ helpLink }}/help/#text_250734" target="_blank">
+                <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+              </a>
+            </h2>
+            <a href="javascript:;" class="btn-fullscreen" (click)="toggleFS()">
+              <i class="fa" tooltip="全屏编辑" container="body" [class.fa-compress]="isFullscreen" [class.fa-expand]="!isFullscreen"></i>
+            </a>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="start">申请事项</label>
+            <button class="btn btn-default form-control" (click)="insertIntoRange(caseType + '公证')">
+                {{ caseType }}公证
+            </button>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="start">询 问 人</label>
+            <button class="btn btn-default form-control" (click)="insertIntoRange('询 问 人(' + notaryName + ')')">
+              {{ notaryName }}
+            </button>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="start">被询问人</label>
+            <button class="btn btn-default form-control" (click)="insertIntoRange('被询问人(' + partyName + ')')">
+              {{ partyName }}
+            </button>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="start">当前日期</label>
+            <button class="btn btn-default form-control" (click)="insertIntoRange(CNDateString())">
+                {{ CNDateString() }}
+            </button>
+          </div>
+          <div class="btn-group m-t-sm">
+            <a class="btn btn-warning" (click)="printTalkNote()">
+              <i class="fa fa-print"></i>&nbsp;打印预览
+            </a>
+            <a class="btn btn-success" (click)="saveTalkNote()">
+              <i class="fa fa-check"></i>&nbsp;保存笔录
+            </a>
+          </div>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <div class="editor">
+    <div class="ibox no-margins">
+      <div class="ibox-content">
+        <div class="editor-head">
+          <div class="btn-group" *ngIf="identList">
+            <button class="btn btn-default edit-btn" (click)="parseDoc()">
+              公证员 - {{ notaryName }}
+            </button>
+            <button class="btn btn-default edit-btn" (click)="addApplyTask($event); scrollY()" *ngFor="let item of identList; let i = index">
+              {{ item.role === 'Applicant' ? '申请人' : item.role === 'Party' ? '关系人' : '代理人' }} - {{ item.name }}
+            </button>
+          </div>
+          <!--<app-select2 [options]="selectOptions" [(ngModel)]="optionSelected" multiple class="slecet-temp"></app-select2>-->
+          <widget-talktemp (event)="loadTalkTemp($event)" style="width: 16%;"></widget-talktemp>
+        </div>
+        <div class="note-inner" contenteditable="true">
+          <perfect-scrollbar [config]="config">
+            <div class="edit-aera" id="edit-aera" [innerHtml]="talkNote.content" (click)='getRange()' (select)='getRange()' (keyup)='getRange()'>
+              <p>
+                <span contenteditable="false" class="name">询&ensp;问&ensp;人(胡晓瑾)：</span>你申办何公证事项？</p>
+              <p>
+                <span contenteditable="false" class="name">被询问人(张盛磊)：</span>
+                <span class="keyword" contenteditable="false" title="公证事项">学历公证</span>。</p>
+              <p>
+                <span contenteditable="false" class="name">询&ensp;问&ensp;人(胡晓瑾)：</span>请你先阅读本处办理证书（执照）公证的告知书，如果你不能阅读或者有需要解释的，请你告诉我，如果没有疑问，请你在阅读后的告知书上签名、捺指印确认。你是否能听明白我讲的话？</p>
+              <p>
+                <span contenteditable="false" class="name">被询问人(张盛磊)：</span>明白</p>
+              <p>
+                <span contenteditable="false" class="name">询&ensp;问&ensp;人(胡晓瑾)：</span>根据法律和公证程序规则规定，你应如实陈述有关事实，并提供真实、合法、充分的证明材料。你是否听清楚了？</p>
+              <p>姓名：
+                <span class="keyword" contenteditable="false">张三</span>，身份证号码为：
+                <span class="keyword" contenteditable="false">342998919950905033X</span>。
+              </p>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

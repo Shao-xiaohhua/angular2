@@ -1,0 +1,193 @@
+<div class="add-client" (click)="bsModal.show(); addLitigant()">
+  <div class="add-content">
+    <i class="fa fa-plus"></i>
+    <h3>添加{{ title[index] }}</h3>
+  </div>
+</div>
+
+<div bsModal #bsModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content animated flipInY add-modal">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" (click)="bsModal.hide(); cancelClient()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h1 class="title">添加申请人</h1>
+        <p>请仔细核对身份证件信息是否与读取信息相符</p>
+      </div>
+      <div class="modal-body">
+        <tabset [justified]="true" #staticTabs>
+          <tab heading='新增-身份证录入' (select)="readCardTab()">
+            <div class="reg-reader" *ngIf="!hasDataInfo && !isReadOver">
+              <app-card-reader [clear]="clear" [deviceId]="highshotId" (idCard)="readIdCard($event)"></app-card-reader>
+            </div>
+            <fieldset class="form-horizontal" *ngIf="hasDataInfo">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">姓名:</label>
+                <div class="col-sm-10">
+                  <p class="form-control-static">{{newClient.name}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">拼音:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入姓名全拼" [(ngModel)]="newClient.pinyin" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">性别:</label>
+                <div class="col-sm-10">
+                  <p class="form-control-static">{{ newClient.gender === 'Male' ? '男':'女'}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">证件号码:</label>
+                <div class="col-sm-10">
+                  <p class="form-control-static">{{newClient.idNumber}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">签发机关:</label>
+                <div class="col-sm-10">
+                  <p class="form-control-static">{{newClient.signOffice}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">通讯地址:</label>
+                <div class="col-sm-10">
+                  <p class="form-control-static">{{newClient.address}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">联系电话:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入申请人电话号码" [(ngModel)]="newClient.mobile" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">人员类型:</label>
+                  <div class="col-sm-10">
+                    <select class="form-control category">
+                    </select>
+                  </div>
+                </div>
+            </fieldset>
+            <div class="reader-over" *ngIf="isReadOver">
+              <div class="reader-over-logo" style="background-image: url(assets/images/ga_success.png);"></div>
+              <div class="reader-over-text">证件已认证通过</div>
+              <div class="reader-over-desc">
+                <div class="police-logo" style="background-image: url(assets/images/gong_an.png);"></div>
+                <div class="police-text">公安部第一研究所官方认证</div>
+              </div>
+            </div>
+          </tab>
+          <tab heading='新增-填写信息录入' (select)="waiteInfoTab()">
+            <fieldset class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">姓名:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入申请人真实姓名全称" [(ngModel)]="newClient.name" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">拼音:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入姓名全拼" [(ngModel)]="newClient.pinyin" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">性别:</label>
+                <!-- <div class="col-sm-10">
+                  <label class="checkbox-inline">
+                    <input type="radio" value="Male" name="sex" checked> 男 </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" value="Female" name="sex"> 女 </label>
+                </div> -->
+                <div class="col-sm-10">
+                  <select class="form-control" [(ngModel)]="newClient.gender" (input)="clientChange()">
+                      <option value="Male">男</option>
+                      <option value="Female">女</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">证件类型:</label>
+                <div class="col-sm-10">
+                  <select class="form-control" [(ngModel)]="newClient.idType" (input)="clientChange()">
+                    <option value="IdCard">中国身份证</option>
+                    <option value="ResidenceBooklet">户口簿</option>
+                    <option value="Passport">护照</option>
+                    <option value="HongkongMacaoTaiWanIdCard">港澳台永久性居民身份证</option>
+                    <option value="MainlandTravelPermitForTaiwanResidents">台湾居民来往大陆通行证</option>
+                    <option value="MainlandTravelPermitForHongkongMacaoResidents">港澳居民来往内地通行证</option>
+                    <option value="Other">其他</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">证件号码:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入证件号码并仔细核对" [(ngModel)]="newClient.idNumber" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">签发机关:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入证件签发机关" [(ngModel)]="newClient.signOffice" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">通讯地址:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入申请人通讯地址" [(ngModel)]="newClient.address" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">联系电话:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="请输入申请人电话号码" [(ngModel)]="newClient.mobile" (input)="clientChange()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">人员类型:</label>
+                <div class="col-sm-10">
+                  <select class="form-control category">
+                  </select>
+                </div>
+              </div>
+              <!-- <button class="btn btn-success pull-right">
+                <i class="fa fa-camera"></i>&nbsp;&nbsp;OCR自动录入信息（测试）</button> -->
+            </fieldset>
+          </tab>
+          <!-- <tab heading='选择-已存在申请人'>
+            <fieldset>
+              <div class="form-group">
+                <label class="control-label" for="start">选择申请人:</label>
+                <app-select2 [options]="selectOptions" [(ngModel)]="optionSelected" multiple></app-select2>
+                <div class="clearfix" *ngIf="clients">
+                  <div
+                    class="client client-sm pull-left"
+                    *ngFor="let item of clients; let i = index"
+                    (click)="selectCurrentClient(item)"
+                    [class.checked]="item === currentClient"
+                  >
+                    <div class="avatar-wrap">
+                      <div class="avatar" [style.background-image]="'url(' + item.pic + ')'"></div>
+                      <div class="checked-mask"><i class="fa fa-check-circle"></i></div>
+                    </div>
+                    <div class="name">{{ item.name }}</div>
+                    <div class="mask"></div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </tab> -->
+        </tabset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" (click)="bsModal.hide(); cancelClient()">取消</button>
+        <button type="button" [disabled]="!isAddClient" class="btn btn-primary" (click)="bsModal.hide(); addClient();">添加申请人</button>
+      </div>
+    </div>
+  </div>
+</div>

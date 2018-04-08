@@ -1,0 +1,207 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  height: 128px;
+}
+.info {
+  width: 70%;
+  display: flex;
+  flex: 1;
+  .workplace {
+    display: flex;
+    flex: 64px 0 0;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+  .info-list {
+    padding-left: 20px;
+    flex: 1;
+  }
+  .title {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-bottom: 10px;
+    height: 36px;
+    font-size: 18px;
+    @include text-overflow();
+    color: #383838;
+    .fa {
+      position: relative;
+      top: 2px;
+      line-height: 100%;
+      margin-left: 8px;
+      color: $blue;
+      cursor: pointer;
+    }
+  }
+  .client-name {
+    span {
+      &:after {
+        content: '\3001';
+      }
+      &:last-child {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  .item {
+    padding: 2px 0;
+    font-size: 16px;
+    @include text-overflow();
+    span {
+      vertical-align: top;
+      display: inline-block;
+      @include text-overflow();
+      color: #888;
+    }
+  }
+  label {
+    vertical-align: top;
+    font-weight: 400;
+    color: #585858;
+  }
+  .tasks-list {
+    margin-top: 5px;
+    width: 100%;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 14px;
+    color: #fff;
+    background-color: $blue;
+    .fa {
+      margin-right: 4px;
+    }
+  }
+}
+.project-extra {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  > div {
+    position: relative;
+    padding: 0 25px;
+    text-align: right;
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 1px;
+      height: 40%;
+      background-color: $border-color;
+    }
+    &:last-child {
+      padding-right: 0;
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .name {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding-bottom: 15px;;
+    font-size: 16px;
+    font-weight: 400;
+    color: #888;
+    .label {
+      margin-right: 8px;
+      margin-top: -1px;
+      padding: 4px 6px;
+      border-color: $blue;
+      font-size: 14px;
+      font-weight: normal;
+      color: #fff;
+      background-color: $blue;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .task-tips {
+    height: 56px;
+    line-height: 50px;
+    @include text-overflow();
+    font-size: 18px;
+    font-weight: 700;
+    color: $blue;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+  .task-done {
+    height: 56px;
+    line-height: 50px;
+    @include text-overflow();
+    font-size: 18px;
+    font-weight: 700;
+    color: $navy;
+  }
+  .clist-list {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin-left: 8px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #e7eaec;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }  
+  .more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    border: 2px dashed #e7eaec;
+    color: #aaa;
+    background-color: transparent;
+    &:hover{
+      color: $blue;
+    }
+  }
+}
+.barcode {
+  padding: 15px;
+  .title {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #383838;
+  }
+}

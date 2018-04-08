@@ -1,0 +1,57 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <div class="row">
+          <div class="col-lg-12" *ngIf="isWindow !== true">
+            <div class="ibox float-e-margins" >
+              <div class="ibox-title">
+                <h5>{{title}}
+                  <small class="m-l-sm">{{simpleTitle}}</small>
+                </h5>
+                <app-ibox-toggle></app-ibox-toggle>
+              </div>
+              <div class="ibox-content">
+                <form novalidate>
+                    <fieldset *ngFor="let fieldset of fieldsets">
+                      <legend *ngIf="fieldsets.length > 1">{{fieldset.name}}</legend>
+                      <div class="row">
+                        <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}} "></dm-widget>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <button class="btn btn-default" type="button" (click)="close(lgModal)">关闭</button>
+                    </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+      
+      
+          <div class="col-lg-12" *ngIf="isWindow === true">
+                <div class="ibox-title">
+                  <h5>{{title}}
+                    <small class="m-l-sm">{{simpleTitle}}</small>
+                  </h5>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="close(lgModal)">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="ibox-content">
+                  <form novalidate>
+                    <fieldset>
+                      <!-- <span *ngFor="let operation of business.operations">
+                          <dm-operation [operation]="operation" [page]="this"></dm-operation>
+                      </span> -->
+                      <button class="btn btn-default" type="button" (click)="close(lgModal)">关闭</button>
+                    </fieldset>
+                    <fieldset *ngFor="let fieldset of fieldsets" class="form-horizontal">
+                      <legend *ngIf="fieldsets.length > 1">{{fieldset.name}}</legend>
+                      <div class="form-group">
+                        <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form"></dm-widget>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+            </div>
+        
+      
+        </div>
+      </div>

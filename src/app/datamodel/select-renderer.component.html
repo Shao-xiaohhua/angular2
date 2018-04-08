@@ -1,0 +1,39 @@
+<!--select modal-->
+<div bsModal #selectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">{{type.getDisplayAs()}}信息选择</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div>
+                            <dm-operation [page]="this"></dm-operation>
+                            <span class="pull-right">
+                                <input name="partWord" [(ngModel)]="partWord" placeholder="关键字">
+                                <button type="button" class="btn btn-default btn-sm" (click)="doSearch()">
+                                    <i class="fa fa-search"></i>查询</button>
+                            </span>
+                        </div>
+                        <data-table #selectGrid id="dm-grid" headerTitle="" [items]="items" [header]="false" [selectOnRowClick]="true" [itemCount]="total"
+                            [selectColumn]="true" [multiSelect]="false" [limit]="pageSize" [indexColumnHeader]="'#'" (reload)="query($event)"
+                            (rowClick)="rowClick($event)" (rowDoubleClick)="rowDoubleClick($event)" [rowTooltip]="rowTooltip"
+                            [translations]="translations">
+                            <data-table-column *ngFor="let column of view.columns" [property]="column.field" [header]="column.header" [sortable]="true"
+                                [resizable]="true">
+                            </data-table-column>
+                        </data-table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="doConfirm()">确定</button>
+                <button type="button" class="btn btn-default" (click)="closeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

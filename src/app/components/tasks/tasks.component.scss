@@ -1,0 +1,88 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.vertical-container.tasks-list {
+  width: 100%;
+  max-width: 100%;
+  .group-name {
+    margin-top: 0;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .group-slide {
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+.tasks {
+  padding: 0 20px;
+  overflow: hidden;
+  .item {
+    position: relative;
+    display: block;
+    margin-bottom: 25px;
+    color: $text-color;
+    .task-heading {
+      display: flex;
+    }
+    .task-body {
+      padding-top: 5px;
+      padding-left: 30px;
+      font-size: 16px;
+      color: #aaa;
+    }
+    .state {
+      width: 30px;
+      font-size: 24px;
+      &.completed {
+        color: $navy;
+      }
+      &.stopped {
+        color: $red;
+      }
+      &.running {
+        color: $blue;
+      }
+      &.waited {
+        color: $dark-gray;
+      }
+    }
+    .name {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 0;
+        border-bottom: 1px dashed #ddd;
+        background-color: transparent;
+      }
+    }
+    .title {
+      z-index: 10;
+      margin: 0;
+      padding-right: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      background-color: #fff;
+    }
+    .task-progress {
+      z-index: 10;
+      padding-left: 20px;
+      font-size: 18px;
+      color: $navy;
+      background-color: #fff;
+    }
+    &:hover {
+      color: $yellow;
+    }
+  }
+}

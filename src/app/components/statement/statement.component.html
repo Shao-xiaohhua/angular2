@@ -1,0 +1,124 @@
+<div class="statement" [class.fullscreen]="isFullscreen">
+  <div class="notes">
+    <div class="ibox no-margins">
+      <div class="ibox-content">
+        <div class="notes-title">
+          <h2>
+            <i class="fa fa-tasks"></i>
+            谈话笔录
+          </h2>
+          <a href="javascript:;" class="btn-fullscreen" (click)="toggleFS()">
+            <i class="fa" tooltip="全屏编辑" container="body" [class.fa-compress]="isFullscreen" [class.fa-expand]="!isFullscreen"></i>
+          </a>
+        </div>
+        <div class="notes-box m-t-lg">
+          <div class="btn-group" *ngIf="identList">
+            <button
+              class="btn btn-default edit-btn"
+              (click)="addGreTask($event); scrollY()"
+            >
+              公证员
+            </button>
+            <button
+              class="btn btn-default edit-btn"
+              (click)="addApplyTask($event); scrollY()"
+              *ngFor="let item of identList; let i = index"
+            >
+              {{ item.role === 'Applicant' ? '申请人' : item.role === 'Party' ? '关系人' : '代理人' }} - {{ item.name }}
+            </button>
+          </div>
+          <div class="note-info">
+            <perfect-scrollbar class="scroll-container" [config]="config">
+              <div *ngFor="let item of tasks; let i = index">
+                <div class="note-dialog question" *ngIf="item.type === 'Question'">
+                  <div class="title">问：</div>
+                  <div class="inner">
+                    <div
+                      class="text"
+                      [class.edit]="item.isAdd"
+                      [attr.contenteditable]="item.isAdd"
+                      (blur)="editOver(i)"
+                      (click)="editTo(i)"
+                    >{{ item.content }}</div>
+                    <div class="desc">
+                      <div class="action-wrap">
+                        <div class="name">{{ item.owner }}</div>
+                        <div class="del" (click)="delTask(i)">
+                          <i class="fa fa-times-circle"></i>删除笔录
+                        </div>
+                      </div>
+                      <div class="timestamp">2017-11-20 20:16:26</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="note-dialog answer" *ngIf="item.type === 'Answer'">
+                  <div class="title">答：</div>
+                  <div class="inner">
+                    <div
+                      class="text"
+                      [class.edit]="item.isAdd"
+                      [attr.contenteditable]="item.isAdd"
+                      (blur)="editOver(i)"
+                      (click)="editTo(i)"
+                    >
+                      {{ item.content }}
+                    </div>
+                    <div class="desc">
+                      <div class="action-wrap">
+                        <div class="name">{{ item.owner }}</div>
+                        <div class="del" (click)="delTask(i)">
+                          <i class="fa fa-times-circle"></i>删除笔录
+                        </div>
+                      </div>
+                      <div class="timestamp">2017-11-20 20:16:26</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+          <div class="action-bar">
+            <a href="javascript:;" class="btn btn-warning m-r-sm">
+              <i class="fa fa-print"></i>&nbsp;打印笔录
+            </a>
+            <a [routerLink]="'/project/home'" class="btn btn-success">
+              <i class="fa fa-check"></i>&nbsp;完成笔录
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="template">
+    <div class="ibox no-margins">
+      <div class="ibox-content">
+        <div class="template-title">
+          <h2>
+            <i class="fa fa-tasks"></i>
+            谈话笔录模板
+          </h2>
+        </div>
+        <div class="template-box m-t-lg">
+          <app-select2 [options]="selectOptions" multiple></app-select2>
+          <div class="template-info" *ngIf="taskTem">
+            <perfect-scrollbar [config]="config">
+              <div class="template-dialog" *ngFor="let item of taskTem; let i = index">
+                <div class="item" *ngIf="item.question">
+                  <div class="title question">问</div>
+                  <div class="inner">{{ item.question }}</div>
+                </div>
+                <div class="item" *ngIf="item.answer">
+                  <div class="title answer">答</div>
+                  <div class="inner">{{ item.answer }}</div>
+                </div>
+                <div class="action-wrap" (click)="copyTask(i, item); scrollY()">
+                  <div class="action" tooltip="复制到笔录" container="body" placement="bottom"><i class="fa fa-arrow-circle-right"></i></div>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

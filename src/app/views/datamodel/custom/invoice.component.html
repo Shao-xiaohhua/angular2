@@ -1,0 +1,184 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>开票管理</h5>
+          </div>
+        <div class="ibox-content">
+          <form novalidate>
+            <fieldset *ngFor="let fieldset of fieldsets">
+              <legend>{{fieldset.name}}</legend>
+              <div class="row">
+                <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}} "></dm-widget>
+              </div>
+            </fieldset>
+            </form>
+            <legend>事项信息</legend>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>核验码</th>
+                  <th>事项名称</th>
+                  <th>事项案号</th>
+                  <th>受理时间</th>
+                  <th>承办公证员</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cases;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{ item.properties.checkCode}}</td>
+                  <td>{{ item.$displays.caseType }} <!-- (
+                    <span
+                      *ngFor="let client of item.parties | slice:0:4; let i = index"
+                    >
+                      {{ client.name }}{{ i < item.parties.length - 1 ? '、' : '' }}
+                    </span>
+                    <span *ngIf="item.parties.length > 4">...</span>
+                  ) --> </td>
+                  <td>{{ item.properties.caseNumber ? item.properties.caseNumber : '暂无案号' }}</td>
+                  <td>{{ item.$displays.createDate }}</td>
+                  <td>{{ item.$displays.notary ? item.$displays.notary : '未知' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <legend>开票详情</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th width="50px">#</th>
+                  <th>案号</th>
+                  <th>收费科目</th>
+                  <th>已收金额</th>
+                  <th>是否代收费</th>
+                  <th width="240px">发票备注</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="detail">
+                <tr *ngFor="let item of detail.details;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{ item.caseNumber ? item.caseNumber : '暂无案号' }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.amount }}</td>
+                  <td>{{ item.isInsteadCollecting ? '是': '否' }}</td>
+                  <td>
+                      <div *ngIf="item.isInsteadCollecting" class="input-group bootstrap-touchspin">
+                        <input type="text" class="form-control can-edit count touchspin1" placeholder="填写代收发票信息" [(ngModel)]="item.invoiceCode" >
+                        <span class="input-group-btn">
+                          <button class="btn btn-white bootstrap-touchspin-up" (click)="otherInvoice(item)">保存</button>
+                        </span>
+                      </div>
+                      <div *ngIf="item.isInsteadCollecting">{{item.invoiceCode}}</div>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="!detail">
+                  <tr><td colspan="6">暂无数据</td></tr>
+              </tbody>
+            </table>
+            <fieldset>
+              <button class="btn btn-primary" type="button" (click)="invoiceModalShow()">开票</button>
+              <button class="btn btn-default" type="button" (click)="close(lgModal)">关闭</button>
+            </fieldset>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- invoice form -->
+<div bsModal #invoiceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 720px;">
+      <div class="modal-content animated flipInY">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" (click)="invoiceModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="title">填写开票信息</h3>
+          <p>请仔细核对开票信息是否一致</p>
+        </div>
+        <div class="modal-body">
+          <fieldset class="form-horizontal invoice-form">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">抬头类型:</label>
+              <div class="col-sm-10">
+                <div class="checkbox-wrap">
+                  <label class="checkbox-inline">
+                    <input type="radio" [(ngModel)]="invoiceType" value="private" name="type">个人/非企业单位</label>
+                  <label class="checkbox-inline">
+                    <input type="radio" [(ngModel)]="invoiceType" value="public" name="type">企业</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">发票抬头:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写发票抬头">
+              </div>
+            </div>
+            <div class="form-group" *ngIf="invoiceType == 'public'">
+              <label class="col-sm-2 control-label">税号:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写纳税人识别号">
+              </div>
+            </div>
+            <div class="form-group" *ngIf="invoiceType == 'public'">
+              <label class="col-sm-2 control-label">单位地址:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写单位地址(非必填)">
+              </div>
+            </div>
+            <div class="form-group" *ngIf="invoiceType == 'public'">
+              <label class="col-sm-2 control-label">单位电话号码:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写单位电话号码(非必填)">
+              </div>
+            </div>
+            <div class="form-group" *ngIf="invoiceType == 'public'">
+              <label class="col-sm-2 control-label">开户银行:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写开户行和帐号(非必填)">
+              </div>
+            </div>
+            <div class="form-group" *ngIf="invoiceType == 'public'">
+              <label class="col-sm-2 control-label">银行账户:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写开户行和帐号(非必填)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">发票金额:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" value="" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">手机号码:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写接受电子发票的手机号码(重要)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">电子邮箱:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="填写接受电子发票的电子邮箱(非必填)">
+              </div>
+            </div>
+            <div class="form-group">
+            <label class="col-sm-2 control-label">备注:</label>
+            <div class="col-sm-10">
+              <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="填写开户行和帐号(非必填)"></textarea>
+            </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" (click)="invoiceModal.hide()">取消</button>
+          <button type="button" class="btn btn-primary" (click)="submit()">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>

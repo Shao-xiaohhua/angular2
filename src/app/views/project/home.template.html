@@ -1,0 +1,32 @@
+<!-- <app-sidebar></app-sidebar> -->
+<div class="wrapper wrapper-content full-content">
+  <div class="project-wrap">
+    <div class="sk-spinner sk-spinner-wave">
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+    <app-overview></app-overview>
+    <div class="project-content">
+      <div class="project-workspace">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="project-control">
+        <perfect-scrollbar [config]="config">
+          <button
+            *ngFor="let item of navList; let i = index"
+            [routerLink]="[item.link]"
+            [class.btn-primary]="currentItem === item"
+            [class.btn-default]="currentItem !== item"
+            (click)="selectItem(i)"
+            class="btn btn-block btn-lg"
+            type="button"
+          >
+            <i class="fa" [ngClass]="item.icon"></i>{{ item.name }}</button>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>

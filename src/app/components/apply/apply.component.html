@@ -1,0 +1,137 @@
+<perfect-scrollbar class="animated fadeInUp" [config]="config" *ngIf="view === 'home'">
+  <div id="vertical-timeline" class="vertical-container light-timeline no-margins tasks-list">
+    <div class="vertical-timeline-block">
+      <div class="vertical-timeline-content" *ngIf="taskList">
+        <h1 class="group-name clearfix">
+          {{ taskList.title }}
+        </h1>
+        <div class="tasks js_tasks">
+          <a class="item" *ngFor="let item of taskList.items">
+            <div class="task-heading">
+              <div
+                class="state"
+                [class.completed]="item.status === 'Success'"
+                [class.stopped]="item.status === 'Error'"
+                [class.running]="item.status === 'Doing'"
+                [class.waited]="item.status === 'Wait'"
+              >
+                <i
+                  class="fa"
+                  [class.fa-check-circle]="item.status === 'Success'"
+                  [class.fa-times-circle]="item.status === 'Error'"
+                  [class.fa-clock-o]="item.status === 'Doing'"
+                  [class.fa-circle-thin]="item.status === 'Wait'"
+                ></i>
+              </div>
+              <div class="name">
+                <h2 class="title">{{ item.title }}</h2>
+                <div class="task-progress">
+                  <span class="label label-primary">
+                    {{ item.status === 'Doing' ? '处理中' : item.status === 'Wait' ? '未处理' : item.status === 'Error' ? '未通过' : '已处理' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="task-body">
+              <span>{{ item.date }} {{ item.desc }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-t row">
+    <div class="col-lg-4">
+      <button class="btn btn-info" [disabled]="disabled" style="width: 100%; font-size: 18px;" (click)="applyPass()">
+        <i class="fa fa-paste"></i>
+        决定受理
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <button class="btn btn-success" style="width: 100%; font-size: 18px;" (click)="addStuff()">
+        <i class="fa fa-paste"></i>
+        补正材料
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <button class="btn btn-danger" style="width: 100%; font-size: 18px;" (click)="goto('form')">
+        <i class="fa fa-paste"></i>
+        不予受理
+      </button>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<perfect-scrollbar class="animated fadeInUp" [config]="config" *ngIf="view === 'form'">
+  <div class="ibox no-margins">
+    <div class="ibox-content">
+      <div>
+        <h2>不予受理公证</h2>
+      </div>
+      <div class="m-t">
+        <div>
+          <h4>具体原因及承办人认为需要说明的情况</h4>
+          <!-- [(ngModel)]="str" [ngModelOptions]="{standalone: true}" -->
+          <textarea class="apply-textarea" [(ngModel)]="acceptNote"></textarea>
+        </div>
+        <div class="clearfix m-t">
+          <div class="pull-left">
+            <a class="btn btn-default" (click)="router.navigateByUrl('/project/home/settings')">返回</a>
+          </div>
+          <div class="pull-right">
+            <a class="btn btn-primary" (click)="applyNotPass()">提交</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<div class="animated fadeInUp" style="height: 100%;" *ngIf="view === 'note'">
+  <div class="ibox no-margins" style="height: 100%;">
+    <div class="ibox-content apply-content" style="height: 100%;">
+      <div class="apply-title">
+        <h2>不予受理公证报告</h2>
+      </div>
+      <div class="apply-note">
+        <perfect-scrollbar [config]="config">
+          <div class="apply-note-box">
+            <div class="info">
+              <p>{{ acceptNote }}</p>
+            </div>
+            <p></p>
+            <div class="insc text-right">
+              <p>
+                承办公证员:
+                <span>{{ accepter }}</span>
+              </p>
+              <p>
+                日期
+                <span>{{ acceptDate }}</span>
+              </p>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ibox no-margins animated fadeInUp" style="height: 100%;" *ngIf="view === 'result'">
+  <div class="ibox-content" style="height: 100%;">
+    <div class="apply-result" *ngIf="success">
+      <i class="fa fa-check-circle"></i>
+
+      <h1 class="title">恭喜，提交成功，请您耐心等待</h1>
+      <div class="desc"><div class="btn btn-success"><a class="btn btn-default" (click)="goto('note')">确定</a></div></div>
+    </div>
+    <div class="apply-result apply-result-error" *ngIf="!success">
+      <i class="fa fa-times-circle"></i>
+
+      <h1 class="title">抱歉，无法完成申请，建议重新提交</h1>
+      <div class="desc">
+        <div class="btn btn-success"><a class="btn btn-default" (click)="goto('form')">重新提交</a></div>
+      </div>
+    </div>
+  </div>
+</div>

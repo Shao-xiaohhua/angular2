@@ -1,0 +1,29 @@
+<!-- <div [formGroup]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}}" [class.has-error]="!isValid">
+  <label class="control-label" [attr.for]="widget.fieldName">{{widget.label}}</label>
+  <div [ngSwitch]="widget.widgetType">
+    <input *ngSwitchCase="widgetType.TextField" [formControlName]="widget.fieldName" [id]="widget.fieldName" [type]="widget.inputType"
+      [placeholder]="widget.tip" class="form-control">
+      <span *ngIf="!isValid && (isDirty || isTouched)" class="help-block">{{widget.label}} 不能为空</span>
+  </div>
+</div> -->
+
+
+<!-- <div [ngSwitch]="widget.widgetType">
+  <widget-textfield *ngSwitchCase="widgetType.TextField" [widget]="widget" [form]="form"></widget-textfield>
+</div> -->
+
+<div [ngSwitch]="widget.xtype">
+  <widget-displayfield *ngSwitchCase="widgetMap.displayfield" [widget]="widget" [form]="form"></widget-displayfield>
+  <widget-textfield *ngSwitchCase="widgetMap.textfield" [widget]="widget" [form]="form"></widget-textfield>
+  <widget-textarea *ngSwitchCase="widgetMap.textarea" [widget]="widget" [form]="form"></widget-textarea>
+  <widget-htmleditor *ngSwitchCase="widgetMap.htmleditor" [widget]="widget" [form]="form"></widget-htmleditor>
+  <widget-datefield *ngSwitchCase="widgetMap.datefield" [widget]="widget" [form]="form"></widget-datefield>
+  <widget-integerfield *ngSwitchCase="widgetMap.integerfield" [widget]="widget" [form]="form"></widget-integerfield>
+  <widget-doublefield *ngSwitchCase="widgetMap.doublefield" [widget]="widget" [form]="form"></widget-doublefield>
+  <widget-booleancheckbox *ngSwitchCase="widgetMap.booleancheckbox" [widget]="widget" [form]="form"></widget-booleancheckbox>
+  <widget-optioncombo *ngSwitchCase="widgetMap.optioncombo" [widget]="widget" [form]="form"></widget-optioncombo>
+  <widget-enumfield *ngSwitchCase="widgetMap.enumfield" [widget]="widget" [form]="form"></widget-enumfield>
+  <widget-entityfield *ngSwitchCase="widgetMap.entityfield" [widget]="widget" [form]="form"></widget-entityfield>
+  <widget-zonecombo *ngSwitchCase="widgetMap.zonecombo" [widget]="widget" [form]="form"></widget-zonecombo>
+  <widget-attachmentfield *ngSwitchCase="widgetMap.attachmentfield" [widget]="widget" [form]="form"></widget-attachmentfield>
+</div>

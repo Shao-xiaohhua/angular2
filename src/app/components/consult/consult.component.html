@@ -1,0 +1,73 @@
+<div class="records-form">
+  <div class="ibox">
+    <perfect-scrollbar [config]="config">
+      <div class="ibox-content">
+        <h1>登记新的咨询<i class="fa fa-question-circle help-btn" tooltip="查看帮助文档"></i></h1>
+        <small>选择咨询事项及登记申请人身份信息</small>
+        <form action="" class="m-t-lg" id="data-form">
+          <div class="client-type m-b-lg" *ngFor="let list of litigantData; let i = index">
+            <div *ngIf="i === 0">
+              <h3 class="title">{{ title[i] }}：</h3>
+              <ul class="client-list">
+                <li *ngFor="let item of list; let j = index">
+                  <app-client
+                    [isProxyBtn]="true"
+                    [isConfigBtn]="true"
+                    [clientData]="item"
+                    (onRemoveClient)="removeItem(j, list)"
+                  ></app-client>
+                </li>
+                <li>
+                  <app-add-clients
+                    [title]="title[i]"
+                    [allClient]="list"
+                    (onAddLitigant)="addLitigant(i)"
+                    (onAdd)="add()"
+                    [index]="i"
+                  ></app-add-clients>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group m-b-lg with-refresh">
+            <label class="control-label" for="start">事项：({{ caseCount.length }})</label>
+            <!--<ngx-address [values]="customData" (onSelected)="onCustomSelected($event)" [options]="custom.options"></ngx-address> -->
+            <div class="case-type-wrap" *ngFor="let case of caseCount; let i = index">
+              <div class="index">{{ i + 1 }}</div>
+              <div class="case-type">
+                <widget-casetype (event)="loadCaseVal($event, i)"></widget-casetype>
+                <button class="btn btn-link refresh-btn" (click)="refresh();" tooltip="刷新列表" container="body"><i class="fa fa-refresh"></i></button>
+              </div>
+              <div class="delete" tooltip="删除事项" container="body" (click)="deleteCase(i)">
+                <i class="fa fa-trash-o"></i>
+              </div>
+            </div>
+            <div class="case-type-add" (click)="addCase()">
+              + 添加事项
+            </div>
+          </div>
+          <div class="form-group m-b-lg with-refresh">
+            <label for="" class="control-label">咨询内容记录：</label>
+            <textarea class="case-textarea" placeholder="填写咨询者咨询信息" name="content"  [(ngModel)]="content"></textarea>
+          </div>
+        </form>
+        <div class="records-btn">
+          <button class="btn btn-primary btn-w-m" (click)="onSubmit()" [disabled]="disabled">
+            <i class="fa fa-print"></i>&nbsp;&nbsp;保存并打印</button>
+         <!--
+            <div class="other-case">
+            <select (input)="selectType($event)">
+              <option value="-1">请选择</option>
+              <option value="0">其它选项</option>
+              <option value="1">打印申请表</option>
+              <option value="/project/data">材料收取</option>
+            </select>
+          </div>
+        -->
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+</div>
+
+

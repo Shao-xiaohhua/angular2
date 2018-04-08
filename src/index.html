@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="renderer" content="webkit">
+  <meta charset="utf-8">
+  <title>上海市东方公证处 - 智慧公证一体化办证平台</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+	<script>
+    console.log('index.html:', new Date().getTime());
+    var TCAConfigCount = 0;
+    function Onload(){
+    };
+
+    function Unload(){
+      /* var highshot=localStorage.getItem('_HighShotDevice_');
+      if(highshot){
+        var video = localStorage.getItem('_HighShotVideo_');
+        if (video) {
+          document.getElementById(highshot).Video_Release(video);
+        }
+        // localStorage.setItem('_HighShotVideo_', '');
+        var camera = localStorage.getItem('_HighShotCamera_');
+        if (camera) {
+          document.getElementById(highshot).Device_Release(camera);
+        }
+        document.getElementById(highshot).Global_DeinitDevs();
+        // document.getElementById(highshot).Global_DeinitFaceDetect();
+      } */
+    }
+    </script>
+  <style>
+    .edit-aera .keyword {
+      display: inline-block;
+      padding-left: 4px;
+      padding-right: 4px;
+      color: #1c84c6;
+  }
+  .select2-dropdown {
+    z-index: 2201!important;
+  }
+  </style>  
+</head>
+<!-- <body class="fixed-sidebar md-skin"> -->
+<body onunload="Unload()" onload="Onload()">
+  <app-root></app-root>
+</body>
+</html>

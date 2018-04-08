@@ -1,0 +1,209 @@
+
+@import "../../../assets/styles/imports/gzstyle";
+
+table,th,td
+{
+border:1px solid;
+}
+table{
+border-collapse:collapse;
+width: 100%;
+margin: 0 auto;
+}
+tr{
+height: 35px; 
+text-align: center; 
+font-size: 14px;
+}
+h2{
+text-align: center;
+}
+   body {
+padding: 0px;
+margin: 0px;
+}
+
+a {
+color: #000
+}
+
+
+@media print {
+.noPrint {
+  DISPLAY: none
+}
+}
+.full{
+margin: 0 auto;
+}
+
+.toolbar{
+padding: 10px 0;
+bottom: 0;
+position: fixed;
+width: 100%;
+background: white;
+text-align: center;
+border: 1px solid gray;
+border-right-width: 0px;
+border-left-width: 0px;
+}
+.toolbar .button{
+display: inline-block;
+}
+.img{
+position: relative;
+}
+
+.img .barcode_img{
+position: absolute;
+left: 0; 
+max-width: 250px;
+height: auto; 
+}
+.img .qrcode_img{
+position: absolute;
+right: 0; 
+max-width: 70px;
+height: auto; 
+}
+.full .report{
+margin-top: 70px;
+}
+.full-default .report{
+margin-top: 70px;
+}
+.title{
+font-size: 20px;
+display: block;
+font-weight: bold;
+margin: 20px;
+}
+.split{
+page-break-after:always;
+} 
+.container {
+  width: 680px;
+  margin: 0 auto;
+}
+
+/* æ¨ªå‘æ‰“å°å¸ƒå±€ */
+.horizontal {
+  width: 900px;
+}
+
+.showborder{
+margin-top:30px;
+padding:50px 70px;
+  -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.17), 0 0 60px rgba(0, 0, 0, 0.01) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.17), 0 0 40px rgba(0, 0, 0, 0.01) inset; 
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.17), 0 0 40px rgba(0, 0, 0, 0.01) inset;
+}
+.border {padding-right:4px;margin-right:5px;border-right:1px solid #ddd;}
+.colborder {padding-right:24px;margin-right:25px;border-right:1px solid #ddd;}
+
+
+
+a.button {
+text-decoration: none;
+color:#333;
+background-color:#f2f2f2;
+border:1px solid #eee;
+border-radius:4px;
+padding:10px;
+}
+
+p.des{
+color:#999;
+font-size:12px;
+padding:20px;
+}
+.container h1 {
+font-family: é»‘ä½“;
+padding-top: 10px;
+padding-bottom: 20px
+}
+
+.container h2 {
+font-family: æ¥·ä½“;
+}
+
+.container hr {
+border-color: #ccc;
+}
+
+.container .sub {
+border-top: 1px solid #ccc;
+padding-top: 10px
+}
+
+/* grid */
+
+.ps-grid{
+border-spacing: 0;
+width:660px;
+}
+
+.ps-grid div{
+border-bottom:1px solid #eee;
+padding:8px 0 8px 0;
+width:660px;
+float:left;
+}
+.ps-grid div.span5{width:50%;}
+.ps-grid div.span1{width:20%;}
+.ps-grid div.span2{width:40%;}
+.ps-grid div.span3{width:60%;}
+.ps-grid div.span4{width:80%;}
+
+
+/* table */
+table,table td,table th{border-collapse:collapse;}
+.ps-table{
+width:100%;
+table-layout:fixed;
+}
+
+.ps-table caption{
+font-size:18px;
+font-weight: bold;
+line-height:40px;
+}
+
+.ps-table caption span{
+font-size:12px;
+font-weight: normal;
+text-align:left;
+display:block;
+line-height:20px;
+padding:5px;
+}
+
+.ps-table caption span.right{
+float:right;
+padding:0;
+}
+
+.ps-table th{
+border:1px solid #eee;
+text-align: center;
+padding:5px;
+background-color:#f5f5f5;
+font-size:12px;
+border-bottom-width: 2px;
+}
+
+.ps-table td{
+border:1px solid #eee;
+text-align: center;
+padding:10px;
+font-size:12px;
+word-wrap: break-word;
+word-break:break-all;
+}
+.ps-table td.left{
+text-align: left;
+}
+.ps-table td span{
+color:#999;
+}

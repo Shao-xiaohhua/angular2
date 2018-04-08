@@ -1,0 +1,63 @@
+
+  <div class="draft animated fadeInUp" [class.fullscreen]="isFullscreen">
+      <div class="control">
+        <perfect-scrollbar [config]="config" style="background-color:#fff;">
+          <div class="ibox no-margins">
+            <div class="ibox-content">
+              <div class="notes-title">
+                <h2 class="m-b-lg">
+                  <i class="fa fa-tasks"></i>
+                  文书拟稿
+                  <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+                </h2>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="start">翻译语种</label>
+                <input type="text" [value]="translateLanguage" disabled class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="start">份数</label>
+                <input type="text" [value]="num" disabled class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="start">是否认证</label>
+                <input type="text" [value]="attestation || ''" disabled class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="start">拟稿人意见</label>
+                <textarea name="" id="" cols="25" [(ngModel)]="draftNote" rows="10" class="form-control" placeholder="输入备注信息"></textarea>
+              </div>
+              <div class="btn-group m-t-sm">
+                <a class="btn btn-success" (click)="saveDoc()">
+                  <i class="fa fa-check"></i>&nbsp;完成拟稿
+                </a>
+                <button class="btn btn-warning" (click)="print()">
+                  <i class="fa fa-print"></i>&nbsp;打印文书
+                </button>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+      <div class="editor">
+        <div class="ibox no-margins">
+          <div class="ibox-content">
+            <div class="editor-head">
+                <div class="btn-group">
+                  
+                  </div>
+              <!--<app-select2 [options]="selectOptions" [(ngModel)]="optionSelected" multiple class="slecet-temp"></app-select2>-->
+              <widget-drafttemplate (event)="loadTemplate($event)" style="width: 16%;"></widget-drafttemplate>
+            </div>
+            <div class="note-inner" contenteditable="true">
+              <perfect-scrollbar [config]="config">
+                <div class="edit-aera" id="edit-aera" [innerHtml]="doc.content" (click)='getRange()' (select)='getRange()' (keyup)='getRange()'>
+                    
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    

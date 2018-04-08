@@ -1,0 +1,314 @@
+<div class="row wrapper border-bottom white-bg page-heading" style="padding: 20px 28px 0;">
+  <ol class="breadcrumb">
+    <li>
+      <a href="index.html">首页</a>
+    </li>
+    <li>
+      <a href="javascript:;">监管</a>
+    </li>
+    <li class="active">
+      <strong>公证业务</strong>
+    </li>
+  </ol>
+  <div class="type-name clearfix">
+    <div class="name pull-left">
+      {{ projectInfo ? projectInfo.caseType : '' }}
+    </div>
+    <div class="prompt pull-left">（ {{ projectInfo ? projectInfo.status : '' }} ）</div>
+  </div>
+  <div class="head-table clearfix">
+    <div class="code-warp pull-left">
+      <div class="code" style="background: url(assets/images/code_pandect.png);"></div>
+    </div>
+    <div class="table-wrap pull-left">
+      <table>
+        <tr>
+          <td>
+            <span class="name">公证员:</span>
+            <span class="content">{{ projectInfo ? projectInfo.notary : '' }}</span>
+          </td>
+          <td>
+            <span class="name">公证助理:</span>
+            <span class="content">王德宇</span>
+          </td>
+          <td>
+            <span class="name">协办人:</span>
+            <span class="content">王海刚</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="name">公正类别:</span>
+            <span class="content">{{ projectInfo ? projectInfo.caseType : '' }}</span>
+          </td>
+          <td>
+            <span class="name">事项编码:</span>
+            <span class="content">(2017)沪东证外字</span>
+          </td>
+          <td>
+            <span class="name">核验码:</span>
+            <span class="content">878-9872-63110</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="name">用途:</span>
+            <span class="content">{{ projectInfo ? projectInfo.purpose : '' }}</span>
+          </td>
+          <td>
+            <span class="name">副本数:</span>
+            <span class="content">5份</span>
+          </td>
+          <td>
+            <span class="name">使用地:</span>
+            <span class="content">{{ projectInfo ? projectInfo.useArea : '' }}</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="type-link clarfix">
+    <a class="active" href="jacascripg:;">概览</a>
+    <a href="jacascripg:;">操作日志</a>
+    <a href="jacascripg:;">公证文书</a>
+    <a href="{{pdfLink}}" target="_blank">电子卷宗</a>
+    <a href="jacascripg:;">音视频留痕</a>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">申请人信息</div>
+    <div class="padding-box">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>申请人姓名</th>
+            <th>性别</th>
+            <th>证件类别</th>
+            <th>证件号码</th>
+            <th>住址</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="partyInfo">
+          <tr *ngFor="let party of partyInfo">
+            <td>{{ party.name }}</td>
+            <td>{{ party.gender === 'Male' ? '男' : '女' }}</td>
+            <td>
+              {{
+                party.idType === 'IdCard' ? '身份证' :
+                party.idType === 'ResidenceBooklet' ? '户口簿' :
+                party.idType === 'Passport' ? '护照' :
+                party.idType === 'HongkongMacaoTaiWanIdCard' ? '港澳台永久性居民身份证' :
+                party.idType === 'MainlandTravelPermitForTaiwanResidents' ? '台湾居民来往大陆通行证' :
+                party.idType === 'MainlandTravelPermitForHongkongMacaoResidents' ? '港澳居民来往内地通行证' :
+                '其他'
+              }}
+            </td>
+            <td>
+              {{ party.idNumber }}
+            </td>
+            <td>
+              {{ party.address }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">收费信息</div>
+    <div class="padding-box">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>收费项目</th>
+            <th>应收额</th>
+            <th>实收额</th>
+            <th>减免额</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="chargeInfo">
+          <tr *ngFor="let charge of chargeInfo">
+            <td>{{ charge.feeTypeName }}</td>
+            <td>{{ charge.amount }}</td>
+            <td>{{ charge.amount }}</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">材料信息</div>
+    <div class="padding-box">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>材料名称</th>
+            <th>份数</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="stuffInfo">
+          <tr *ngFor="let stuff of stuffInfo">
+            <td>{{ stuff.name }}</td>
+            <td>{{ stuff.pages.length }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">文书</div>
+    <div class="padding-box">
+      <table class="padding-table" style="border: 1px solid #e9eaea">
+        <thead>
+          <tr>
+            <td style="width: 100%">文书名称</td>
+          </tr>
+        </thead>
+        <tbody *ngIf="documentInfo">
+          <tr *ngFor="let document of documentInfo; let i = index">
+            <td style="position: relative;">
+              <span class="line"></span>
+              <span class="name">{{ i+1 }}、{{ document.name }}</span>
+              <a href="javascript:;" class="link pull-right">查看</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">办理时间</div>
+    <div class="padding-box list-padding">
+      <table class="padding-table" *ngIf="projectInfo">
+        <tr>
+          <td>
+            <span style="color: #333;">登记时间:</span>
+            <span style="color: #676a6c">{{ projectInfo.createDate }}</span>
+          </td>
+          <td>
+            <span style="color: #333;">受理时间:</span>
+            <span style="color: #676a6c">{{ projectInfo.acceptDate }}</span>
+          </td>
+          <td>
+            <span style="color: #333;">受理人:</span>
+            <span style="color: #676a6c">{{ projectInfo.accepter }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color: #333;">拟稿时间:</span>
+            <span style="color: #676a6c">{{ projectInfo.draftDate }}</span>
+          </td>
+          <td>
+            <span style="color: #333;">拟稿人:</span>
+            <span style="color: #676a6c">{{ projectInfo.drafter }}</span>
+          </td>
+          <td>
+            <span style="color: #333;">审核时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color: #333;">审核人:</span>
+            <span style="color: #676a6c">胡小瑾</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">制证送达</div>
+    <div class="padding-box list-padding">
+      <table class="padding-table">
+        <tr>
+          <td>
+            <span style="color: #333;">制证时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+          <td>
+            <span style="color: #333;">制证人:</span>
+            <span style="color: #676a6c">张三</span>
+          </td>
+          <td>
+            <span style="color: #333;">翻译时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color: #333;">翻译人:</span>
+            <span style="color: #676a6c">李四</span>
+          </td>
+          <td>
+            <span style="color: #333;">装订时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+          <td>
+            <span style="color: #333;">装订人:</span>
+            <span style="color: #676a6c">胡晓瑾</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color: #333;">送达签收时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+          <td>
+            <span style="color: #333;">送达人:</span>
+            <span style="color: #676a6c">王五</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="body-wrap">
+  <div class="body-table-wrap">
+    <div class="title">归档信息</div>
+    <div class="padding-box list-padding">
+      <table class="padding-table">
+        <tr>
+          <td>
+            <span style="color: #333;">卷宗制作时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+          <td>
+            <span style="color: #333;">卷宗制作人:</span>
+            <span style="color: #676a6c">张三</span>
+          </td>
+          <td>
+            <span style="color: #333;">翻译时间:</span>
+            <span style="color: #676a6c">2018.02.09</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color: #333;">翻译人:</span>
+            <span style="color: #676a6c">李四</span>
+          </td>
+          <td>
+            <span style="color: #333;">宗号:</span>
+            <span style="color: #676a6c">F3</span>
+          </td>
+          <td>
+            <span style="color: #333;">目录号:</span>
+            <span style="color: #676a6c">049</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

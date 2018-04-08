@@ -1,0 +1,7 @@
+<div *ngIf="business" [ngSwitch]="business.renderer">
+    <dm-detail *ngSwitchCase="'com.homolo.datamodel.ui.page.renderers.DetailRenderer'" [view]="view" [entity]="entity" [type]="type" [business]="business" [config]="config"></dm-detail>
+    <dm-view *ngSwitchCase="'com.homolo.datamodel.ui.page.renderers.ViewRenderer'" [view]="view" [entity]="entity" [type]="type" [business]="business" [config]="config"></dm-view>
+    <dm-search *ngSwitchCase="'com.homolo.datamodel.ui.page.renderers.SearchRenderer'" [view]="view" [type]="type" [business]="business"></dm-search>
+    <dm-list *ngSwitchCase="'com.homolo.datamodel.ui.page.renderers.ListRenderer'" [view]="view" [type]="type" [business]="business"></dm-list>
+    <dm-select *ngSwitchCase="'com.homolo.datamodel.ui.page.renderers.SelectRenderer'" [view]="view" [type]="type" [business]="business"></dm-select>
+</div>

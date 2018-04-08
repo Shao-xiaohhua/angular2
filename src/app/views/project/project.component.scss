@@ -1,0 +1,224 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.page-heading {
+  position: relative;
+  .new {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 16px;
+    .fa {
+      display: block;
+      font-size: 24px;
+    }
+  }
+}
+
+.project-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &.project-list-wrap {
+    padding: 20px 10px 40px 10px;
+  }
+  &.sk-loading {
+    position: relative;
+    &:after {
+      content: '';
+      z-index: 20;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    > .sk-spinner {
+      display: block;
+      position: absolute;
+      top: 48%;
+      left: 0;
+      right: 0;
+      z-index: 2000;
+    }
+  }
+  > .sk-spinner {
+    display: none;
+  }
+  .project-content {
+    position: relative;
+    display: flex;
+    padding: 0 10px;
+    height: 100%;
+  }
+  .project-workspace {
+    width: 100%;
+    padding-right: 175px;
+  }
+  .project-control {
+    position: absolute;
+    right: 10px;
+    width: 150px;
+    height: 100%;
+    .btn {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      .fa {
+        display: block;
+        padding-bottom: 10px;
+        font-size: 24px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .btn-primary {
+      color: #fff;
+    }
+    .btn-primary .fa {
+      color: #fff;
+    }
+  }
+}
+.client-name {
+  span {
+    &:after {
+      content: '\3001';
+    }
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
+.project-list {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      border-bottom: 1px solid $border-color;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+.item {
+  padding: 16px 0;
+  font-size: 14px;
+  cursor: pointer;
+  .heading,
+  .info {
+    display: flex;
+    justify-content: space-between;
+  }
+  .title {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 18px;
+  }
+  .label {
+    margin-left: 8px;
+  }
+  .people {
+    display: flex;
+    a {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .info {
+    padding-top: 8px;
+  }
+}
+
+.project-wrap {
+  width: 100%;
+  .project-col {
+    padding-left: 20px;
+    font-size: 16px;
+  }
+}
+.project-title-row.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.project-row {
+  margin-top: 8px;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.1s ease;
+  &:hover {
+    transform: translateY(-1px) scale(1.01);
+  }
+  &.row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .project-col {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &.right {
+      justify-content: flex-end;
+    }
+    .col-thumr {
+      display: inline-block;
+      margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 0px 2px #fff, 1px 1px 5px rgba(0,0,0,0.8);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover;
+    }
+  }
+  .text {
+    position: relative;
+    line-height: 32px;
+    &.text-blod {
+      font-weight: bold;
+    }
+  }
+  .status {
+  }
+  .sl {
+    &:after {
+      background-color: #1ab394;
+    }
+  }
+  .sc {
+    &:after {
+      background-color: #1c84c6;
+    }
+  }
+  .cz {
+    &:after {
+      background-color: #f8bc34;
+    }
+  }
+  .zz {
+    &:after {
+      background-color: #23c6c8;
+    }
+  }
+  .project-item {
+    cursor: pointer;
+  }
+}

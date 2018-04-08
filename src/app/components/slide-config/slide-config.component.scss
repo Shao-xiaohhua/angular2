@@ -1,0 +1,35 @@
+.home-number {
+  padding: 20px 20px;
+  border-bottom: 1px solid #e7eaec;
+  .number-item {
+    color: #1ab394;
+  }
+}
+.home-matter {
+  .title {
+    padding: 12px 20px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+  }
+}
+.matter-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    &.active,
+    &:hover {
+      background-color: #1ab394;
+      color: #fff;
+    }
+  }
+}
+.matter-btn {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}

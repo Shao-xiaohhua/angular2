@@ -1,0 +1,187 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.fullscreen {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80px;
+  width: 100%;
+  height: 100%;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+  background-size: cover;
+  .foot {
+    position: absolute;
+    bottom: 40px;
+    font-size: 16px;
+    color: rgba($color: #fff, $alpha: 0.7);
+  }
+}
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .smart-logo {
+    margin-top: 80px;
+    text-align: center;
+  }
+  .desc {
+    padding-top: 80px;
+    font-weight: 300;
+    font-size: 40px;
+  }
+  .start {
+    padding-top: 40px;
+    margin: 0 auto;
+  }
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 72px;
+    border-radius: 0;
+    font-size: 32px;
+    font-weight: 300;
+  }
+}
+.register {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .smart-logo {
+    margin-bottom: 64px;
+    text-align: center;
+  }
+  .form {
+    width: 480px;
+    padding: 32px 24px;
+    border-radius: 3px;
+    border: 1px solid rgba($color: $blue, $alpha: 0.25);
+    background-color: rgba($color: #072f4b, $alpha: 0.5);
+    label {
+      margin-bottom: 12px;
+      font-size: 24px;
+      font-weight: 300;
+      color: $border-color;
+    }
+  }
+  .form-group {
+    position: relative;
+    margin-bottom: 32px;
+    .help-block {
+      position: absolute;
+      font-size: 16px;
+      .fa {
+        margin-right: 4px;
+      }
+    }
+  }
+  .form-control {
+    color: #383838;
+    border-color: transparent;
+    height: 48px;
+    font-size: 20px;
+  }
+  .submit {
+    padding-top: 8px;
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+      border-radius: 0;
+      font-size: 24px;
+      font-weight: 300;
+    }
+    .fa {
+      margin-right: 8px;
+    }
+    .help-block {
+      padding-top: 16px;
+      text-align: right;
+      font-size: 16px;
+      color: rgba($color: #fff, $alpha: 0.5);
+      cursor: pointer;
+      &:hover {
+        color: #fff;
+      }
+      .fa {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+.feedback {
+  width: 480px;
+  padding: 48px 24px;
+  border-radius: 3px;
+  border: 1px solid rgba($color: $blue, $alpha: 0.25);
+  background-color: rgba($color: #072f4b, $alpha: 0.5);
+}
+.failed {
+  text-align: center;
+  .state {
+    font-size: 64px;
+  }
+  .desc {
+    font-size: 32px;
+  }
+  .contact {
+    margin-top: 32px;
+    .help-block {
+      padding-top: 16px;
+      text-align: center;
+      font-size: 16px;
+      color: rgba($color: #fff, $alpha: 0.5);
+      cursor: pointer;
+      &:hover {
+        color: #fff;
+      }
+      .fa {
+        margin-right: 4px;
+      }
+    }
+  }
+  .btn {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 48px;
+    border-radius: 0;
+    font-size: 20px;
+    font-weight: 300;
+  }
+}
+@media (max-width: 1400px) {
+  .welcome {
+    .smart-logo img {
+      height: 228px;
+      width: auto;
+    }
+    .desc {
+      padding-top: 64px;
+    }
+  }
+  .register {
+    padding-top: 40px;
+    .smart-logo {
+      margin-bottom: 24px;
+      img {
+        height: 80px;
+        width: auto;
+      }
+    }
+  }
+  .feedback {
+    margin-top: 32px;
+  }
+}

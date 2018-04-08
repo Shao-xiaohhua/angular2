@@ -1,0 +1,93 @@
+<div class="records-form">
+  <div class="ibox">
+    <perfect-scrollbar [config]="config">
+      <div class="ibox-content">
+        <h1>登记新的事项<i class="fa fa-question-circle help-btn" tooltip="查看帮助文档"></i></h1>
+        <small>选择事项及登记申请人身份信息</small>
+        <form action="" class="m-t-lg" id="data-form">
+          <div class="form-group m-b-lg with-refresh">
+            <label class="control-label" for="start">选择事项：</label>
+            <button class="btn btn-link refresh-btn" (click)="refresh();" tooltip="刷新列表" container="body"><i class="fa fa-refresh"></i></button>
+            <!--<ngx-address [values]="customData" (onSelected)="onCustomSelected($event)" [options]="custom.options"></ngx-address> -->
+            <widget-casetype (event)="setCaseType($event)"></widget-casetype>
+          </div>
+          <div class="client-type m-b-lg" *ngFor="let list of litigantData; let i = index">
+            <div *ngIf="i === 0">
+              <h3 class="title">{{ title[i] }}：</h3>
+              <ul class="client-list">
+                <li *ngFor="let item of list; let j = index">
+                  <app-client
+                    [isProxyBtn]="true"
+                    [isConfigBtn]="true"
+                    [clientData]="item"
+                    (onRemoveClient)="removeItem(j, list)"
+                  ></app-client>
+                </li>
+                <li>
+                  <app-add-clients
+                    [title]="title[i]"
+                    [allClient]="list"
+                    (onAddLitigant)="addLitigant(i)"
+                    (onAdd)="add()"
+                    [index]="i"
+                  ></app-add-clients>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- <div class="m-b" (click)="toggle()">
+            <button class="btn btn-white">
+              展开/收起关系人
+            </button>
+          </div>
+          <div *ngIf="toggleManage">
+            <div class="client-type m-b-lg" *ngFor="let list of litigantData; let i = index">
+              <div *ngIf="i === 1">
+                <h3 class="title">{{ title[i] }}：</h3>
+                <ul class="client-list">
+                  <li *ngFor="let item of list; let j = index">
+                    <app-client
+                      [isProxyBtn]="true"
+                      [isConfigBtn]="true"
+                      [clientData]="item"
+                      (onRemoveClient)="removeItem(j, list)"
+                    ></app-client>
+                  </li>
+                  <li>
+                    <app-add-clients
+                      [title]="title[i]"
+                      [allClient]="list"
+                      (onAddLitigant)="addLitigant(i)"
+                      (onAdd)="add()"
+                      [index]="i"
+                    ></app-add-clients>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> -->
+        </form>
+        <div class="records-btn">
+           <button class="btn btn-default btn-w-m">
+            <i class="fa fa-life-ring"></i>&nbsp;&nbsp;转为咨询</button>
+          <button class="btn btn-primary btn-w-m" (click)="onSubmit()" [disabled]="disabled">
+            <i class="fa fa-pencil"></i>&nbsp;&nbsp;开始办证</button>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-4">
+            <button class="btn btn-default btn-block" disabled>
+              <i class="fa fa-life-ring"></i>&nbsp;&nbsp;转为咨询</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-default btn-block" disabled>
+              <i class="fa fa-calendar-plus-o"></i>&nbsp;&nbsp;预约</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary btn-block" (click)="onSubmit()" [disabled]="disabled">
+              <i class="fa fa-pencil"></i>&nbsp;&nbsp;开始办证</button>
+          </div>
+        </div> -->
+      </div>
+    </perfect-scrollbar>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<style>
+  :host-context(widget-zonecombo)>>>ngx-address {
+    padding: 3px 0px;
+  }
+
+  :host-context(widget-zonecombo)>>>.ngx-address-title {
+    border: none;
+    height: 100%
+  }
+
+  :host-context(widget-zonecombo)>>>.ngx-address {
+    height: 100%;
+  }
+
+  :host-context(widget-zonecombo)>>>.ngx-address-select-tab .current {
+    color: #2E82C4;
+  }
+
+  :host-context(widget-zonecombo)>>>.ngx-address-select a.current,
+  :host-context(widget-zonecombo)>>>.ngx-address-select a:hover,
+  :host-context(widget-zonecombo)>>>.ngx-address-select a:focus {
+    background-color: #2E82C4;
+    color: #fff;
+  }
+</style>
+<div [formGroup]="form" [class.has-error]="!isValid">
+  <div class="form-group">
+    <label [attr.for]="_widget.fieldName">{{_widget.label}}</label>
+    <span *ngIf="!isValid && (isDirty || isTouched)" class="control-label">&nbsp;&nbsp; 不能为空</span>
+    <ngx-address 
+      *ngIf="stan.options['data'] != null || stan.options['http'] != null"
+      (onSelected)="onSelectedZone($event)"
+      [(ngModel)]="stan.id" 
+      [formControlName]="_widget.fieldName" 
+      [id]="_widget.fieldName"
+      [options]="stan.options"
+      class="form-control" #full>
+    </ngx-address>
+  </div>
+</div>

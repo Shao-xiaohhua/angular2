@@ -1,0 +1,24 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.info {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  font-size: 16px;
+  &-label {
+    width: 100px;
+    font-weight: bold;
+  }
+  &-control {
+    width: calc(100% - 100px);
+    @include text-overflow();
+  }
+}
+.print {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+

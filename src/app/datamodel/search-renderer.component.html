@@ -1,0 +1,85 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="float-e-margins">
+                    <div class ="ibox ">
+                        <div class="ibox-title">
+                            <h5>{{business.title}} <small class="m-l-sm">{{business.description}}</small></h5>
+                            <app-ibox-toggle></app-ibox-toggle>
+                        </div>
+                        <div class="ibox-content">
+                            <div *ngIf="view.conditions.length > 0; then conditionBlock else emptyBlock"></div>
+                            <ng-template #emptyBlock>没有设置查询条件!</ng-template>
+                            <ng-template #conditionBlock>
+                                <form novalidate>
+                                    <fieldset>
+                                        <dm-widget *ngFor="let widget of widgets" [widget]="widget" [form]="form" [form]="form" class="col-sm-6"></dm-widget>
+                                    </fieldset>
+                                    <fieldset>
+                                        <button class="btn btn-default pull-right" style="margin-right: 10px;" type="button" (click)="doReset()">重置</button>
+                                        <button class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="doSearch()">查询</button>
+                                    </fieldset>
+                                </form>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <dm-operation [page]="this"></dm-operation> <!--只处理是业务的操作按钮-->
+                        <data-table #dmGrid id="dm-grid"
+                            headerTitle=""
+                            [items]="items"
+                            [header]="false"
+                            [itemCount]="total"
+                            [selectColumn]="true"
+                            [selectOnRowClick]="true"
+                            [multiSelect]="false"
+                            [limit]="pageSize"
+                            [indexColumnHeader]="'#'"
+                            (reload)="query($event)"
+                            (rowClick)="rowClick($event)"
+                            (rowDoubleClick)="rowDoubleClick($event)"
+                            [rowTooltip]="rowTooltip"
+                            [translations]="translations"
+                            >
+                            <data-table-column *ngFor="let column of view.columns"
+                                [property]="column.field"
+                                [header]="column.header"
+                                [sortable]="true"
+                                [resizable]="true"></data-table-column>
+                            <!-- <data-table-column
+                                [property]="'dateCreated'"
+                                [header]="'Date'"
+                                [sortable]="true">
+                                <ng-template #dataTableCell let-item="item">
+                                    <span>{{item.dateCreated | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                </ng-template>
+                            </data-table-column> -->
+                            <!-- <data-table-column
+                                [property]="'jobTitle'"
+                                [header]="'Job title'"
+                                [visible]="false">
+                            </data-table-column> -->
+                            <!-- <data-table-column
+                                [property]="'active'"
+                                [header]="'操作'"
+                                [width]="70"
+                                [resizable]="true">
+                                <ng-template #dataTableHeader let-item="item">
+                                    <span style="color: rgb(232, 0, 0)">操作</span>
+                                </ng-template>
+                                <ng-template #dataTableCell let-item="item">
+                                    <span style="color: grey">
+                                    <span class="glyphicon glyphicon-ok" *ngIf="item.active"></span>
+                                    <span class="glyphicon glyphicon-remove" *ngIf="!item.active" (click)="trash(item.id)" title="删除"></span>
+                                    </span>
+                                </ng-template>
+                            </data-table-column> -->
+                        </data-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+

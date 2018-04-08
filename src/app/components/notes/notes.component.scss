@@ -1,0 +1,337 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+$baroffset: 20px;
+
+.draft {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  .control {
+    width: 380px;
+    height: 100%;
+  }
+  .editor {
+    width: calc(100% - 400px);
+    height: 100%;
+  }
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2999;
+  width: 100%!important;
+  background-color: #fff;
+  transition: transform .3s;
+}
+
+.notes-title {
+  padding-right: $baroffset;
+  position: relative;
+  .btn-fullscreen {
+    position: absolute;
+    right: $baroffset;
+    top: 0px;
+    font-size: 24px;
+    color: #ddd;
+    &:hover {
+      color: $navy;
+    }
+  }
+}
+.notes-select {
+  padding-right: $baroffset
+}
+
+.notes-control {
+  position: relative;
+  padding-right: 10px;
+  padding-bottom: 35px;
+  width: 100%;
+  height: calc(100% - 96px);
+  .notes-btns {
+    position: absolute;
+    left: 0;
+    right: $baroffset;
+    bottom: 0;
+    text-align: right;
+  }
+}
+
+.notes-list {
+  margin: 0;
+  padding: 0 $baroffset 0 0;
+  list-style: none;
+  li {
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+    &:last-child {
+      margin-bottom: 10px;
+    }
+    &:before {
+      position: absolute;
+      left: 10px;
+      top: 20px;
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background-color: #cdcdcd;
+    }
+    &:last-child {
+      &:before {
+        display: none;
+      }
+    }
+    &.item-success {
+      &:hover {
+        .item-text {
+          color: $text-color;
+        }
+      }
+      .item-tip {
+        border: 1px solid $navy;
+        background-color: $navy;
+        color: #fff;
+      }
+    }
+    &:hover,
+    &.item-active {
+      .item-text {
+        color: $blue;
+      }
+      .item-tip {
+        border: 1px solid $blue;
+        background-color: $blue;
+        color: #fff;
+      }
+    }
+  }
+  .item-tip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #cdcdcd;
+    background-color: #fff;
+  }
+  .item-text {
+    padding-left: 32px;
+    line-height: 22px;
+    font-size: 16px;
+    color: $text-color;
+  }
+}
+
+.ntoes-add-box {
+  padding-right: $baroffset;
+  margin-bottom: 20px;
+  padding-left: 32px;
+  width: 100%;
+  .notes-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    height: 44px;
+    border: 2px dashed #eee;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #1c84c6;
+    cursor: pointer;
+    .fa {
+      margin: 10px;
+    }
+    &:hover {
+      border: 2px dashed #c2c2c2;
+    }
+  }
+}
+
+.edit-notes {
+  padding: 15px 20px 20px 20px;
+  margin-top: 20px;
+  width: 100%;
+  height: calc(30% - 20px);
+  overflow: hidden;
+  background-color: #fff;
+}
+.notes-container {
+  padding: 0 40px;
+  height: calc(100% - 40px);
+  overflow: hidden;
+  .notes-btn,
+  .notes-content {
+    position: relative;
+    float: left;
+    height: 100%;
+  }
+  .notes-btn {
+    position: relative;
+    padding: 0 9px;
+    font-size: 16px;
+    user-select: none;
+    cursor: pointer;
+    span {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &:hover {
+      background-color: #e7eaec;
+      color: $blue;
+    }
+  }
+  .notes-prev {
+    margin-left: -100%;
+    left: -40px;
+    width: 40px;
+    border: 1px solid #e7eaec;
+  }
+  .notes-next {
+    margin-left: -40px;
+    right: -40px;
+    width:40px;
+    border: 1px solid #e7eaec;
+  }
+  .notes-content {
+    width: 100%;
+    .content {
+      width: 100%;
+      height: 100%;
+      word-break: break-all;
+    }
+    .notes-group-box {
+      padding: 0 20px;
+    }
+    .notes-group {
+      position: relative;
+      padding: 20px 30px 10px;
+      margin-bottom: 10px;
+      border: 2px dashed #e7eaec;
+      &:first-child {
+        min-height: 100px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .notes-tip {
+      position: absolute;
+      left: -19px;
+      top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #eef0f2;
+      background-color: #fff;
+      .notes-tip-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-weight: bold;
+        color: #fff;
+        &.notes-tip-q {
+          background-color: $blue;
+        }
+        &.notes-tip-a {
+          background-color: $yellow;
+        }
+      }
+    }
+    .title,
+    .desc {
+      font-weight: bold;
+      font-size: 16px;
+      color: #383838;
+    }
+    .title {
+      margin-bottom: 5px;
+    }
+    .desc {
+      outline: none;
+      resize: none;
+      border: 0;
+      width: 100%;
+      height: auto;
+    }
+    .question {
+      color: $blue;
+    }
+  }
+}
+.edit-notes-form {
+  padding-bottom: 20px;
+  height: calc(100%);
+}
+
+.note-modal {
+  .modal-body {
+    height: 600px;
+    padding: 15px;
+  }
+}
+.qa-list {
+  margin: 0;
+  padding: 20px;
+  list-style: none;
+  li {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed $border-color;
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .item {
+    display: flex;
+    padding-bottom: 10px;
+  }
+  .item-icon {
+    flex: 30px 0 0;
+  }
+  .icon-wrap {
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    color: $text-color;
+    background-color: $border-color;
+    &.question {
+      color: #fff;
+      background-color: $blue;
+    }
+    &.answer {
+      color: #fff;
+      background-color: $yellow;
+    }
+  }
+  .item-content {
+    flex: 1;
+    line-height: 28px;
+    font-size: 18px;
+    color: #383838;
+  }
+}

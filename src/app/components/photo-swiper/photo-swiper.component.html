@@ -1,0 +1,86 @@
+<div class="photo-swiper-wrap clearfix" *ngIf="currentMatterItem">
+  <div class="swiper-head">
+    {{ currentMatterItem.name }}
+  </div>
+  <div [class.photo-swiper-container]="isAside">
+    <div class="swiper-content">
+      <div class="swiper-inside clearfix">
+        <div
+          class="swiper-img pull-left"
+          [ngStyle]="{'background-image': 'url('+ currentMatterItem.picURL +')'}"
+        ></div>
+      </div>
+      <div class="swiper-btn clearfix">
+        <a
+          *ngIf = "showPrev"
+          class="prev pull-left"
+          href="javascript:;"
+          style="background-image: url(assets/images/prev.png);"
+          (click)="prev()"
+        ></a>
+        <a
+          *ngIf = "showNext"
+          class="next pull-right"
+          href="javascript:;"
+          style="background-image: url(assets/images/next.png);"
+          (click)="next()"
+        ></a>
+      </div>
+    </div>
+    <div class="swiper-intro clearfix">
+      <div class="swiper-thum-box pull-left clearfix">
+        <div class="swiper-thum" [ngStyle]="{width: matterThumWidth + 'px', left: '-' + thumPosition + 'px'}">
+          <div
+            class="swiper-thum-item pull-left"
+            *ngFor="let item of matterList; let i = index"
+            [class.active]="currentMatterItem === item"
+            (click)="updateIndex(i)"
+          >
+            <img [src]="item.picURL" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="swiper-matter-intro pull-right">
+        <div class="text">当前材料名称：{{ currentMatterItem.name }}</div>
+        <div class="text">拍摄时间：{{ currentMatterItem.updateDate }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="photo-card-aside" *ngIf="isAside">
+    <div class="card-title">填写查证信息</div>
+    <div class="card-content">
+      <perfect-scrollbar [config]="config">
+        <div class="card-info">
+          <div class="card-form form-group">
+            <label>证件类型</label>
+            <input class="form-control" placeholder="请输入证件类型" type="text">
+          </div>
+          <div class="card-form form-group">
+            <label>姓名</label>
+            <input *ngIf="currentMatterItem.result" class="form-control" [(ngModel)]="currentMatterItem.result.xm" placeholder="请输入姓名" type="text">
+          </div>
+          <div class="card-form form-group">
+            <label>证书编号</label>
+            <input *ngIf="currentMatterItem.result" class="form-control" [(ngModel)]="currentMatterItem.result.zsbh" placeholder="请输入证书编号" type="text">
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="card-body sk-loading" *ngIf="isLoading">
+        <div class="loading">
+          <div class="sk-spinner sk-spinner-wave">
+            <div class="sk-rect1"></div>
+            <div class="sk-rect2"></div>
+            <div class="sk-rect3"></div>
+            <div class="sk-rect4"></div>
+            <div class="sk-rect5"></div>
+          </div>
+          <h4 class="loading-title">智能识别中</h4>
+        </div>
+      </div>
+    </div>
+    <button class="card-btn btn btn-default" (click)="getOcr()">
+      <i class="fa fa-carme"></i>
+      ORC智能识别（测试）
+    </button>
+  </div>
+</div>

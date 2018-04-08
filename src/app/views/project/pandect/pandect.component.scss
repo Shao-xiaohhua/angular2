@@ -1,0 +1,159 @@
+// Variables, Mixins
+@import "../../../../assets/styles/imports/variables";
+@import "../../../../assets/styles/imports/mixins";
+
+.type-name {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  .name {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+  }
+  .prompt {
+    padding-top: 21px;
+    color: #19aa8d;
+    font-size: 16px;
+  }
+}
+.head-table {
+  width: 100%;
+  height: auto;
+  margin-top: 40px;
+  .code-warp {
+    width: 160px;
+    height: auto;
+    .code {
+      width: 106px;
+      height: 108px;
+      background: red;
+    }
+  }
+  .table-wrap {
+    width: calc(100% - 160px);
+    height: auto;
+    table {
+      width: 100%;
+      height: auto;
+      font-size: 16px;
+    }
+    tr {
+      line-height: 100%;
+    }
+    td {
+      padding-bottom: 25px;
+      line-height: 100%;
+    }
+    .name {
+      color: #414141;
+    }
+    .content {
+      color: #676a6c;
+    }
+  }
+}
+.type-link {
+  width: 100%;
+  height: auto;
+  padding-top: 30px;
+  a {
+    margin-right: 100px;
+    padding-bottom: 10px;
+    display: inline-block;
+    border-bottom: 2px solid text-decoration;
+    font-size: 16px;
+    color: #999;
+    &.active {
+      color: #19aa8d;
+      border-bottom: 2px solid #19aa8d;
+    }
+  }
+}
+.body-wrap {
+  padding: 26px 12px 0 12px;
+  &:last-child {
+    padding-bottom: 65px;
+  }
+}
+.body-table-wrap {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  .padding-box {
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    &.list-padding {
+      padding: 10px 30px;
+    }
+  }
+  .title {
+    padding: 0 30px;
+    width: 100%;
+    height: 62px;
+    line-height: 62px;
+    font-size: 20px;
+    color: #383838;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  table {
+    margin-bottom: 0;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    font-size: 16px;
+    thead {
+      background: #f8f9f9;
+      color: #333;
+      tr {
+        th {
+          padding: 20px;
+        }
+      }
+    }
+    tbody {
+      color: #676a6c;
+      tr {
+        td {
+          padding: 20px;
+        }
+      }
+    }
+    th {
+      font-weight: normal;
+    }
+    td {
+      .link {
+        padding-left: 50px;
+        color: #47bba4;
+        display: inline-block;
+        background: #fff;
+      }
+      .name {
+        position: absolute;
+        padding-right: 30px;
+        display: inline-block;
+        background: #fff;
+        z-index: 10;
+      }
+      .line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 80%;
+        height: 1px;
+        border-top: 1px dashed #cccccc;
+        z-index: 1;
+      }
+    }
+  }
+  .padding-table {
+    td {
+      padding: 20px;
+    }
+  }
+}

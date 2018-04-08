@@ -1,0 +1,81 @@
+// Variables, Mixins
+@import "../../../../assets/styles/imports/variables";
+@import "../../../../assets/styles/imports/mixins";
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  height: 112px;
+}
+
+.user {
+  flex: 1;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  &-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: $border-color;
+  }
+  &-info {
+    margin-left: 15px;
+    .name {
+      font-weight: normal;
+      font-size: 20px;
+      color: #383838;
+    }
+    .title {
+      padding-top: 8px;
+      font-size: 14px;
+      color: #888;
+    }
+    .li-spacing {
+      margin: 0 4px;
+    }
+  }
+}
+.user-extra {
+  display: flex;
+  justify-content: flex-end;
+  width: 40%;
+  > div {
+    position: relative;
+    padding: 0 32px;
+    text-align: right;
+    cursor: pointer;
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      display: block;
+      height: 60%;
+      width: 1px;
+      background-color: $border-color;
+    }
+    &:last-child {
+      padding-right: 0;
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .name {
+    font-size: 14px;
+    color: #888;
+  }
+  .num {
+    padding-top: 8px;
+    font-size: 30px;
+    font-weight: normal;
+    color: #383838;
+  }
+}

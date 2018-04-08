@@ -1,0 +1,258 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.draft {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  .control {
+    width: 250px;
+  }
+  .editor {
+    width: calc(100% - 270px);
+  }
+}
+.editor-inner {
+  font-size: 16px;
+  padding: 30px;
+  .name {
+    position: relative;
+    padding: 15px 0;
+    margin: 0;
+    dt {
+      position: absolute;
+      font-weight: normal;
+      line-height: 1.8;
+    }
+    dd {
+      padding-left: 70px;
+      padding-bottom: 5px;
+      line-height: 1.8;
+    }
+  }
+  .info {
+    padding-bottom: 60px;
+    line-height: 1.8;
+    p {
+      text-indent: 40px;
+    }
+  }
+}
+
+.client-list {
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+  &.client-date {
+    li {
+      background-color: #f8f8f8;
+    }
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border: 2px solid #eee;
+    height: 44px;
+    &:hover {
+      .del {
+        color: $red;
+      }
+    }
+  }
+  .name {
+    font-size: 16px;
+    @include text-overflow();
+    .fa {
+      color: #ccc;
+    }
+  }
+  .del {
+    width: 30px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: #ccc;
+    cursor: pointer;
+  }
+}
+.add-client {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  height: 44px;
+  border: 2px dashed #eee;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: $blue;
+  cursor: pointer;
+  .fa {
+    margin: 10px;
+  }
+  &:hover {
+    border: 2px dashed #c2c2c2
+  }
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 30px;
+  color: $dark-gray;
+}
+.add-manage-wrap {
+  padding: 0 20px 20px;
+  width: 100%;
+  .title {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: #383838;
+  }
+  .client-sm {
+    width: 100px;
+    height: 120px;
+    position: relative;
+    padding: 4px;
+    margin-right: 42px;
+    margin-bottom: 20px;
+    border: 1px solid #e7eaec;
+    text-align: center;
+    background-color: #fff;
+    transition: all .18s ease-in-out;
+    .avatar-wrap {
+      position: relative;
+      z-index: 30;
+      width: 90px;
+      height: 90px;
+      .avatar {
+        width: 100%;
+        height: 100%;
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+      .checked-mask {
+        position: absolute;
+        z-index: 40;
+        top: 0;
+        left: 0;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: 48px;
+        color: #1ab394;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+    }
+    .name {
+      position: relative;
+      z-index: 20;
+      height: 24px;
+      line-height: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+    }
+    .mask {
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+    }
+  }
+}
+
+.notes-title {
+  position: relative;
+  .btn-fullscreen {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 24px;
+    color: #ddd;
+    &:hover {
+      color: $navy;
+    }
+  }
+}
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2999;
+  width: 100%!important;
+  background-color: #fff;
+  transition: transform .3s;
+}
+
+.note-inner {
+  flex: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  height: calc(100% - 44px);
+  border: 2px dashed $border-color;
+  &:focus {
+    outline: none;
+  }
+}
+.editor {
+  height: 100%;
+  .ibox,
+  .ibox-content {
+    height: 100%;
+  }
+  .ibox-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+}
+.editor-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex: 34px 0 0;
+  .slecet-temp {
+    width: 30%;
+  }
+}
+.edit-aera {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: $text-color;
+  p {
+    margin-bottom: 15px;
+  }
+  .keyword {
+    display: inline-block;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: $blue;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 16px;
+  }
+}

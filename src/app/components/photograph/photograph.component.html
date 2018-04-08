@@ -1,0 +1,109 @@
+<div class="photo-wrap clearfix">
+  <div class="aside-left" *ngIf="isMatterList && materials">
+    <div class="title" (click)="close();">材料拍摄清单 ({{materialOverCount}}/{{materials.pages.length}})</div>
+    <div class="photo-content photo-aside-left gray-bg">
+      <perfect-scrollbar [config]="config">
+        <div class="matter-photo" *ngIf="materials">
+          <div class="matter-group">
+            <div class="matter-info">{{ materials.name }}</div>
+            <div
+              class="matter-frame"
+              [class.matter-frame-active]="currentPhoto === item"
+              *ngFor="let item of materials.pages; let i = index"
+              (click)="setCurrent(i, item)">
+              <div class="matter-logo">
+                <div class="matter-del" *ngIf="item.picURL !== '' "tooltip="重拍" placement="right" container="body" (click)="deletePhoto(i, item)">
+                  <i class="fa fa-trash"></i>
+                </div>
+                <div class="logo" [ngStyle]="{'background-image': 'url('+ item.picURL +')'}"></div>
+                <div class="empty-photo" *ngIf="item.picURL == ''">
+                  <div class="name">{{ item.name }}</div>
+                  <div class="state" *ngIf="item == currentPhoto">
+                    <i class="fa fa-play-circle"></i>
+                    拍摄中
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="matter-group" (click)="addMaterial()" *ngIf="materials.canAdd">
+            <div class="matter-frame matter-add-frame">
+              <div class="matter-logo">
+                <i class="fa fa-plus"></i>
+                <div class="photo-info">新增材料页</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+  <div class="aside-left" *ngIf="isIdent && identList">
+    <div class="title">申请人核验清单 ({{identListOverCount}}/{{identList.length}})</div>
+    <div class="photo-content photo-aside-left">
+      <perfect-scrollbar [config]="config">
+        <div
+          class="ident-item clearfix"
+          *ngFor="let item of identList; let i = index"
+          [class.active]="currentIdentItem === item"
+          (click)="selectedIdent(i)"
+        >
+          <div class="ident-circle pull-left" [ngStyle]="{'background-image': 'url('+ item.photo +')'}">
+            <svg xmlns="http://www.w3.org/200/svg" height="80" width="80">
+              <circle cx="40" cy="40" r="38" fill="none" stroke="#eee" stroke-width="5" stroke-linecap="round" />
+              <circle
+                [ngStyle]="{
+                  'stroke-dasharray': 38 * 2 * 3.14 * item.percent / 100 + ',10000',
+                  'stroke': item.percent > 50 ? '#1ab394' : '#ed5565'
+                }"
+                class="inside-cir"
+                cx="40"
+                cy="40"
+                r="37"
+                fill="none"
+                stroke-width="5" />
+            </svg>
+          </div>
+          <div class="ident-info">
+            <div class="name">{{ item.name }}</div>
+            <div class="type">{{ item.role === 'Applicant' ? '申请人' : item.role === 'Agent' ? '代理人' : '关系人' }}</div>
+            <div
+              class="verify"
+              [class.verify-success]="item.active === 'success'"
+              [class.verify-error]="item.active === 'error'"
+              [class.verify-doing]="item.active === 'doing'"
+              [class.verify-wait]="item.active === 'wait'"
+            >
+              <i
+                class="fa"
+                [class.fa-check-circle]="item.active === 'success'"
+                [class.fa-times-circle]="item.active === 'error'"
+                [class.fa-play-circle]="item.active === 'doing'"
+                [class.fa-clock-o]="item.active === 'wait'"
+              ></i>
+              {{ item.active === 'success' ? '通过验证' : item.active === 'error' ? '验证失败' : '正在验证' }}
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+  <div class="aside-right" [class.aside-outside]="sceneCarme">
+    <div class="shot-title title clearfix">
+      {{ photoTitle }}
+    </div>
+    <div class="photo-content">
+      <div class="matter-photo matter-photo-padding">
+        <div class="photo-graph">
+          <object type="application/x-eloamplugin" style="width: 100%; height: 100%; background-color: #fff;" name="view" id="{{deviceId}}"></object>
+        </div>
+      </div>
+      <div class="button-photo clearfix">
+        <button class="btn btn-w-m btn-success pull-left" (click)="captureImage()">
+          <i class="fa fa-camera"></i>
+          点击拍照
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

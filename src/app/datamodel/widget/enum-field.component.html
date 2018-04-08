@@ -1,0 +1,36 @@
+<style>
+  .select2-container--inspinia .select2-results__option[aria-selected=true] {
+    background-color: #F6F7E0;
+    color: #888;
+  }
+
+  .select2-container--inspinia .select2-results__option--highlighted[aria-selected] {
+    background-color: #1ab394;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  em {
+    color: #dd4b39;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: underline;
+  }
+</style>
+<div [formGroup]="form" [class.has-error]="!isValid">
+  <div class="form-group">
+    <label [attr.for]="_widget.fieldName">{{_widget.label}}</label>
+    <span *ngIf="!isValid && (isDirty || isTouched)" class="control-label">&nbsp;&nbsp; 不能为空</span>
+    <select class="form-control">
+      <!-- <ng-container *ngFor="let option of options">
+        <option value='{{option.id}}' [disabled]="option.disabled">{{option.text}}</option>
+      </ng-container> -->
+    </select>
+    <input 
+    type="hidden"
+    [(ngModel)]="form.value[_widget.fieldName]"
+    [id]="_widget.fieldName" 
+    [formControlName]="_widget.fieldName" />
+  </div>
+</div>

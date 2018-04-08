@@ -1,0 +1,8 @@
+
+<ng-container *ngIf="page !== null">
+  <span *ngFor="let operation of operations">
+    <button [ngClass]="{'btn': true, 'btn-primary': true, 'disabled': (!page.currentSelectedRow && operation.mode === 0)}" type="button" (click)="onOpClick(operation.name)">{{operation.name}}</button>
+  </span>
+  <button *ngIf="page.viewInfo.refreshable" class="btn btn-primary" type="button" (click)="page.refresh()">刷新</button>&nbsp;&nbsp;
+  <button *ngIf="page.viewInfo.closable" class="btn btn-default" type="button" (click)="page.close()">返回</button>&nbsp;&nbsp;
+</ng-container>

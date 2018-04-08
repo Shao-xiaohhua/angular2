@@ -1,0 +1,177 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.client-type {
+  .title {
+    margin: 0;
+    font-size: 18px;
+  }
+  .list {
+    margin-left: -20px;
+    @include clearfix();
+    .client-item {
+      float: left;
+      margin: 20px 20px 0 20px;
+      width: 120px;
+      height: 150px;
+    }
+  }
+}
+
+.matter-modal {
+  margin-top: 20px;
+  .matter-modal-note {
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  .matter-modal-btn {
+    padding: 20px;
+  }
+  .matter-title {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .matter-text {
+    margin-bottom: 15px;
+    text-indent: 30px;
+    font-size: 14px;
+  }
+}
+// 申请人详情
+.team-box {
+  &:hover {
+    .team-config {
+      opacity: 1;
+    }
+    .team-item {
+      .shadow {
+        opacity: 1;
+      }
+    }
+  }
+  .team-name {
+    position: relative;
+    margin-top: 8px;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .team-config {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    transition: all .18s ease-out;
+    .btn {
+      position: relative;
+      width: 50%;
+      float: left;
+    }
+    > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    > .btn:first-child {
+      margin-left: 0;
+    }
+  }
+}
+.team-item {
+  position: relative;
+  cursor: pointer;
+  .avatar {
+    width: 100%;
+    height: 178px;
+    border-radius: 4px;
+  }
+  .shadow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 18px 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: all .18s ease-out;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    .fa {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 30px;
+    }
+  }
+}
+.add-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 178px;
+  cursor: pointer;
+  border: 1px solid #e5e5e5;
+  .fa {
+    font-size: 36px;
+    color: #e5e5e5;
+  }
+}
+.card-inp-table {
+  width: 100%;
+  background-color: #fcfcfc;
+  border: 1px solid #e7eaec;
+  td {
+    padding-left: 12px;
+    height: 38px;
+    line-height: 38px;
+    word-break: break-all;
+    border: 1px solid #e7eaec;
+    font-size: 14px;
+    color: #333;
+    &:nth-of-type(1) {
+      width: 80px;
+    }
+  }
+}
+.modal-addteam-sm {
+  padding: 0 100px;
+}
+.card-read-wrap {
+  height: 168px;
+}
+.photo-wrap {
+  margin-bottom: 30px;
+  height: 166px;
+  .upload-heading {
+    position: relative;
+    padding: 8px 10px;
+    background-color: #eee;
+    .title {
+      width: 100%;
+      padding: 2px 70px 2px 5px;
+      box-shadow: none;
+      border: none;
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #676a6c;
+    }
+  }
+}
+.register-btns {
+  margin-top: 50px;
+}
+.tab-content {
+  padding: 20px;
+}

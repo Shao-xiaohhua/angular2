@@ -1,0 +1,58 @@
+<div class="draft-diff animated fadeInUp" [style.height]="docHeight + 'px'">
+  <div class="control">
+    <perfect-scrollbar [config]="config">
+      <div class="ibox no-margins">
+        <div class="ibox-content">
+          <div class="form-group">
+            <label for="start" class="control-label">核验码</label>
+            <input class="form-control" disabled type="text" [value]="checkCode">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">事项</label>
+            <input class="form-control" disabled type="text" [value]="caseType">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">类型</label>
+            <input class="form-control" disabled type="text" [value]="type">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">公证员</label>
+            <input class="form-control" disabled type="text" [value]="notary">
+          </div>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <div class="editor">
+    <div class="ibox no-margins" style="height: 100%;">
+      <div class="ibox-content" style="height: 100%;">
+        <div style="position: relative;">
+          <h2>
+            <i class="fa fa-tasks"></i>
+            公证书
+          </h2>
+          <div class="action-bar" style="top: -5px; right: 0;">
+              <button class="btn btn-warning" (click)="print()">
+                <i class="fa fa-print"></i>&nbsp;打印文书
+              </button>
+            </div>
+        </div>
+        <div class="draft-inner">
+          <perfect-scrollbar [config]="config">
+            <div class="draft-text" contenteditable="true" [innerHTML]='content' #docDiv>
+              
+            </div>
+          </perfect-scrollbar>
+        </div>
+        <div class="text-right m-t">
+          <button class="btn btn-primary" (click)="saveDoc(true)">保存文书</button>
+          <button class="btn btn-success" (click)="calibrate()">盖章</button>
+          <button class="btn btn-default" (click)="router.navigateByUrl('/business/nbm.Case@ng-query-in-approved')">返回</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

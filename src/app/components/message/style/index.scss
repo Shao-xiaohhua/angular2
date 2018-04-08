@@ -1,0 +1,59 @@
+.ant-message {
+  font-size: 14px;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  top: 16px;
+  left: 0;
+  pointer-events: none;
+}
+
+.ant-message-notice {
+  padding: 8px;
+  text-align: center;
+  &:first-child {
+    margin-top: -8px;
+  }
+}
+
+.ant-message-notice-content {
+  padding: 8px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+  background: #fff;
+  display: inline-block;
+  pointer-events: all;
+}
+
+.ant-message-success .anticon{
+  color: #108ee9;
+}
+.ant-message-error .anticon {
+  color: #f04134;
+}
+.ant-message-warning .anticon {
+  color: #ffbf00;
+}
+.ant-message-info .anticon,
+.ant-message-loading .anticon {
+  color: #108ee9;
+}
+
+.ant-message-notice.move-up-leave.move-up-leave-active {
+  animation-name: MessageMoveOut;
+  overflow: hidden;
+  animation-duration: .3s;
+}
+
+@keyframes MessageMoveOut {
+  0% {
+    opacity: 1;
+    max-height: 150px;
+    padding: 8px;
+  }
+  100% {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+  }
+}

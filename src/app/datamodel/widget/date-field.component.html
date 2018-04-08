@@ -1,0 +1,27 @@
+<div [formGroup]="form" [class.has-error]="!isValid">
+  <div class="form-group">
+    <label [attr.for]="_widget.fieldName">{{_widget.label}}</label>
+    <span *ngIf="!isValid && (isDirty || isTouched)" class="control-label">&nbsp;&nbsp; 不能为空</span>
+    <div class="input-group date">
+      <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+      <input 
+      [id]="_widget.fieldName" 
+      [formControlName]="_widget.fieldName"
+      class="form-control"
+      [(ngModel)]="displayAs"
+      (onChange)="ngOnChanges($event)"
+      [type]="_widget.inputType"
+      [placeholder]="_widget.tip"
+      [dpDayPicker]="dpDayPickerConf" 
+      [required]="dpDayPickerConf.required" 
+      [theme]="dpDayPickerConf.theme"
+      [mode]="dpDayPickerConf.mode" #full/>
+      <!-- <input 
+      type="hidden"   
+      class="form-control" [(ngModel)]="displayAs"
+      [(value)]="form.value[_widget.fieldName]"
+      [id]="_widget.fieldName" 
+      [formControlName]="_widget.fieldName" /> -->
+    </div>
+  </div>
+</div>

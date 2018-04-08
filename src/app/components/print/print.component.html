@@ -1,0 +1,12 @@
+<div class="full-default" *ngFor="let doc of docList; let i = index">
+    <div class="split" [innerHTML]="doc">
+        
+    </div>
+    <br *ngIf="i < (docList.length-1)" style="page-break-before:always; clear:both" />
+</div>
+
+<div class="noPrint toolbar">
+<a class="button" href="javascript:window.print();void(0);"><i class="glyph-icon icon-print"></i> 开始打印</a> &emsp;	
+<a class="button" href="javascript:window.close();void(0);"><span class="glyph-icon icon-remove"></span> 关闭</a> &emsp;  &emsp; 	
+</div>
+<div style="height: 100px;" class="noPrint"></div>

@@ -1,0 +1,86 @@
+<perfect-scrollbar [config]="config" style="background-color: #fff;" class="animated fadeInUp">
+  <div class="ibox no-margins">
+    <div class="ibox-content">
+      <div>
+        <h2>
+          <i class="fa fa-tasks"></i>
+          文书管理
+          <a href="{{ helpLink }}/help/#text_250738" target="_blank">
+            <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+          </a>
+        </h2>
+      </div>
+      <div class="print">
+        <!-- <button class="btn btn-success" (click)="createDocument()"><i class="fa fa-tasks"></i> 生成文书</button> -->
+        <button class="btn btn-success" (click)="createDoc()"><i class="fa fa-tasks"></i> 一键生成文书</button>
+        <button class="btn btn-warning" (click)="printAll()"><i class="fa fa-print"></i> 打印全部文书</button>
+      </div>
+      <div class="m-t-lg">
+        <div class="data-item">
+          <ul class="data-list clearfix">
+            <li (click)="print(doc.id)" *ngFor="let doc of docs; let i = index"  title="{{doc.name}}">
+              <div class="data-inner">
+                <i class="fa fa-file-text"></i>
+              </div>
+              <div class="text">{{doc.name}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<!-- <ng-template #template> -->
+<div bsModal #innerModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content modal-addteam-content">
+      <div class="text-center">
+        <h2>公证申请表</h2>
+        <p>请仔细核对公证申请表是否与读取信息相符</p>
+      </div>
+      <div class="matter-modal">
+        <div class="matter-modal-note">
+          <div class="matter-title">公证申请书</div>
+          <div class="matter-text">
+              申请人： 王x，女，2017年9月12日出生，现住xx省xx市xx区xx路xx号
+          </div>
+          <div class="matter-text">
+              申请人： 王x，女，2017年9月12日出生，现住xx省xx市xx区xx路xx号
+          </div>
+          <div class="matter-title">申请人：王xx</div>
+          <div class="matter-title">公证申请书 公证申请书</div>
+        </div>
+        <div class="matter-modal-btn">
+          <button class="btn btn-w-m btn-primary">材料拟稿</button>
+          <button class="btn btn-w-m btn-primary m-l">材料审核</button>
+        </div>
+        <div id="vertical-timeline" class="dark-timeline" style="margin: 0 20px;">
+          <div class="vertical-timeline-block">
+            <div class="vertical-timeline-icon gray-bg">
+              <i class="fa fa-coffee"></i>
+            </div>
+            <div class="vertical-timeline-content">
+              <p>Conference on the sales results for the previous year.</p>
+              <span class="vertical-date small text-muted">2:10 pm - 12.06.2014 </span>
+            </div>
+          </div>
+          <div class="vertical-timeline-block">
+            <div class="vertical-timeline-icon gray-bg">
+              <i class="fa fa-coffee"></i>
+            </div>
+            <div class="vertical-timeline-content">
+              <p>Conference on the sales results for the previous year.</p>
+              <span class="vertical-date small text-muted">2:10 pm - 12.06.2014 </span>
+            </div>
+          </div>
+        </div>
+        <div class="matter-btns">
+          <button class="btn btn-sm btn-default m-r" (click)="innerModal.hide()">关闭</button>
+          <button class="btn btn-sm btn-primary" (click)="innerModal.hide()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->

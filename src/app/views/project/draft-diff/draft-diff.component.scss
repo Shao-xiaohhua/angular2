@@ -1,0 +1,73 @@
+// Variables, Mixins
+@import "../../../../assets/styles/imports/variables";
+@import "../../../../assets/styles/imports/mixins";
+
+.draft-diff {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  .control {
+    width: 250px;
+    background-color: #fff;
+  }
+  .editor {
+    width: calc(100% - 270px);
+    height: 100%;
+    background-color: #fff;
+  }
+}
+.draft-inner {
+  margin-top: 20px;
+  padding: 0 0 0 20px;
+  height: calc(100% - 32px - 65px);
+  border: 1px solid #eee;
+}
+.draft-text {
+  padding: 20px 20px 20px 0;
+  height: 100%;
+  outline: none;
+  font-size: 16px;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 30px;
+  color: $dark-gray;
+}
+.draft-modal-inner {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.draft-modal-left {
+  width: 50%;
+  height: 555px;
+  background-color: #fafafa;
+  border: 1px solid #eee;
+}
+.draft-modal-right {
+  margin-left: 20px;
+  width: 50%;
+  height: 555px;
+  border: 1px solid #eee;
+}
+.draft-modal-text {
+  padding: 20px;
+  height: 100%;
+  outline: none;
+  font-size: 16px;
+  textarea {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    resize: none;
+    border: 0;
+    background-color: #fafafa;
+  }
+}

@@ -1,0 +1,81 @@
+<div class="wrapper" *ngIf="reportList.length==0">
+  暂时没有IDC核验报告
+</div>
+<div class="wrapper" *ngFor="let report of reportList; let i = index">
+  <div class="report-heading" >
+    <h2 class="title">公证IDC核验报告</h2>
+    <div class="checkcode">校验码 : {{report.code}}</div>
+    <br/>
+    <div class="checkcode"><img src="{{barCode}}" width="320"></div>
+  </div>
+  <table class="table table-bordered info">
+    <tbody>
+      <tr>
+        <td class="bg-muted" width="15%">核验项目</td>
+        <td>{{report.type === 'Fingerprint'?'指纹核验':'人脸核验'}}</td>
+        <td class="bg-muted" width="15%">操作人账号</td>
+        <td>{{report.userName}}</td>
+      </tr>
+      <tr>
+        <td class="bg-muted" width="15%">操作人名称</td>
+        <td>{{report.nickName}}</td>
+        <td class="bg-muted" width="15%">核验时间</td>
+        <td>{{report.verificationDate}}</td>
+      </tr>
+      <tr>
+        <td class="bg-muted" width="15%">姓名</td>
+        <td>{{report.party}}</td>
+        <td class="bg-muted" width="15%">证件类型</td>
+        <td>{{report.idType}}</td>
+      </tr>
+      <tr>
+          <td class="bg-muted" width="15%">证件号</td>
+          <td>{{report.idNumber}}</td>
+          <td class="bg-muted" width="15%">核验结果</td>
+          <td>{{report.result === 'Failed' ?'核验失败':'核验成功'}}</td>
+        </tr>
+    </tbody>
+  </table>
+  <div class="group-title" *ngIf="report.IdCard_Positive && report.IdCard_Reverse">实拍证件照</div>
+  <div class="card" *ngIf="report.IdCard_Positive && report.IdCard_Reverse">
+    <img src="{{report.IdCard_Positive}}" alt="" width="48%">
+    <img src="{{report.IdCard_Reverse}}" alt="" width="48%">
+  </div>
+  <div class="group-title">比对结果</div>
+
+  <div class="result" *ngIf="report.type === 'Face' && report.pic && report.realPic">
+    <div class="photo">
+      <div class="thumb-wrap">
+        <div class="thumb">
+            <img src="{{report.pic }}" alt="">
+        </div>
+        <div class="desc">证件照片</div>
+      </div>
+      <div class="thumb-wrap">
+        <div class="thumb">
+            <img src="{{report.realPic }}" alt="">
+        </div>
+        <div class="desc">实拍照片</div>
+      </div>
+    </div>
+    <div class="number">
+      <div class="title">认证一致性核验结果</div>
+      <div class="output">{{report.result === 'Failed'? '认证失败':'通过认证'}}</div>
+      <div class="score">匹配度：<span>{{report.percent}}%</span></div>
+    </div>
+  </div>
+
+  <div class="result with-fingerprint" *ngIf="report.type === 'Fingerprint'" >
+      <div class="number">
+          <div class="title">认证一致性核验结果</div>
+          <div class="output">{{report.result === 'Failed'? '认证失败':'通过认证'}}</div>
+          <div class="score">匹配度：<span>{{report.percent}}%</span></div>
+        </div>
+  </div>
+  <br style="page-break-before:always; clear:both" />
+</div>
+
+<div class="noPrint toolbar">
+  <a class="button" href="javascript:window.print();void(0);"><i class="glyph-icon icon-print"></i> 开始打印</a> &emsp;	
+  <a class="button" href="javascript:window.close();void(0);"><span class="glyph-icon icon-remove"></span> 关闭</a> &emsp;  &emsp;
+</div>

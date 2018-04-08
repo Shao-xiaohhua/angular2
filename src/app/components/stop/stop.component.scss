@@ -1,0 +1,190 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.vertical-container.tasks-list {
+  width: 100%;
+  max-width: 100%;
+  .group-name {
+    margin-top: 0;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .group-slide {
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+
+.vertical-timeline-content:before {
+  display: none;
+}
+.vertical-timeline-content {
+  margin-left: 0;
+}
+
+.tasks {
+  padding: 0 20px;
+  overflow: hidden;
+  .item {
+    position: relative;
+    display: block;
+    margin-bottom: 25px;
+    color: $text-color;
+    .task-heading {
+      display: flex;
+    }
+    .task-body {
+      padding-top: 5px;
+      padding-left: 30px;
+      font-size: 16px;
+      color: #aaa;
+    }
+    .state {
+      width: 30px;
+      font-size: 24px;
+      &.completed {
+        color: $navy;
+      }
+      &.stopped {
+        color: $red;
+      }
+      &.running {
+        color: $blue;
+      }
+      &.waited {
+        color: $dark-gray;
+      }
+    }
+    .name {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 0;
+        border-bottom: 1px dashed #ddd;
+        background-color: transparent;
+      }
+    }
+    .title {
+      z-index: 10;
+      margin: 0;
+      padding-right: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      background-color: #fff;
+    }
+    .task-progress {
+      z-index: 10;
+      padding-left: 20px;
+      font-size: 18px;
+      color: $navy;
+      background-color: #fff;
+    }
+    &:hover {
+      color: $yellow;
+    }
+  }
+}
+
+.apply-tip {
+  color: $yellow;
+  font-size: 18px;
+}
+.apply-check {
+  margin-bottom: 20px;
+  input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    vertical-align: -2px;
+    outline: none;
+  }
+  span {
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+.apply-textarea {
+  padding: 10px;
+  width: 100%;
+  height: 122px;
+  border: 1px solid #eee;
+  outline: none;
+  resize: none;
+}
+.apply-content {
+  display: flex;
+  flex-direction: column;
+  .apply-title {
+    flex: 0 0 42px;
+  }
+  .apply-btns {
+    flex: 0 0 34px;
+  }
+}
+.apply-note {
+  flex: 1;
+  margin-top: 20px;
+  padding: 20px 0 20px 60px;
+  width: 100%;
+  overflow: hidden;
+  border: 2px solid #eee;
+  font-size: 16px;
+  &-box {
+    padding-right: 60px;
+    .title {
+      padding-bottom: 15px;
+    }
+    .info {
+      padding-bottom: 60px;
+      line-height: 1.8;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+  }
+}
+
+.apply-result {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .fa {
+    font-size: 72px;
+  }
+  .fa-check-circle {
+    color: $navy;
+  }
+  .fa-times-circle {
+    color: $red;
+  }
+  .fa-clock-o {
+    color: $blue;
+  }
+  .title {
+    margin-top: 25px;
+    font-weight: bold;
+    color: $text-color;
+  }
+  .desc {
+    font-size: 16px;
+    color: $text-color;
+    a {
+      margin: 0 8px;
+      color: $blue;
+      &:hover {
+        color: darken($blue, 5%);
+      }
+    }
+  }
+}

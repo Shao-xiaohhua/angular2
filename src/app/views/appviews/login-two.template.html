@@ -1,0 +1,159 @@
+<div class="eu-login">
+  <div class="eu-login-content">
+    <div class="content-bg" style="background-image: url(assets/images/login_two_bg.jpg);">
+      <div class="logo">
+        <div class="logo-box" [ngStyle]="{'background-image': 'url('+ notaryoffice.logowhite +')'}"></div>
+        <h3 class="logo-title">{{notaryoffice.name}}</h3>
+        <div class="logo-text">
+          智能办证系统
+        </div>
+      </div>
+      <div class="copy">
+        <div class="copy-text">
+          ©2018  智慧公证
+        </div>
+        <div class="copy-icon" (click)="infoModal.show();">
+          <i class="fa fa-exclamation-circle"></i>
+        </div>
+      </div>
+    </div>
+    <!-- 提示插入ukey界面 -->
+    <div class="content-config" *ngIf="step === 1">
+      <h1 class="title">登录智能办证系统</h1>
+      <div class="ukey">
+        <div class="usb" style="background-image: url(assets/images/usb.png);"></div>
+        <div class="ukey-text">请将您的 UKey 连接到一体机</div>
+      </div>
+      <div class="steps">
+        <div class="item active"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+      </div>
+    </div>
+    <!-- 读取到账号密码表单界面 -->
+    <div class="content-config" *ngIf="step === 2">
+      <div class="user-info">
+        <div class="avatar-wrap">
+          <!-- <div class="avatar" style="background-image: url(assets/images/default-male.png);"></div> -->
+          <div class="avatar" [ngStyle]="{'background-image': 'url(data:image/jpg;base64,'+ notary.portrait +')'}"></div>
+        </div>
+        <h1 class="name">欢迎您，{{notary.name}}</h1>
+      </div>
+      <div class="login-form">
+        <div class="field">
+          <div class="control has-icon">
+            <input class="form-control" type="password" placeholder="请输入登录密码" [(ngModel)]="notary.password">
+            <span class="icon is-small">
+              <i class="fa fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control has-code">
+            <input class="form-control" type="text" name="code" [(ngModel)]="notary.code" placeholder="请输入验证码">
+            <div class="vcode"><img src="{{captchaUrl}}" alt="验证码" title="验证码,点击刷新" (click)="refreshCode()" style="cursor: pointer"></div>
+          </div>
+        </div>
+        <div class="error-info" *ngIf="errorMessage">
+          <i class="fa fa-times"></i>{{errorMessage}}
+        </div>
+      </div>
+      <div class="login-action">
+        <div class="next-btn" (click)="next()">
+          <span>下一步
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </div>
+        <div class="steps">
+          <div class="item active"></div>
+          <div class="item active"></div>
+          <div class="item"></div>
+        </div>
+      </div>
+      <!-- <div class="user-cir">
+        <div class="user-pic" [ngStyle]="{'background-image': 'url(data:image/jpg;base64,'+ notary.portrait +')'}"></div>
+      </div>
+      <h1 class="title user-title">欢迎您，{{notary.name}}</h1>
+      <div class="user-form">
+        <div class="user-inp">
+          <div class="user-icon">
+            <i class="fa fa-lock"></i>
+          </div>
+          <input class="user-entry" type="password" placeholder="请输入登录密码" [(ngModel)]="notary.password">
+        </div>
+        <div class="user-inp">
+          <input class="user-entry" type="text" placeholder="请输入验证码">
+        </div>
+        <div class="user-tip" *ngIf="errorMessage">
+          <i class="fa fa-times"></i>{{errorMessage}}
+        </div>
+        <div class="next-btn" (click)="next()">
+          <span>下一步<i class="fa fa-angle-right"></i></span>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="item active"></div>
+        <div class="item active"></div>
+        <div class="item"></div>
+      </div> -->
+    </div>
+    <!-- 等待进入页面 -->
+    <div class="content-config" *ngIf="step === 3">
+      <div class="user-info">
+        <div class="avatar-wrap">
+          <div class="avatar" [ngStyle]="{'background-image': 'url(data:image/jpg;base64,'+ notary.portrait +')'}"></div>
+        </div>
+        <h1 class="name">欢迎您，{{notary.name}}</h1>
+      </div>
+      <div class="loading-box">
+        <div class="lds-ellipsis" *ngIf="recFlag">
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+        </div>
+        <div class="loding-text" *ngIf="recFlag">正在进行人脸识别认证，请稍等</div>
+        <div class="failed" *ngIf="!recFlag">
+          <div class="photo" *ngIf="recFace" [ngStyle]="{'background-image': 'url(data:image/jpg;base64,'+ recFace +')'}"></div>
+          <div class="text"><i class="fa fa-exclamation-circle"></i>认证失败，请重新识别</div>
+        </div>
+      </div>
+      <div class="login-action">
+        <div class="reset-btn" (click)="reset()" *ngIf="!recFlag">
+          <i class="fa fa-refresh"></i>重新识别
+        </div>
+        <!-- <div class="loding-text loding-error" *ngIf="!recFlag">{{recErrorMessage}}</div> -->
+        <div class="steps">
+          <div class="item active"></div>
+          <div class="item active"></div>
+          <div class="item active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹窗 -->
+<div bsModal #infoModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);">
+      <div class="info-modal">
+        设备信息查看
+        <div class="text-center m-t">
+          <button class="btn btn-sm btn-success" (click)="infoModal.hide()">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

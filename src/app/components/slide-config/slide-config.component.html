@@ -1,0 +1,66 @@
+<div class="col-lg-2 overview-layout">
+  <div class="overview-bg">
+    <perfect-scrollbar [config]="config">
+      <div class="home-number">
+        <h2>
+          <small>当前叫号：<span class="number-item">001035</span></small>
+        </h2>
+        <h2>
+          <small>排队状态：<span class="number-item">正在排队</span></small>
+        </h2>
+        <h2>
+          <small>前方人数：<span class="number-item">7人</span></small>
+        </h2>
+        <h2>
+          <small>大约等待时长：<span class="number-item">34分钟</span></small>
+        </h2>
+        <div class="row">
+          <div class="col-lg-6 text-left">
+            <button class="btn btn-warning">过号</button>
+          </div>
+          <div class="col-lg-6 text-right">
+            <button class="btn btn-primary">叫号</button>
+          </div>
+        </div>
+      </div>
+      <div class="home-matter">
+        <div class="title">
+          <i class="fa fa-list-ul"></i>
+          办理事项
+        </div>
+        <ul class="matter-list">
+          <li class="active clearfix">
+            学历公证
+            <span class="pull-right" tooltip="删除">
+              <i class="fa fa-trash"></i>
+            </span>
+          </li>
+          <li class="clearfix" (click)="loading()">
+            遗嘱公证
+            <span class="pull-right" tooltip="删除">
+              <i class="fa fa-trash"></i>
+            </span>
+          </li>
+          <li class="clearfix">
+            合同公证
+            <span class="pull-right" tooltip="删除">
+              <i class="fa fa-trash"></i>
+            </span>
+          </li>
+          <li class="clearfix">
+            驾驶公证
+            <span class="pull-right" tooltip="删除">
+              <i class="fa fa-trash"></i>
+            </span>
+          </li>
+        </ul>
+        <div class="matter-btn">
+          <a [routerLink]="'/register/all'" class="btn btn-default">
+            <i class="fa fa-arrows"></i>
+            添加新事项
+          </a>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<perfect-scrollbar [config]="config">
+  <div class="ibox" style="box-shadow: none;">
+    <div class="ibox-title">
+        <h3>公证书拟稿</h3>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-lg-3">
+          <h3 class="m-b">关键字段</h3>
+          <div class="form-group">
+            <label>申请人</label>
+            <select class="form-control" [(ngModel)]="name" (ngModelChange)="name=$event.setName()">
+              <option *ngFor="let item of manuList.name">{{ item }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>申请事项</label>
+            <input class="form-control" type="text" [(ngModel)]="manuList.tab">
+          </div>
+          <div class="form-group">
+            <label>受理时间</label>
+            <input class="form-control" type="text" [(ngModel)]="manuList.time">
+          </div>
+          <div class="form-group">
+            <label>公证员签名</label>
+            <input class="form-control" type="text" [(ngModel)]="manuList.sign">
+          </div>
+          <div class="text-center">
+            <a class="btn btn-w-m btn-primary" [routerLink]="'/starterview/task'">确认</a>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="note">
+            <h2 class="title text-center">公证申请表</h2>
+            <div class="number text-right">沪司审（0294-1）字（2017）14242号</div>
+            <div class="name">{{ name }}</div>
+            <div class="info">
+              <p>{{ manuList.tab }}现将与本公证事项有关的法律意义，法律后果和注意事项告知如下：</p>
+              <p>一、证书（执照）公证是指公证机构根据申请人的申请，依法对公证申请人持有的具有法律意义的证书（执照）的真实性与证明的活动。</p>
+              <p>二、证书（执照）公证询问笔录（适用《公证程序规则》第三十七条）</p>
+              <p>询问人：请你先阅读本处办理证书（执照）公证的告知书，如果你不能阅读或者需要解释 询问人：请问办理证书（执照）公证的原因、目的和用途？</p>
+              <p>以上笔录共 1 页，如确认审阅无误后，在下方空白处手书：经我审阅无误</p>
+            </div>
+            <div class="insc text-right">
+              <p>申请人或代理人签名</p>
+              <p>2017年9月23日</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>

@@ -1,0 +1,67 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-4">
+    <h2>概览</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="index.html">首页</a>
+      </li>
+      <li class="active">
+        <strong>全部事项</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="project-wrap project-list-wrap">
+  <div class="row project-title-row">
+    <div class="col-lg-1 project-col">事项状态</div>
+    <div class="col-lg-4 project-col">事项名称</div>
+    <div class="col-lg-2 project-col">事项案号</div>
+    <div class="col-lg-2 project-col">受理时间</div>
+    <div class="col-lg-1 project-col">公证员</div>
+    <div class="col-lg-2 project-col text-right">申请人</div>
+  </div>
+  <div class="project-list">
+    <div class="row project-row" *ngFor="let item of projectList">
+      <div class="project-item clearfix" (click)="setValue(item)">
+        <div class="col-lg-1 project-col">
+          <div class="text status">
+            {{ item.$displays.status }}
+          </div>
+        </div>
+        <div class="col-lg-4 project-col">
+          <div class="text text-blod">
+            {{ item.$displays.caseType }}(
+              <span
+                *ngFor="let client of item.properties.parties | slice:0:4; let i = index"
+              >
+                {{ client.name }}{{ i < item.properties.parties.length - 1 ? '、' : '' }}
+              </span>
+              <span *ngIf="item.properties.parties.length > 4">...</span>
+            )
+          </div>
+        </div>
+        <div class="col-lg-2 project-col">
+          <div class="text">{{ item.properties.caseNumber ? item.properties.caseNumber : '暂无案号' }}</div>
+        </div>
+        <div class="col-lg-2 project-col">
+          <div class="text">{{ item.$displays.createDate }}</div>
+        </div>
+        <div class="col-lg-1 project-col">
+          <div class="text">{{ item.$displays.notary ? item.$displays.notary : '未知' }}</div>
+        </div>
+        <div class="col-lg-2 project-col right">
+          <div
+            class="col-thumr"
+            *ngFor="let client of item.properties.parties"
+            [tooltip]="client.name"
+            [ngStyle]="{'background-image': 'url('+ (client.photoURL?client.photoURL:(client.gender ==='Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) +')'}"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <pagination [totalItems]="totalItems" [rotate]="false" previousText="上一页" nextText="下一页" firstText="&laquo;" lastText="&raquo;" [maxSize]="8" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>

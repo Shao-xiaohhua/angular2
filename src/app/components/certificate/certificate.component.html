@@ -1,0 +1,145 @@
+<div class="verify animated fadeInUp" [class.fullscreen]="isFullscreen">
+  <div class="aside">
+    <div class="aside-top">
+      <div class="ibox no-margins" style="height: 100%;">
+        <div class="ibox-content" style="height: 100%;">
+          <div class="notes-title">
+            <h2>
+              <i class="fa fa-tasks"></i>
+              材料核查（{{ materials.length }}）
+            </h2>
+            <a href="javascript:;" class="btn-fullscreen" (click)="toggleFS()">
+              <i class="fa" tooltip="全屏编辑" container="body" [class.fa-compress]="isFullscreen" [class.fa-expand]="!isFullscreen"></i>
+            </a>
+          </div>
+          <small>选择具体材料进行核实</small>
+          <div class="cerifi-photo">
+            <div class="list">
+              <perfect-scrollbar [config]="config" style="background-color:#fff;">
+                <div style="padding-right: 10px;">
+                  <div class="item"
+                    *ngFor="let material of materials; let i = index"
+                    (click)="selectedMatter(i)"
+                    [class.active]="currentMatter === material"
+                    [class.wait]="material.status === 'Doing'"
+                  >
+                    <div class="icon">
+                      <i *ngIf="material.status === 'Success'" class="fa fa-check-circle success"></i>
+                      <i *ngIf="material.status === 'Failed'" class="fa fa-times-circle failed"></i>
+                      <i *ngIf="material.status === 'Doing'" class="fa fa-question-circle-o"></i>
+                    </div>
+                    <div class="info">
+                      <h4 class="title">{{ material.name }}</h4>
+                      <div *ngIf="material.status === 'Success'" class="status success">通过核实</div>
+                      <div *ngIf="material.status === 'Failed'" class="status failed">未通过核实</div>
+                      <div *ngIf="material.status === 'Doing'" class="status">等待核实</div>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+            <div class="item-photo">
+              <div class="photo" *ngIf="currentPhoto.picURL">
+                <div class="photo-prev" title="上一页" (click)="prev()">
+                  <i class="fa fa-angle-left"></i>
+                </div>
+                <div class="active" [ngStyle]="{'background-image': 'url('+ currentPhoto.picURL +')'}"></div>
+                <div class="photo-next" title="下一页" (click)="next()">
+                  <i class="fa fa-angle-right"></i>
+                </div>
+              </div>
+              <div class="photo-none" *ngIf="!currentPhoto.picURL">
+                <i class="fa fa-picture-o"></i>
+                <div class="text">暂无{{ currentPhoto.name }}信息</div>
+              </div>
+              <div class="photo-info">
+                <div class="text">{{ currentPhoto.name }}</div>
+                <div class="time">拍摄时间: {{ currentPhoto.updateDate }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="aside-bottom">
+      <div class="ibox no-margins" style="height: 100%;">
+        <div class="ibox-content" style="height: 100%;">
+          <h4>核查日志</h4>
+          <div class="aside-notes-content">
+            <perfect-scrollbar [config]="config" style="background-color:#fff;">
+              <ul class="notes-list" *ngIf="tips">
+                <li class="clearfix"  *ngFor="let tip of tips; let i = index;"
+                   [class.active]="i === 0">
+                  <div class="notes-item">
+                    <div class="time pull-left">{{tip.properties.tip}}</div>
+                   
+                  </div>
+                </li>
+                
+              </ul>
+              <!-- <div class="notes-none">
+                <img src="assets/images/data_none.png" alt="">
+              </div> -->
+            </perfect-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <perfect-scrollbar [config]="config" style="background-color:#fff;" *ngIf="scene === 'wait'">
+      <div class="wait-sceen">
+        <div class="wait-logo" style="background-image: url(assets/images/wait.png);"></div>
+        <div class="wait-text">等待审核中</div>
+        <button class="btn btn-default m-b" (click)="redirScene('sem')">公证员自行核查</button>
+        <button class="btn btn-default m-b" disabled="disabled">外调核查</button>
+        <button class="btn btn-default m-b" disabled="disabled">提交查证中心</button>
+      </div>
+    </perfect-scrollbar>
+    <div class="sem-scene" *ngIf="scene === 'sem'">
+      <div class="sem-head">
+        <button class="btn btn-success">公证员自行核查</button>
+        <button class="btn btn-default" disabled="disabled">外调核查</button>
+        <button class="btn btn-default" disabled="disabled">提交查证中心</button>
+      </div>
+      <div class="sem-body">
+        <perfect-scrollbar [config]="config" style="background-color:#fff;">
+          <h4 style="margin: 0;">材料信息核查结果</h4>
+          <div class="sem-status">
+            <div class="status green" (click)="semSuccess()" [class.active]="currentResult.text === '通过检查'">
+              <i class="fa fa-check-circle"></i>
+              <div class="text">通过检查</div>
+            </div>
+            <div class="status red" (click)="semError()" [class.active]="currentResult.text === '未通过核查'">
+              <i class="fa fa-times-circle"></i>
+              <div class="text">未通过核查</div>
+            </div>
+          </div>
+          <textarea class="sem-textarea" name="note" placeholder="备注：请填写备注内容" [(ngModel)]="note"></textarea>
+          <div class="text-right">
+            <button class="btn btn-primary m-t" (click)="redirScene('semResult')">提交核查结果</button>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <div class="sem-scene" *ngIf="scene === 'semResult'">
+      <div class="sem-head">
+        <button class="btn btn-success">公证员自行核查</button>
+        <button class="btn btn-default" disabled="disabled">外调核查</button>
+        <button class="btn btn-default" disabled="disabled">提交查证中心</button>
+      </div>
+      <div class="sem-body">
+        <perfect-scrollbar [config]="config" style="background-color:#fff;">
+          <h4 style="margin: 0;">材料信息核查结果</h4>
+          <div class="sem-result">
+            <i class="fa" [ngClass]="currentResult.icon"></i>
+            <div class="text">{{ currentPhoto.name }}{{ currentResult.text }}</div>
+            <div class="sem-result-remark">
+              备注：经过公证员自行核查对成绩单照片和附件进行核查成绩真实。
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>

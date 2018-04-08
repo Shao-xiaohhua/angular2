@@ -1,0 +1,123 @@
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  background-color: #fff;
+}
+.login-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  &.cell-bg {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  &.cell-box {
+    flex: 0 0 33.3333%;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-logo {
+    margin-top: 20%;
+    align-self: center;
+    width: 304px;
+    height: 238px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  .login-copy {
+    position: absolute;
+    bottom: 0;
+    align-self: center;
+    margin-bottom: 5%;
+    font-size: 14px;
+    color: #fff;
+    span {
+      margin-left: 10px;
+    }
+  }
+}
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  .logo {
+    width: 80px;
+    height: 84px;
+    background-size: cover;
+  }
+}
+.login-title {
+  margin-top: 10px;
+  text-align: center;
+  h2 {
+    font-weight: bold;
+  }
+}
+.login-cell-form {
+  width: 100%;
+  .inp-box {
+    display: flex;
+    margin-top: 22px;
+    border-bottom: 1px solid #eee;
+    .fa {
+      padding: 14px 0;
+      flex: 0 0 16px;
+      font-size: 16px;
+      color: #60cab5;
+      &.fa-unlock-alt {
+        padding: 12px 0;
+        font-size: 18px;
+      }
+    }
+    .inp-text {
+      flex: 1;
+      padding: 0 10px;
+      margin-left: 15px;
+      border: 0;
+      outline: none;
+      height: 44px;
+      line-height: 44px;
+      font-size: 16px;
+      &::-webkit-input-placeholder {
+        color: #999;
+      }
+      &:-moz-placeholder {
+        color: #999;
+      }
+      &::-moz-placeholder {
+        color: #999;
+      }
+      &:-ms-input-placeholder {
+        color: #999;
+      }
+    }
+  }
+  .inp-error {
+    display: flex;
+    margin-top: 8px;
+    .fa {
+      flex: 0 0 14px;
+      font-size: 18px;
+      color: #ed5565;
+    }
+    .error-text {
+      flex: 1;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #ed5565;
+    }
+  }
+  .inp-checkbox {
+    margin: 0 0 26px;
+  }
+}
+
+.checkbox.checkbox-primary input[type="checkbox"]:checked + label::before {
+  background-color: #1ab394;
+  border-color: #1ab394;
+}

@@ -1,0 +1,30 @@
+<perfect-scrollbar [config]="config" style="background-color: #fff;">
+  <div class="ibox">
+    <div class="ibox-content" *ngIf="dragPerson">
+      <h2>申请人管理</h2>
+      <small>拖动头像即可更换申请人角色</small>
+      <div class="client-type m-t-lg" *ngFor="let list of dragPerson.lists; let i = index">
+        <h3 class="title">{{ dragPerson.selectTitle[i] }}</h3>
+        <div class="list"
+          [dndList]="{disabled: false, effectAllowed: 'move', allowedTypes:['item']}"
+          [dndModel]="list"
+        >
+          <div class="client-item"
+            *ngFor="let item of list; let j = index"
+            [dndType]="'item'"
+            [dndDraggable]="{draggable: true, effectAllowed: 'move'}"
+            [dndObject]="item"
+            (dndMoved)="removeMovedItem(j, list)"
+            (dndSelected)="log('selected')"
+            [class.selected]="dragPerson.selected === item"
+          >
+            <app-client [clientData]="item" [isProxyBtn]="true" [isConfigBtn]="true" (onRemoveClient)="deletePersonInfo(list, j)"></app-client>
+          </div>
+          <div class="client-item">
+            <app-add-clients [title]="dragPerson.selectTitle[i]" (onAddLitigant)="addLitigant(i)" (onAdd)="add()" [index]="i"></app-add-clients>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>

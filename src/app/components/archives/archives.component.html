@@ -1,0 +1,245 @@
+<div class="ibox no-margins preview">
+  <div class="ibox-content">
+    <h2>
+      <i class="fa fa-tasks"></i>
+      电子卷宗
+      <a href="javascript:;" target="_blank">
+        <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+      </a>
+    </h2>
+    <div class="file-wrap">
+      <perfect-scrollbar [config]="config">
+        <div *ngIf="index === 0">
+          <img class="file-code" src="{{ barCode }}" alt="">
+          <div class="file-explain">
+            <div>案卷</div>
+            <div>性质</div>
+          </div>
+          <div class="file-box">
+            <div class="file-title">
+              <h1>上海市东方公证处</h1>
+              <h2>公证卷宗</h2>
+            </div>
+            <table class="file-table">
+              <tbody>
+                <tr>
+                  <td colspan="3">（ 2017 ）沪东证 外 字</td>
+                </tr>
+                <tr>
+                  <td style="width: 20%">证号</td>
+                  <td style="width: 30%">案由</td>
+                  <td style="width: 50%">当事人</td>
+                </tr>
+                <tr class="td-content">
+                  <td>48646</td>
+                  <td>毕业证书</td>
+                  <td>杨晅冰</td>
+                </tr>
+                <tr class="td-content">
+                  <td>48647</td>
+                  <td>复印本与原本相符（大学成绩单）</td>
+                  <td>杨晅冰</td>
+                </tr>
+                <tr class="td-content">
+                  <td>48648</td>
+                  <td>复印本与原本相符（研究生成绩单）</td>
+                  <td>杨晅冰</td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="td-content">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="file-table">
+              <tr>
+                <td>收案日期</td>
+                <td>
+                  <input class="file-inp" type="text"> 年 <input class="file-inp" type="text"> 月 <input class="file-inp" type="text"> 日
+                </td>
+                <td>承办人</td>
+                <td><input value="陈斌" class="file-inp" type="text"></td>
+              </tr>
+              <tr>
+                <td>结案日期</td>
+                <td>
+                  <input class="file-inp" type="text"> 年 <input class="file-inp" type="text"> 月 <input class="file-inp" type="text"> 日
+                </td>
+                <td>保管期限</td>
+                <td>短期</td>
+              </tr>
+              <tr>
+                <td>归档日期</td>
+                <td>
+                  <input class="file-inp" type="text"> 年 <input class="file-inp" type="text"> 月 <input class="file-inp" type="text"> 日
+                </td>
+                <td>卷内页数</td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+          <div class="file-number">
+            <table class="file-number-table pull-left">
+              <thead>
+                <tr>
+                  <th>全宗号</th>
+                  <th>目录号</th>
+                  <th>案卷号</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>F3</td>
+                  <td>049</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="file-number-text pull-right">
+              档案室号：<input type="text">
+            </div>
+          </div>
+        </div>
+        <div *ngIf="index === 1">
+          <div class="catalog-text">SHN-4-02 6.33</div>
+          <h1 class="catalog-title text-center">卷内目录</h1>
+          <table class="catalog-table">
+            <thead>
+              <tr>
+                <th>文件名称</th>
+                <th>所在页号</th>
+                <th>备注</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a href="javascript:;" (click)="goto(2)">公证书正文，签发稿，译文，译文底稿</a>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="catalog-col">
+                <td colspan="3">
+                  备考：
+                  <span class="catalog-col-text">
+                    主卷见( <input type="text"> )沪东证<input type="text">字<input type="text">号卷
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="catalog-date catalog-table">
+            <tbody>
+              <tr>
+                <td class="clearfix" width="50%">
+                  <div class="pull-left">立卷人：</div>
+                  <div class="pull-right">
+                    <input type="text">年<input type="text">月<input type="text">日
+                  </div>
+                </td>
+                <td class="clearfix" width="50%">
+                  <div class="pull-left">检查人：</div>
+                  <div class="pull-right">
+                    <input type="text">年<input type="text">月<input type="text">日
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="file-copyright text-right m-t">2010版本</div>
+        </div>
+        <div *ngIf="index === 2">
+          <ng-container *ngIf="noteContent">
+            <div class="tips" [innerHTML]="noteContent"></div>
+          </ng-container>
+        </div>
+      </perfect-scrollbar>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="prevPage()" *ngIf="index !== 0">上一页</button>
+      <button class="btn btn-primary" (click)="nextPage()" *ngIf="index < 2">下一页</button>
+    </div>
+    <div class="action-bar">
+      <a class="btn btn-warning m-r-sm">
+        <i class="fa fa-print"></i>&nbsp;打印卷宗
+      </a>
+    </div>
+  </div>
+</div>

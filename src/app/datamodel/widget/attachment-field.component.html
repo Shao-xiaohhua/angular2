@@ -1,0 +1,70 @@
+<style>
+  .file-upload>.file-upload-data {
+    display: inline-block;
+  }
+
+  .file-upload>.file-upload-data>.btn-group {
+    margin-right: 5px;
+  }
+
+  .file-upload .file-ui-knob {
+    display: inline-block;
+    width: 37px;
+    height: 34px;
+    text-align: center;
+    padding-top: 4px;
+    border-top: 1px solid #e7eaec;
+    border-right: 1px solid #e7eaec;
+    border-bottom: 1px solid #e7eaec;
+  }
+
+  .file-upload .file-ui-knob .sk-spinner-fading-circle .sk-circle:before {
+    background-color: #1c84c6;
+  }
+</style>
+<div [formGroup]="form" [class.has-error]="!isValid">
+  <div class="form-group">
+    <label [attr.for]="widget.fieldName">{{widget.label}}</label>
+    <!-- <input [type]="widget.inputType" [(ngModel)]="form.value[widget.fieldName]" [formControlName]="widget.fieldName" [id]="widget.fieldName" [placeholder]="widget.tip"
+      class="form-control"> -->
+    <span *ngIf="!isValid && (isDirty || isTouched)" class="control-label">&nbsp;&nbsp; 不能为空</span>
+    <div class='file-upload'>
+      <div class='file-upload-data'>
+        <div class="btn-group" *ngFor="let file of files; let i = index ">
+          <a [title]="'下载:' + file.fileName" [href]="getDownloadUrl(file)" class="btn btn-default" type="button">
+            <!-- btn-outline btn-danger -->
+            {{file.fileName}}&nbsp;&nbsp;
+          </a>
+          <div *ngIf="file.isSuccess == false" class="file-ui-knob">
+            <div class="sk-spinner sk-spinner-fading-circle">
+              <div class="sk-circle1 sk-circle"></div>
+              <div class="sk-circle2 sk-circle"></div>
+              <div class="sk-circle3 sk-circle"></div>
+              <div class="sk-circle4 sk-circle"></div>
+              <div class="sk-circle5 sk-circle"></div>
+              <div class="sk-circle6 sk-circle"></div>
+              <div class="sk-circle7 sk-circle"></div>
+              <div class="sk-circle8 sk-circle"></div>
+              <div class="sk-circle9 sk-circle"></div>
+              <div class="sk-circle10 sk-circle"></div>
+              <div class="sk-circle11 sk-circle"></div>
+              <div class="sk-circle12 sk-circle"></div>
+            </div>
+          </div>
+          <button *ngIf="file.isSuccess == true" type="button" class="btn btn-white" (click)="removeFile($event, file)">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-success" type="button" (click)="onClickUpload($event)">
+        <i class="fa fa-upload"></i>&nbsp;&nbsp;
+        <span class="bold" [innerHTML]="getUploadBtnName"></span>
+      </button>
+      <div class='hidden'>
+        <input class='file-input' type="file" ng2FileSelect [multiple]="widget.array ? 'multiple' : ''" [uploader]="uploader" (change)="selectedFileOnChanged($event)"
+        />
+        <input [(ngModel)]="form.value[widget.fieldName]" [formControlName]="widget.fieldName" [id]="widget.fieldName" />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+// Variables, Mixins
+@import "../../../../assets/styles/imports/variables";
+@import "../../../../assets/styles/imports/mixins";
+
+.costs-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  overflow: auto;
+  li {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+    float: left;
+    height: 36px;
+    line-height: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #585858;
+    &:hover,
+    &.active {
+      border: 1px solid $navy;
+      color: #fff;
+      background-color: $navy;
+    }
+  }
+}
+
+.consts-inp {
+  margin: 0 0 15px;
+}

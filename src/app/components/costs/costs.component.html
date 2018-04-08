@@ -1,0 +1,291 @@
+<perfect-scrollbar [config]="config" class="animated fadeInUp">
+  <div class="ibox animated fadeInDown" *ngIf="charge && charge.status === 'PaySuccess'">
+    <div class="ibox-content">
+      <div class="row m-t-lg m-b">
+        <div class="col-md-6">
+          <div class="pay-state">
+            <i class="fa fa-check-circle success"></i>
+            <!-- <i class="fa fa-times-circle text-danger"></i> -->
+            <div class="state-info">
+              <h3 class="title">订单支付成功</h3>
+              <div class="num">单号:{{charge.no}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 text-right">
+          <!-- <div class="invoice-state" *ngIf="!isInvoice">
+            <h3 class="wait text-muted">
+              <i class="fa fa-info m-r-xs"></i>待开票</h3>
+            <button (click)="invoiceModalShow()" class="btn btn-success btn-sm">
+              <i class="fa fa-print m-r-xs"></i>开具发票</button>
+          </div>
+          <div class="invoice-state" *ngIf="isInvoice">
+            <h3 class="title text-muted">发票编号:<span class="text-success">031001600211</span></h3>
+            <div class="date">开票日期:<span>2018年1月26日</span></div>
+          </div> -->
+        </div>
+      </div>
+      <div class="pay-info">
+        <div class="row m-b-lg">
+          <div class="col-md-4">
+            <div class="item">
+              <label for="">创建时间：</label>
+              <span>{{ charge.createTime | date:'medium'}}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="item">
+              <label for="">支付时间：</label>
+              <span>{{ charge.payTime | date:'medium'}}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="item">
+              <label for="">流水号：</label>
+              <span>{{charge.no}}</span>
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="item">
+              <label for="">付款人：</label>
+              <span></span>
+            </div>
+          </div> -->
+          <div class="col-md-4">
+            <div class="item">
+              <label for="">支付方式：</label>
+              <span>{{charge.payTypeName}}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="item">
+              <label for="">收款金额：</label>
+              <span>{{charge.rAmount | currency:'CNY':'code'}}</span>
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="item">
+              <label for="">付款帐户：</label>
+              <span></span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ibox no-margins">
+    <div class="ibox-content" *ngIf="charge">
+      <div>
+        <h2>
+          <i class="fa fa-tasks"></i>
+          费用明细
+          <a href="{{ helpLink }}/help/#text_250739" target="_blank">
+            <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+          </a>
+        </h2>
+      </div>
+      <div class="print">
+        <button class="btn btn-warning" (click)="createDocument()"><i class="fa fa-print"></i> 打印收费确认单</button>
+      </div>
+      <div class="table-responsive m-t">
+        <table class="table invoice-list">
+          <thead>
+            <tr>
+              <th width="40%">收费项目</th>
+              <th class="text-center" width="15%">数量</th>
+              <th class="text-center" width="15%">单价</th>
+              <th class="text-center" width="15%">金额</th>
+              <th class="text-center" width="15%">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of charge.details, let i = index">
+              <td>
+                <div>
+                  {{ item.name }}
+                </div>
+              </td>
+              <td class="text-center">
+                <div *ngIf="item.isChargeNum && item.edit">
+                    <div class="input-group bootstrap-touchspin">
+                      <span class="input-group-btn" (click)="reduceOne(item)">
+                        <button class="btn btn-white bootstrap-touchspin-down">-</button>
+                      </span>
+                      <input type="text" class="form-control can-edit count touchspin1" [(ngModel)]="item.num" (input)="calcTotalMoney()">
+                      <span class="input-group-btn" (click)="addOne(item)">
+                        <button class="btn btn-white bootstrap-touchspin-up">+</button>
+                      </span>
+                    </div>
+                </div>
+                <div *ngIf="!item.isChargeNum || !item.edit">
+                  {{item.num }} {{ item.unit}}
+                </div>
+              </td>
+              <td class="text-center">
+                  <div class="unit" *ngIf="!item.edit">
+                    {{item.amount  | currency:'CNY':'code'}}
+                  </div>
+                  <div class="change" *ngIf="item.edit">
+                    <input type="text" class="form-control can-edit" [(ngModel)]="item.amount" (input)="calcTotalMoney()">
+                  </div>
+              </td>
+              <td class="text-center">
+                  {{item.amount * item.num | currency:'CNY':'code'}}
+              </td>
+              <td class="text-center clearfix">
+                <div *ngIf="(charge.status === 'Register' || charge.status === 'Submit')">
+                  <div class="config-edit" (click)="editPrice(i)" *ngIf="!item.edit">
+                    编辑
+                  </div>
+                  <div class="config-action" *ngIf="item.edit">
+                    <span (click)="editPrice(i)">保存</span>
+                    <span (click)="cancelPrice(i)">取消</span>
+                  </div>
+                  <div class="trash" [class.active]="!item.isNecessity">
+                    <i class="fa fa-trash" (click)="deleteCharge(item, i)"></i>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="(charge.status === 'Register' || charge.status === 'Submit')" class="invoice-add" (click)="addCharge(); changeCostModal.show()">&#43; 添加</div>
+      </div>
+      <div class="invoice-total">
+        <div class="item">
+          <div class="text-right">总计</div>
+          <div>{{totalMoney | currency:'CNY':'code'}}</div>
+        </div>
+        <div class="item">
+          <div class="text-right">折扣</div>
+          <div>{{charge.discount | currency:'CNY':'code'}}</div>
+        </div>
+        <div class="item total">
+          <div class="text-right">应收</div>
+          <div>{{totalMoney - charge.discount | currency:'CNY':'code'}}</div>
+        </div>
+      </div>
+      <div class="text-right" *ngIf="charge.status === 'Register'">
+        <button (click)="updateOrder()" class="btn btn-success pay"><div class="fa fa-cny"></div>提交费用</button>
+      </div>
+      <div class="text-right" *ngIf="charge.status === 'Submit'">
+        <button (click)="submitOrder()" class="btn btn-success pay"><div class="fa fa-cny"></div>费用单确认</button>
+      </div>
+      <div class="text-right" *ngIf="charge.status === 'PayPending'">
+          <button (click)="reWriteOrder()" class="btn btn-default pay">取消</button>
+          <button (click)="pay()" class="btn btn-default pay"><div class="fa fa-cny"></div>等待支付</button>
+      </div>
+      <div class="text-right" *ngIf="charge.status === 'Cancel'">
+          <button class="btn btn-default pay">已取消</button>
+      </div>
+    </div>
+  </div>
+</perfect-scrollbar>
+
+<!-- invoice form -->
+<div bsModal #invoiceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" style="width: 720px;">
+    <div class="modal-content animated flipInY">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" (click)="invoiceModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="title">填写开票信息</h3>
+        <p>请仔细核对开票信息是否一致</p>
+      </div>
+      <div class="modal-body" *ngIf="charge">
+        <fieldset class="form-horizontal invoice-form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">抬头类型:</label>
+            <div class="col-sm-10">
+              <div class="checkbox-wrap">
+                <label class="checkbox-inline">
+                  <input type="radio" [(ngModel)]="invoiceType" value="public" name="type">企业</label>
+                <label class="checkbox-inline">
+                  <input type="radio" [(ngModel)]="invoiceType" value="private" name="type">个人/非企业单位</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">发票抬头:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="payeeInfo.name" placeholder="填写发票抬头">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="invoiceType == 'public'">
+            <label class="col-sm-2 control-label">税号:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="填写纳税人识别号">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="invoiceType == 'public'">
+            <label class="col-sm-2 control-label">单位地址:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="填写单位地址(非必填)">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="invoiceType == 'public'">
+            <label class="col-sm-2 control-label">单位电话号码:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="填写单位电话号码(非必填)">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="invoiceType == 'public'">
+            <label class="col-sm-2 control-label">开户银行:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="填写开户行和帐号(非必填)">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="invoiceType == 'public'">
+            <label class="col-sm-2 control-label">银行账户:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="填写开户行和帐号(非必填)">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">发票金额:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" value="{{charge.rAmount | currency:'CNY':'code'}}" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">手机号码:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="payeeInfo.mobile" placeholder="填写接受电子发票的手机号码(重要)">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">电子邮箱:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="payeeInfo.email" placeholder="填写接受电子发票的电子邮箱(非必填)">
+            </div>
+          </div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label">备注:</label>
+          <div class="col-sm-10">
+            <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="填写开户行和帐号(非必填)"></textarea>
+          </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" (click)="invoiceModal.hide()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="submit()">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #changeCostModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0;">
+        <h3>添加收费科目</h3>
+        <div class="close" (click)="changeCostModal.hide()">&times;</div>
+      </div>
+      <div class="modal-body" style="padding: 0 15px 15px;">
+        <app-costs-list [costList]="costList" (onConfirm)="confirm($event)"></app-costs-list>
+      </div>
+    </div>
+  </div>
+</div>

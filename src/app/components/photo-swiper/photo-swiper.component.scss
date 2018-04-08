@@ -1,0 +1,172 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+
+.photo-swiper-wrap {
+  padding: 0 20px 20px;
+  width: 100%;
+  border-radius: 6px;
+  .swiper-head {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: #383838;
+  }
+  .photo-swiper-container {
+    width: 660px;
+    float: left;
+  }
+  .swiper-content {
+    position: relative;
+    width: 100%;
+    height: 495px;
+    overflow: hidden;
+  }
+  .swiper-inside {
+    position: absolute;
+    left: 0%;
+    top: 0;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+    .swiper-img {
+      width: 50%;
+      height: 100%;
+      background-color: #eee;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+    }
+  }
+  .swiper-btn {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    width: 100%;
+    height: 100px;
+    margin-top: -50px;
+    .prev,
+    .next {
+      width: 60px;
+      height: 100px;
+      text-align: center;
+      cursor: pointer;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-color: rgba(0, 0, 0, .6);
+      color: #fff;
+      &:hover {
+        background-color: rgba(0, 0, 0, .8);
+      }
+    }
+  }
+  .swiper-intro {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .swiper-thum-box {
+    position: relative;
+    width: 370px;
+    height: 50px;
+    overflow: hidden;
+  }
+  .swiper-thum {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 142px;
+    height: 100%;
+  }
+  .swiper-thum-item {
+    margin-left: 10px;
+    width: 66px;
+    height: 46px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    &:first-child {
+      margin-left: 0;
+    }
+    &.active {
+      border: 2px solid $blue;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .swiper-matter-intro {
+    text-align: right;
+    font-size: 16px;
+    color: $text-color;
+  }
+}
+
+.photo-card-aside {
+  float: right;
+  width: 220px;
+  .card-title {
+    font-weight: bold;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    color: $text-color;
+    background-color: #eee;
+  }
+  .card-content {
+    position: relative;
+    height: 408px;
+    border: 2px dashed #eee;
+    border-top: 0;
+  }
+  .card-info {
+    padding: 0 10px 10px;
+  }
+  .card-form {
+    margin-top: 20px;
+  }
+  .card-btn {
+    margin-top: 15px;
+    width: 100%;
+  }
+  .card-body {
+    width: 100%;
+    height: 100%;
+    &.sk-loading {
+      position: absolute;
+      left: 0;
+      top: 0;
+      &:after {
+        content: '';
+        background-color: rgba(255, 255, 255, 0.9);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      > .loading {
+        display: block;
+        position: absolute;
+        top: 30%;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        text-align: center;
+      }
+      .loading-title {
+        padding-top: 10px;
+        font-weight: 700;
+        font-size: 18px;
+        color: $navy;
+      }
+    }
+    > .loading {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,338 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.material {
+  display: flex;
+  .aside {
+    width: 250px;
+    margin-right: 20px;
+  }
+  .menu {
+    padding: 5px;
+    background-color: #eee;
+  }
+  .menu-heading {
+    padding: 5px 10px;
+    line-height: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .menu-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin-top: 5px;
+      cursor: pointer;
+    }
+  }
+  .item {
+    padding: 0 5px;
+    font-size: 16px;
+    @include text-overflow();
+    color: $text-color;
+    background-color: #fff;
+    .fa {
+      display: inline-block;
+      margin-right: 4px;
+    }
+    &.completed {
+      color: $navy;
+    }
+    &.active {
+      color: #fff;
+      background-color: $lazur;
+    }
+  }
+  .icon-left {
+    margin-top: 10px;
+    .fa {
+      font-size: 36px;
+    }
+  }
+  .material-text {
+    margin-left: 5px;
+    margin-top: 10px;
+    width: 182px;
+    h3 {
+      margin: 0;
+      height: 20px;
+      @include text-overflow();
+    }
+  }
+  &-content {
+    width: calc(100% - 270px);
+  }
+  &-list {
+    margin: 0 0 0 -20px;
+    padding: 0;
+    list-style: none;
+    display: none;
+    @include clearfix();
+    &.active {
+      display: block;
+    }
+    li {
+      float: left;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      width: 180px;
+      height: 170px;
+    }
+    .nodata {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      float: none;
+      width: calc(100% - 20px);
+      height: 400px;
+      margin-left: 20px;
+      border: 2px dashed #eee;
+      color: $blue;
+      cursor: pointer;
+      &:hover {
+        border-color: $dark-gray;
+      }
+      .fa {
+        font-size: 28px;
+      }
+      .text {
+        padding-top: 4px;
+        font-size: 18px;
+      }
+    }
+  }
+  .add-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed #eee;
+    color: $blue;
+    cursor: pointer;
+    &:hover {
+      border-color: $dark-gray;
+    }
+    .fa {
+      font-size: 28px;
+    }
+    .text {
+      padding-top: 4px;
+      font-size: 18px;
+    }
+  }
+}
+.material-item {
+  overflow: hidden;
+  position: relative;
+  padding: 10px 10px 0;
+  border: 1px solid #ddd;
+  &:hover {
+    border-color: $dark-gray;
+    .action {
+      transform: translateX(0);
+    }
+  }
+  .del-text {
+    color: #aaa;
+    font-size: 14px;
+  }
+  .thumb {
+    width: 100%;
+    height: 120px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
+  .upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #eee;
+    color: $blue;
+    &:hover {
+      border-color: $dark-gray;
+    }
+    .fa {
+      font-size: 26px;
+    }
+    .text {
+      padding-top: 4px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+  .name {
+    margin: 7px 0;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 16px;
+    @include text-overflow();
+  }
+  .edit {
+    position: relative;
+    .form-control {
+      padding-left: 5px;
+      padding-right: 30px;
+      height: 25px;
+      border: none;
+      font-size: 16px;
+      @include text-overflow();
+      background-color: #f5f5f5;
+      &[readonly] {
+        background-color: #fff;
+      }
+    }
+    .edit-btn {
+      position: absolute;
+      right: 0;
+    }
+    .cancel-btn {
+      position: absolute;
+      right: 0;
+      font-size: 14px;
+      line-height: 25px;
+      color: #aaa;
+      cursor: pointer;
+      &:hover {
+        color: $text-color;
+      }
+    }
+    .fa {
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      color: #aaa;
+      cursor: pointer;
+      &:hover {
+        color: $text-color;
+      }
+    }
+  }
+  .action {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    transform: translateX(-30px);
+    transition: all .18s ease-in-out;
+    > a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      color: #fff;
+    }
+    .remake {
+      background-color: $yellow;
+    }
+    .del {
+      line-height: 100%;
+      font-size: 26px;
+      background-color: $red;
+    }
+  }
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 30px;
+  color: $dark-gray;
+}
+.photo-btn {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 240px;
+  height: 40px;
+  font-size: 16px;
+  color: $navy;
+  .fa {
+    margin-right: 3px;
+    font-size: 18px;
+  }
+  &:hover {
+    border-color: $navy;
+    color: #fff;
+    background-color: $navy;
+  }
+}
+
+.add-material {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  height: 44px;
+  border: 2px dashed #eee;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: $blue;
+  cursor: pointer;
+  .fa {
+    margin: 10px;
+  }
+  &:hover {
+    border: 2px dashed #c2c2c2;
+  }
+}
+
+.material-title {
+  position: relative;
+  outline: none;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  background-color: #fff;
+  font-size: 18px;
+  color: #676a6c;
+  font-weight: bold;
+  &.material-title-edit {
+    background-color: #f5f5f5;
+  }
+  &:hover {
+    .fa-trash-o {
+      display: inline-block;
+    }
+  }
+  .fa {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .fa-trash-o {
+    display: none;
+  }
+  .cancel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 0 5px;
+    height: 32px;
+    line-height: 32px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    color: #aaa;
+  }
+}

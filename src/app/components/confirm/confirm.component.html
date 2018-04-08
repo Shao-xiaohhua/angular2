@@ -1,0 +1,129 @@
+<div class="draft">
+  <div class="control">
+    <perfect-scrollbar [config]="config" style="background-color:#fff;">
+      <div class="ibox no-margins">
+        <div class="ibox-content">
+          <h2>
+            <i class="fa fa-tasks"></i>
+            文书制证
+            <a href="{{ helpLink }}/help/#text_250743" target="_blank">
+              <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+            </a>
+          </h2>
+          <div class="m-t-lg" *ngIf="caseData">
+            <div class="timeline-item" *ngIf="caseData.properties.drafter">
+              <div class="row">
+                <div class="col-lg-2 date">
+                  <i class="fa fa-briefcase"></i>
+                  {{ caseData.$displays.draftDate }}
+                </div>
+                <div class="col-lg-5 content no-top-border">
+                  <p class="m-b-xs">
+                    <strong>{{ caseData.$displays.drafter }}已拟稿</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item" *ngIf="caseData.properties.approver">
+              <div class="row">
+                <div class="col-lg-2 date">
+                  <i class="fa fa-briefcase"></i>
+                  {{ caseData.$displays.approveDate }}
+                </div>
+                <div class="col-lg-5 content no-top-border">
+                  <p class="m-b-xs">
+                    <strong>{{ caseData.$displays.approver }}已审批</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item" *ngIf="caseData.properties.maker">
+              <div class="row">
+                <div class="col-lg-2 date">
+                  <i class="fa fa-briefcase"></i>
+                  {{ caseData.$displays.makeDate }}
+                </div>
+                <div class="col-lg-5 content no-top-border">
+                  <p class="m-b-xs">
+                    <strong>{{ caseData.$displays.maker }}已制证</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>审核意见</label>
+              <textarea class="form-control" style="resize: none;" [(ngModel)]="doc.make.makeNote"></textarea>
+            </div>
+            <div class="text-center">
+                <a _ngcontent-c30="" class="btn btn-warning" (click)="print()">
+                  <i _ngcontent-c30="" class="fa fa-print"></i>&nbsp;打印
+                </a>
+                <a _ngcontent-c30="" class="btn btn-success" (click)="makeDoc()">
+                  <i _ngcontent-c30="" class="fa fa-check"></i>&nbsp;盖章
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <div class="editor">
+    <perfect-scrollbar [config]="config" style="background-color:#fff;">
+      <div class="ibox no-margins">
+        <div class="ibox-content">
+          <div class="editor-inner" id="edit-aera" [innerHtml]="content">
+            <h1 class="title text-center">公证书</h1>
+            <div class="number text-right">（2017）沪东证字第 31829 号</div>
+            <dl class="name">
+              <dt>申请人：</dt>
+              <dd *ngFor="let item of activeLitigant; let i = index">
+                <span class="text-success">
+                  {{ item.name }}，{{ item.gender === 'Male' ? '男' : '女' }}，{{ item.birthDate }}
+                </span>
+                出生<br>公民身份号码：
+                <span class="text-success">
+                  {{ item.idNumber }}
+                </span>
+              </dd>
+            </dl>
+            <div class="info">
+              <p>公证事项：委托</p>
+              <p>
+                兹证明
+                <span class="text-success" *ngFor="let item of activeLitigant; let i = index">
+                  {{ item.name }}
+                </span>
+                于
+                <span class="text-success">
+                  二〇一七年十月八日
+                </span>
+                来到我处，在本公证员的面前，在前面的《委托书》上签名，并表示知悉委托的法律意义和法律后果。
+              </p>
+              <p>
+                <span class="text-success" *ngFor="let item of activeLitigant; let i = index">
+                  {{ item.name }}
+                </span>
+                的委托行为符合《中华人民共和国民法总则》第一百四十三条的规定。
+              </p>
+            </div>
+            <div class="trif text-center">
+              <p>上海市东方公证处</p>
+            </div>
+            <div class="insc text-center">
+              <div class="insc-intro">
+                公证员
+                <div *ngIf="isSign" class="sign" style="background-image: url(assets/images/sign.png);"></div>
+              </div>
+            </div>
+            <div class="date text-center">
+              <div class="date-intro">
+                二0一七年十月十一日
+                <div *ngIf="isSeal" class="cachet" style="background-image: url(assets/images/cachet.png);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>{{title}}
+            <small class="m-l-sm">{{simpleTitle}}</small>
+          </h5>
+        </div>
+        <div class="ibox-content">
+          <form novalidate>
+            <fieldset *ngFor="let fieldset of fieldsets">
+              <legend>{{fieldset.name}}</legend>
+              <div class="row">
+                <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}} "></dm-widget>
+              </div>
+            </fieldset>
+            </form>
+            <legend>事项信息</legend>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>核验码</th>
+                  <th>事项名称</th>
+                  <th>事项案号</th>
+                  <th>受理时间</th>
+                  <th>承办公证员</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cases;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{ item.properties.checkCode}}</td>
+                  <td>{{ item.$displays.caseType }} <!-- (
+                    <span
+                      *ngFor="let client of item.parties | slice:0:4; let i = index"
+                    >
+                      {{ client.name }}{{ i < item.parties.length - 1 ? '、' : '' }}
+                    </span>
+                    <span *ngIf="item.parties.length > 4">...</span>
+                  ) --> </td>
+                  <td>{{ item.properties.caseNumber ? item.properties.caseNumber : '暂无案号' }}</td>
+                  <td>{{ item.$displays.createDate }}</td>
+                  <td>{{ item.$displays.notary ? item.$displays.notary : '未知' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <legend>结算</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th width="50px">#</th>
+                  <th>案号</th>
+                  <th>收费科目</th>
+                  <th>金额</th>
+                  <th>已收金额</th>
+                  <th width="200px">缴纳金额</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="detail">
+                <tr *ngFor="let item of detail.details;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{ item.caseNumber ? item.caseNumber : '暂无案号' }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.mxTotalAmount }}</td>
+                  <td>{{ item.amount }}</td>
+                  <td>
+                      <div class="input-group bootstrap-touchspin">
+                        <span class="input-group-btn" (click)="reduceOne(item)">
+                          <button class="btn btn-white bootstrap-touchspin-down" [disabled]="item.mxTotalAmount === item.amount">-</button>
+                        </span>
+                        <input type="number" class="form-control can-edit count touchspin1" [disabled]="item.mxTotalAmount === item.amount" [(ngModel)]="item.currentAmount" min="0" max="{{item.mxTotalAmount}}"  (input)="calcTotalMoney()">
+                        <span class="input-group-btn" (click)="addOne(item)">
+                          <button class="btn btn-white bootstrap-touchspin-up" [disabled]="item.mxTotalAmount === item.amount">+</button>
+                        </span>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <fieldset>
+              <button class="btn btn-primary" type="button" (click)="save(lgModal)">结算</button>
+              <button class="btn btn-default" type="button" (click)="close(lgModal)">关闭</button>
+            </fieldset>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" novalidate [formGroup]="form">
+  <fieldset *ngFor="let fieldset of fieldsets">
+    <!-- <legend *ngIf="fieldsets.length > 1">{{fieldset.name}}</legend> -->
+    <div class="row">
+      <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}} "></dm-widget>
+    </div>
+  </fieldset>
+  <fieldset>
+    <!-- <dm-operation [page]="this"></dm-operation> -->
+    <!--<button class="btn btn-primary" (click)="openModal()">弹窗测试</button>
+    <button class="btn btn-primary" (click)="openSelector()">弹窗选择</button>-->
+    <!-- <button class="btn btn-primary" (click)="getPageData()">表单数据</button> -->
+  </fieldset>
+</form>

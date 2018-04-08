@@ -1,0 +1,311 @@
+@import "../node_modules/select2/dist/css/select2.min.css";
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+}
+/* Only demo */
+@media (max-width: 1000px) {
+  .welcome-message {
+    display: none;
+  }
+}
+.menu-fold {
+  float: left;
+  display: block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 20px;
+  &:hover {
+    color: $text-color;
+    background-color: #eee;
+  }
+}
+.navbar-form-custom {
+  position: relative;
+  margin-left: 15px;
+  width: 300px;
+  .fa {
+    position: absolute;
+    top: 21px;
+    font-size: 16px;
+    color: #aaa;
+  }
+  .form-control {
+    font-size: 16px;
+    padding-left: 22px;
+  }
+}
+
+.logo {
+  text-align: center;
+  img {
+    width: 60px;
+    height: auto;
+  }
+  .logo-text {
+    font-size: 20px;
+    color: #fff;
+  }
+}
+.full-content {
+  height: calc(100vh - 99px);
+  padding: 0 0 25px 0;
+}
+
+.sidebar-content {
+  height: 100%;
+}
+.help-btn {
+  position: relative;
+  top: -3px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  font-size: 20px;
+  color: #ccc;
+  cursor: pointer;
+  &:hover {
+    color: $blue;
+  }
+}
+
+.button-click {
+  position: absolute;
+  z-index: 10000;
+  left: 0;
+  right: 0;
+  bottom: -25px;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 55px;
+  border-radius: 50%;
+  border: none;
+  z-index: 100;
+  background: #1ab394;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 0 8px rgba(26, 179, 148, 0.3), 0 0 0 16px rgba(26, 179, 148, 0.15);
+  &.small {
+    bottom: -20px;
+    width: 40px;
+    height: 40px;
+    line-height: 45px;
+    box-shadow: 0 0 0 6px rgba(26, 179, 148, 0.3), 0 0 0 12px rgba(26, 179, 148, 0.15);
+    .fa {
+      font-size: 18px;
+    }
+  }
+  &:hover {
+    background-color: #179d82;
+  }
+}
+
+.ibox-content {
+  &.ibox-content-noborder {
+    border: 0;
+  }
+}
+.tab-container {
+  .info-tab-heading {
+    .nav-link {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
+.action-bar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 49px;
+}
+
+// 文书预览页通用
+.preview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .ibox-content {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+}
+.doc-wrap {
+  position: relative;
+  padding: 0;
+  margin: 15px 0;
+  height: calc( 100% - 60px );
+  font-size: 16px;
+  border: 1px solid #eee;
+  background-color: #fcfcfc;
+}
+
+// tips 告知文书(内容为生成，全局样式方可生效)
+.tips {
+  padding: 20px;
+  .title {
+    padding-bottom: 15px;
+  }
+  .name {
+    padding: 30px 0;
+  }
+  .info {
+    padding-bottom: 60px;
+    line-height: 1.8;
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+}
+
+
+// table
+.certi-list {
+  margin-top: 0 !important;
+  .table {
+    thead {
+      tr {
+        border-bottom: 1px solid #e7eaec;
+      }
+    }
+  }
+}
+
+// overview
+.overview-layout {
+  height: 100%;
+}
+.overview-bg {
+  position: relative;
+  height: 100%;
+  background-color: #fff;
+}
+// 按钮
+.module-over-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+// module title
+.module-title {
+  padding-left: 20px;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  border-left: 6px solid #e7eaec;
+  overflow: hidden;
+  background-color: #f3f3f4;
+  font-size: 16px;
+  color: #666;
+}
+
+// fixed btn
+.fixed-btn {
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
+}
+
+// 拖拽
+.client-type .dndDragover li.dndPlaceholder {
+  float: left;
+  margin: 20px 20px 0 20px;
+  width: 120px;
+  height: 150px;
+  border: 2px dotted #eee;
+  list-style: none;
+}
+
+// 提醒弹窗
+.leave-body {
+  padding: 10px;
+}
+.leave-modal {
+  padding-left: 34px;
+  background-size: 24px 24px;
+  background-position: left top;
+  background-repeat: no-repeat;
+  .desc {
+    text-align: justify;
+  }
+}
+
+.common-p-20 {
+  padding: 20px;
+}
+
+.select2-container--inspinia.select2-container--open {
+  z-index: 9999999;
+}
+.notexxx {
+  width: 840px;
+  padding: 40px 80px 80px 100px;
+  height: auto;
+  margin: 0 auto;
+  font-family: 'SimSun';
+  font-size: 23px;
+}
+.notexxx .title {
+  margin: 0;
+  padding-top: 56px;
+  font-size: 38px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 60px;
+  font-family: 'KaiTi';
+}
+.notexxx .num {
+  padding-top: 56px;
+  text-align: right;
+}
+.notexxx p {
+  line-height: 46px;
+  margin: 0;
+}
+.notexxx .applicant,
+.notexxx .content,
+.notexxx .inscribe {
+  padding-top: 56px;
+}
+.notexxx .org {
+  text-align: right;
+}
+.notexxx .notary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 56px;
+  letter-spacing: 24px;
+}
+.notexxx .notary img {
+}
+.notexxx .timestamp {
+  position: relative;
+  text-align: center;
+  padding-top: 56px;
+  padding-left: 60px;
+  letter-spacing: 4px;
+}
+.notexxx .timestamp img {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  margin-left: -30px;
+  margin-top: -20px;
+}
+.notexxx .inscribe {
+  position: relative;
+}
+.notexxx .query {
+  position: absolute;
+  top: 40%;
+}

@@ -1,0 +1,85 @@
+<div class="fullscreen" style="background-image:url('assets/images/fullscreen_bg.jpg')">
+  <perfect-scrollbar class="scroll-container" [config]="config">
+    <div class="welcome" *ngIf="step === 1">
+      <div class="smart-logo"><img src="./assets/images/logo-vertical.png" alt=""></div>
+      <div class="desc">欢迎使用智慧公证 · 一体化智能办证系统</div>
+      <div class="start"><a class="btn btn-success" (click)="register()">{{registerName}}</a></div>
+    </div>
+    <div class="register" *ngIf="step === 2">
+      <div class="smart-logo">
+        <img src="./assets/images/logo-horizontal.png" alt="">
+      </div>
+      <form action="" class="form">
+        <div class="form-group">
+          <label for="">办证点</label>
+          <select  class="form-control" (change)="placeChange($event)" name="notaryPlace" [(ngModel)]="device.notaryPlace">
+            <option value="" selected>请选择办证地点</option>
+            <option *ngFor="let item of notaryoffice.places" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="selectPlace && selectPlace.id">
+          <label for="">办证室</label>
+          <select  class="form-control" (change)="roomChange($event)" name="notryRoom" [(ngModel)]="device.notaryRoom">
+            <option selected="selected">请选择办证室</option>
+            <option *ngFor="let item of selectPlace.rooms" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">端口号</label>
+          <input type="text" class="form-control" readonly="readonly" value="{{backScreen.ip | uppercase}}" disabled>
+        </div>
+        <div class="form-group">
+          <label for="">设备号</label>
+          <input type="text" class="form-control" readonly="readonly" value="{{backScreen.license | uppercase}}" disabled>
+        </div>
+        <span class="help-block text-danger" *ngIf="formMessage"><i class="fa fa-times-circle"></i>{{formMessage}}</span>
+        <div class="submit">
+          <button type="button" class="btn btn-success btn-block" (click)="submit()"><i class="fa fa-check-circle"></i>激活此设备</button>
+          <div class="help-block">
+            <i class="fa fa-question-circle"></i>如何激活设备?</div>
+        </div>
+      </form>
+    </div>
+    <div class="register" *ngIf="step === 3">
+      <div class="smart-logo">
+        <img src="./assets/images/logo-horizontal.png" alt="">
+      </div>
+      <div class="feedback">
+        <!-- 正在审核中 -->
+        <div class="failed">
+          <div class="state text-primary p-md">
+            <div class="sk-spinner sk-spinner-wave">
+              <div class="sk-rect1"></div>
+              <div class="sk-rect2"></div>
+              <div class="sk-rect3"></div>
+              <div class="sk-rect4"></div>
+              <div class="sk-rect5"></div>
+            </div>
+          </div>
+          <div class="desc text-primary">正在审核中，请耐心等待</div>
+          <div class="contact">
+            <button class="btn btn-primary">联系管理人员</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="register" *ngIf="step === 4">
+      <div class="smart-logo">
+        <img src="./assets/images/logo-horizontal.png" alt="">
+      </div>
+      <div class="feedback">
+        <!-- 激活失败 -->
+        <div class="failed">
+          <div class="state text-danger"><i class="fa fa-times-circle"></i></div>
+          <div class="desc text-danger">{{errorMessage}}</div>
+          <div class="contact">
+            <button class="btn btn-success">联系管理人员</button>
+            <div class="help-block">
+              <i class="fa fa-question-circle"></i>为什么会注册失败?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </perfect-scrollbar>
+  <div class="foot">&copy;2018 上海同道信息技术有限公司</div>
+</div>

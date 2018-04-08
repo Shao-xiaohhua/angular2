@@ -1,0 +1,67 @@
+<div class="row border-bottom white-bg">
+  <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="btn-link menu-fold" (click)="toggleNavigation()">
+        <i class="fa fa-outdent" tooltip="收起菜单" placement="right" *ngIf="toogle"></i>
+        <i class="fa fa-indent" tooltip="展开菜单" placement="right" *ngIf="!toogle"></i>
+      </a>
+      <form role="search" class="navbar-form-custom" method="post" action="#">
+        <div class="form-group">
+          <i class="fa fa-search"></i>
+          <input type="text" placeholder="搜索: 事项、案件、工作等" class="form-control" name="top-search" id="top-search">
+        </div>
+      </form>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li>
+        <span class="m-r-sm text-muted welcome-message">{{ userName }}，欢迎使用智能一体化办证平台</span>
+      </li>
+      <li class="dropdown" dropdown>
+        <a dropdownToggle class="dropdown-toggle count-info">
+          <i class="fa fa-bell"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-alerts" *dropdownMenu>
+          <li>
+            <a href="mailbox.html">
+              <div>
+                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                <span class="pull-right text-muted small">4 minutes ago</span>
+              </div>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="profile.html">
+              <div>
+                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                <span class="pull-right text-muted small">12 minutes ago</span>
+              </div>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="grid_options.html">
+              <div>
+                <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                <span class="pull-right text-muted small">4 minutes ago</span>
+              </div>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <div class="text-center link-block">
+              <a href="notifications.html">
+                <strong>See All Alerts</strong>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="logout()"><i class="fa fa-sign-out"></i> 注销 </a>
+      </li>
+    </ul>
+
+  </nav>
+</div>

@@ -1,0 +1,80 @@
+<div class="row border-bottom white-bg page-heading">
+  <div class="info">
+    <div class="workplace" [routerLink]="['/project/home']">
+      <div class="status"><img src="./assets/images/ex-icon.png" alt=""></div>
+      <div class="tasks-list">事项流程</div>
+    </div>
+    <div class="info-list">
+      <h3 class="title">
+        {{ this.projectInfo.caseType }}
+        (<div class="client-name"><span class="client-name" *ngFor="let client of clientList | slice:0:4">{{ client.name }}</span></div><span *ngIf="clientList.length > 4">...</span>)
+        <i class="fa fa-qrcode" tooltip="查看条形码" (click)="showCode.show()"></i>
+        <i class="fa fa-retweet" tooltip="打印流转单"  (click)="createDocument()"></i>
+      </h3>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="item">
+            <label for="">核验码：</label>
+            <span>{{ checkCode }}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="item">
+            <label for="">受理时间：</label>
+            <span>{{ this.projectInfo.createDate }}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="item">
+            <label for="">案号：</label>
+            <span>{{ this.caseNumber }}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="item">
+            <label for="">状态：</label>
+            <span>{{ this.projectInfo.status }}</span>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="item">
+            <label for="">公证员：</label>
+            <span>{{ this.projectInfo.notary }}</span>
+          </div>
+        </div>
+        <!-- <div class="col-lg-4">
+          <div class="item">
+            <label for="">公证助理：</label>
+            <span>{{ this.projectInfo.assistant }}</span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="project-extra">
+    <div class="tasks">
+      <h4 class="name"><div [routerLink]="['/project/home/process-list']" class="label">特殊流程</div>待完成</h4>
+      <ng-container *ngIf="todo">
+        <div class="task-tips" *ngFor="let item of todo | slice:0:1" (click)="toTask(item.route)">{{ item.name }}</div>
+      </ng-container>
+      <div class="task-done" *ngIf="!todo">已完成受理</div>
+    </div>
+    <div class="client">
+      <h4 class="name"><span *ngIf="clientList.length > showNumber">共 {{ clientList.length }} 位</span>申请人</h4>
+      <ul class="clist-list">
+        <li *ngFor="let client of clientList | slice:0:showNumber"><div class="avatar" [ngStyle]="{'background-image': 'url('+ (client.photoURL?client.photoURL:(client.gender === 'Male'?'./assets/images/default-male.png':'./assets/images/default-female.png')) +')'}" tooltip="{{ client.name }}"></div></li>
+        <li><div class="avatar more" [routerLink]="['/project/home/clients']" tooltip="申请人管理"><i class="fa fa-ellipsis-h"></i></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  <div bsModal #showCode="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 500px;">
+      <div class="modal-content barcode" style="box-shadow: 0 0 50px rgba(0,0,0,.08);border: none;">
+        <div class="close" (click)="showCode.hide()">&times;</div>
+          <div class="title">案件核验码</div>
+          <img src="{{ barCode }}" alt="核验码">
+      </div>
+    </div>
+  </div>

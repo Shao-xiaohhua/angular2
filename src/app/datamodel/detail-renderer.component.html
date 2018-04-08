@@ -1,0 +1,86 @@
+<!--<div class="wrapper wrapper-content animated fadeInRight ecommerce">-->
+  <div class="row">
+    <div class="col-lg-12" *ngIf="isWindow !== true">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h5>{{title}}
+            <small class="m-l-sm">{{simpleTitle}}</small>
+          </h5>
+          <app-ibox-toggle></app-ibox-toggle>
+        </div>
+        <div class="ibox-content">
+          <form (ngSubmit)="onSubmit()" novalidate [formGroup]="form">
+            <fieldset *ngFor="let fieldset of fieldsets">
+              <legend *ngIf="fieldsets.length > 1">{{fieldset.name}}</legend>
+              <div class="row">
+                <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form" class="col-sm-{{widget.labelWidth + widget.inputWidth}} "></dm-widget>
+              </div>
+            </fieldset>
+            <fieldset>
+              <dm-operation [page]="this"></dm-operation>
+              <!--<button class="btn btn-primary" (click)="openModal()">弹窗测试</button>
+              <button class="btn btn-primary" (click)="openSelector()">弹窗选择</button>-->
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12" *ngIf="isWindow === true">
+          <div class="ibox-title">
+            <h5>{{title}}
+              <small class="m-l-sm">{{simpleTitle}}</small>
+            </h5>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="ibox-content">
+            <form (ngSubmit)="onSubmit()" novalidate [formGroup]="form">
+              <fieldset>
+                <dm-operation [page]="this"></dm-operation>
+                <button class="btn btn-primary" (click)="openModal()">弹窗测试</button>
+              </fieldset>
+              <fieldset *ngFor="let fieldset of fieldsets" class="form-horizontal">
+                <legend *ngIf="fieldsets.length > 1">{{fieldset.name}}</legend>
+                <div class="form-group">
+                  <dm-widget *ngFor="let widget of fieldset.widgets" [widget]="widget" [form]="form"></dm-widget>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+      </div>
+  
+
+  </div>
+<!--</div>-->
+
+   <!--default modal-->
+   <div bsModal id="detail-modal" #defaultModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div #linkComponent></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="defaultModal.hide()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div #selectContainer></div>
+   <!--select modal-->
+   <!-- <div bsModal #selectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div #selectContainer></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="doConfirm()">确定</button>
+            <button type="button" class="btn btn-default" (click)="selectModal.hide()">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div> -->

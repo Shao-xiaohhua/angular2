@@ -1,0 +1,20 @@
+.photo-wrap {
+  margin-bottom: 30px;
+  height: 320px;
+  .upload-heading {
+    position: relative;
+    padding: 8px 10px;
+    background-color: #eee;
+    .title {
+      width: 100%;
+      padding: 2px 70px 2px 5px;
+      box-shadow: none;
+      border: none;
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #676a6c;
+    }
+  }
+}

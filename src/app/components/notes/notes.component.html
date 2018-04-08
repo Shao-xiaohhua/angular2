@@ -1,0 +1,264 @@
+<div class="draft animated fadeInUp" [class.fullscreen]="isFullscreen" *ngIf="talkNoteStatus == 'Draft'">
+  <div class="control">
+    <div class="ibox no-margins" style="height: 100%;">
+      <div class="ibox-content" style="height: 100%; padding: 15px 0 20px 20px;">
+        <div class="notes-title">
+          <h2 class="m-b">
+            <i class="fa fa-tasks"></i>
+            谈话笔录
+            <!-- <a href="{{ helpLink }}/help/#text_250734" target="_blank">
+              <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+            </a> -->
+          </h2>
+          <a href="javascript:;" class="btn-fullscreen" (click)="toggleFS()">
+            <i class="fa" tooltip="全屏编辑" container="body" [class.fa-compress]="isFullscreen" [class.fa-expand]="!isFullscreen"></i>
+          </a>
+        </div>
+        <div class="notes-select m-b">
+          <widget-template (event)="loadTalkTemp($event)" [docType]="docType" [caseTypeId]="caseTypeId"></widget-template>
+        </div>
+        <div class="notes-control">
+          <perfect-scrollbar [config]="config" style="background-color:#fff;">
+            <ul class="notes-list" *ngIf="testTalks && testTalks.length">
+              <li
+                *ngFor="let qaNote of testTalks; let i = index"
+                [class.item-success]="qaNote.isCompleted"
+                [class.item-active]="qaNote === testTalks[index]"
+                (click)="setTalk(qaNote, i);">
+                <div class="item-tip">
+                  <span *ngIf="!qaNote.isCompleted">问</span>
+                  <i *ngIf="qaNote.isCompleted" class="fa fa-check"></i>
+                </div>
+                <div class="item-text" [innerHtml]='qaNote.question'></div>
+              </li>
+            </ul>
+            <div
+              class="ntoes-add-box"
+              *ngIf="testTalks && testTalks.length"
+              (click)="addNote()"
+            >
+              <div class="notes-add" *ngIf="!(talkNoteStatus === 'Completed')">
+                <i class="fa fa-plus"></i>
+                新增问题
+              </div>
+            </div>
+          </perfect-scrollbar>
+          <div class="notes-btns">
+            <button class="btn btn-success" (click)="saveTalkNote()" [disabled]="isSaveTalkNote" *ngIf="!(talkNoteStatus === 'Completed')">
+              <i class="fa fa-check"></i>
+              完成谈话笔录
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="editor">
+    <div class="ibox no-margins" style="height: 70%;">
+      <div class="ibox-content" style="height: 100%;">
+        <div class="notes-title">
+          <h3 class="m-b">
+            <i class="fa fa-pencil"></i>
+            笔录编辑区
+          </h3>
+        </div>
+        <div class="notes-container clearfix">
+          <div class="notes-content">
+            <div class="content">
+              <perfect-scrollbar [config]="config" style="background-color:#fff;">
+                <div class="notes-group-box" *ngIf="testTalks && testTalks.length">
+                  <div
+                    class="notes-group"
+                  >
+                    <div class="notes-tip">
+                      <div class="notes-tip-text notes-tip-q">问</div>
+                    </div>
+                    <div *ngIf="!(talkNoteStatus === 'Completed')" 
+                      contenteditable="true"
+                      class="desc"
+                      [innerHtml]='item.question' #question>
+                    </div>
+                    <div *ngIf="(talkNoteStatus === 'Completed')" 
+                      class="desc"
+                      [innerHtml]='item.question' #question>
+                    </div>
+                  </div>
+                  <div
+                    class="notes-group"
+                    [ngStyle]="{'min-height': editOffset + 'px'}"
+                  >
+                      <div class="notes-tip">
+                        <div class="notes-tip-text notes-tip-a">答</div>
+                      </div>
+                    <div *ngIf="!(talkNoteStatus === 'Completed')"
+                      contenteditable="true"
+                      class="desc"
+                      [innerHtml]='item.answer' #answer>
+                    </div>
+                    <div *ngIf="(talkNoteStatus === 'Completed')"
+                      class="desc"
+                      [innerHtml]='item.answer' #answer>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+          <div class="notes-btn notes-prev" (click)="prev();" #editHeight>
+            <span>上一题</span>
+          </div>
+          <div class="notes-btn notes-next" (click)="next();">
+            <span>下一题</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="edit-notes">
+      <h3 class="m-b">
+        <i class="fa fa-support"></i>
+        辅助编辑区
+        <button class="btn btn-primary" (click)="restBuild()" [disabled]="isRestBuild" *ngIf="!(talkNoteStatus === 'Completed') && item.fields && item.fields.length > 0">
+          <i class="fa fa-refresh"></i>
+          保存并刷新
+        </button>
+        <button class="btn" title="保存当前笔录" (click)="saveCurrentNote()">
+          <i class="fa fa-save"></i>
+        </button>
+      </h3>
+      <div class="edit-notes-form">
+        <perfect-scrollbar [config]="config" style="background-color:#fff;">
+          <!-- <div class="row"> -->
+            <widget-variable [setTypeId]="item.bussinessType" [setEntityId]="caseId" [setFieldNames]="item.fields" (formValues)='formValueChange($event)'></widget-variable>
+            <!-- <div class="col-lg-4">
+              <div class="form-group">
+                <label>使用地</label>
+                <select class="form-control">
+                  <option value="-1">请选择公证书使用地</option>
+                  <option value="0">使用地1</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>翻译语言</label>
+                <select class="form-control">
+                  <option value="-1">请选择公证书翻译语言</option>
+                  <option value="0">英语</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>邮寄地址</label>
+                <input class="form-control" type="text" placeholder="请输入公证书邮寄地址">
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>代办</label>
+                <select class="form-control">
+                  <option value="-1">请选择公证书使用地</option>
+                  <option value="0">使用地1</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>翻译语言</label>
+                <select class="form-control">
+                  <option value="-1">请选择公证书翻译语言</option>
+                  <option value="0">英语</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>邮寄地址</label>
+                <input class="form-control" type="text" placeholder="请输入公证书邮寄地址">
+              </div>
+            </div>
+          </div> -->
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 笔录预览 -->
+<div class="ibox no-margins preview" *ngIf="talkNoteStatus === 'Submitted' || talkNoteStatus === 'Completed'">
+  <div class="ibox-content">
+    <h2>
+      <i class="fa fa-tasks"></i>
+      谈话笔录预览
+    </h2>
+    <div class="action-bar">
+      <a (click)="resetEdit()" class="btn btn-default m-r-sm">
+        <i class="fa fa-undo"></i>&nbsp;重新编辑</a>
+      <a (click)="printTalkNote()" class="btn btn-warning m-r-sm">
+        <i class="fa fa-print"></i>&nbsp;打印笔录</a>
+      <button class="btn btn-success" (click)="clientRead()" *ngIf="talkNoteStatus !== 'Completed' && talkNoteStatus === 'Submitted' && !signConfig.isResetSign" [disabled]="isStart">
+        <i class="fa fa-volume-up"></i>&nbsp;开始确认</button>
+    </div>
+    <!-- <small>谈话笔录内容核对</small> -->
+    <div class="doc-wrap">
+      <perfect-scrollbar [config]="config">
+          <div class="common-p-20" *ngIf="talkNoteStatus === 'Completed' || talkNoteStatus === 'Submitted'">
+              <app-sign [signConfig]="signConfig" (event)="resetSign($event)"></app-sign>
+          </div>
+        <div class="qa-list">
+          <li *ngFor="let qaNote of testTalks; let i = index">
+            <div class="item">
+              <div class="item-icon">
+                <div class="icon-wrap question">问</div>
+              </div>
+              <div class="item-content" [innerHtml]='sanitizer.bypassSecurityTrustHtml(qaNote.question)'>请问你要办理什么事项？</div>
+            </div>
+            <div class="item">
+              <div class="item-icon">
+                <div class="icon-wrap answer">答</div>
+              </div>
+              <div class="item-content" [innerHtml]='sanitizer.bypassSecurityTrustHtml(qaNote.answer)'>我需要办理学历公证事项</div>
+            </div>
+          </li>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>
+
+<div bsModal #notesModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" style="width:800px">
+    <div class="modal-content note-modal">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" (click)="notesModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="title">预览谈话笔录</h3>
+        <p>请在谈话笔录核对无误后，点击确认按钮</p>
+      </div>
+      <div class="modal-body">
+        <perfect-scrollbar [config]="config" style="background-color:#fff;">
+        <div class="qa-list">
+          <li *ngFor="let qaNote of testTalks; let i = index">
+            <div class="item">
+              <div class="item-icon">
+                <div class="icon-wrap question">问</div>
+              </div>
+              <div class="item-content" [innerHtml]='sanitizer.bypassSecurityTrustHtml(qaNote.question)'>请问你要办理什么事项？</div>
+            </div>
+            <div class="item">
+              <div class="item-icon">
+                <div class="icon-wrap answer">答</div>
+              </div>
+              <div class="item-content" [innerHtml]='sanitizer.bypassSecurityTrustHtml(qaNote.answer)'>我需要办理学历公证事项</div>
+            </div>
+          </li>
+        </div>
+        </perfect-scrollbar>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" (click)="notesModal.hide()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="clientRead();notesModal.hide();">确认</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,252 @@
+<navigator [headLine]="'材料收取'"></navigator>
+<div class="m-t">
+  <div class="ibox no-margins">
+    <div class="ibox-content" style="position: relative;">
+      <h2>
+        <i class="fa fa-tasks"></i>
+        材料管理
+        <a href="{{ helpLink }}/help/#text_250737" target="_blank">
+          <i class="fa fa-question-circle help-btn" tooltip="查看帮助文档" container="body"></i>
+        </a>
+      </h2>
+      <div class="action-bar">
+        <button class="btn btn-warning m-r-sm" (click)="printReciveDoc()">
+          <i class="fa fa-print"></i>&nbsp;收件清单打印</button>
+        <button class="btn btn-warning m-r-sm" (click)="printCorrectionDoc()">
+          <i class="fa fa-print"></i>&nbsp;补充材料清单打印</button>
+        <button class="btn btn-warning m-r-sm" (click)="printStuff()">
+          <i class="fa fa-print"></i>&nbsp;材料打印</button>
+        <button class="btn btn-warning m-r-sm" (click)="printAllStuff()">
+          <i class="fa fa-print"></i>&nbsp;所有材料打印</button>
+      </div>
+      <div class="material m-t-lg">
+        <div class="aside">
+          <div class="menu">
+            <ul class="menu-list" *ngIf="materialList">
+              <li *ngFor="let item of materialList; let i = index">
+                <div class="item clearfix" [ngClass]="{completed: item.pages.length === item.realNum, active: currentIndex === i}" (click)="checkedMaterial(i)">
+                  <div class="icon-left pull-left">
+                    <i class="fa fa-folder" *ngIf="item.pages.length !== item.realNum"></i>
+                    <i class="fa fa-check-circle" *ngIf="item.pages.length === item.realNum"></i>
+                  </div>
+                  <div class="material-text pull-left">
+                    <h3>{{ item.name }}</h3>
+                    <p class="desc" *ngIf="item.pages">应收 {{ item.pages.length }} 张，实收 {{item.realNum ? item.realNum : 0}} 张</p>
+                    <p class="desc" *ngIf="!item.pages">应收 0 张，实收 0 张</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="add-material" (click)="addMaterial(); changeGroup.show()">
+            <i class="fa fa-plus"></i>
+            新增材料
+          </div>
+          <!-- <div class="upload-progress m-t-lg">
+            <h4>材料上传进度：</h4>
+            <div class="progress progress-small">
+              <div style="width: 48%;" class="progress-bar"></div>
+            </div>
+          </div> -->
+        </div>
+        <div class="material-content" *ngIf="materialList.length">
+          <div *ngIf="materialList[currentIndex]">
+            <div
+              class="material-title"
+              [class.material-title-edit]="materialList[currentIndex].titleReadonly"
+              (blur)="cancelGroup()"
+              (keydown.enter)="cancelGroup()"
+            >
+              <span class="material-title-text">{{ materialList[currentIndex].name }}</span>
+              <i
+                class="fa fa-pencil"
+                tooltip="重命名"
+                container="body"
+                (click)="editGroup()"
+                *ngIf="materialList[currentIndex].editGroup"
+              ></i>
+              <i
+                class="fa fa-trash-o"
+                tooltip="删除该项"
+                container="body"
+                (click)="removeGroup(true)"
+                *ngIf="materialList[currentIndex].editGroup"
+              ></i>
+              <div
+                class="cancel"
+                *ngIf="materialList[currentIndex].titleReadonly"
+                (click)="cancelGroup()"
+              >取消</div>
+            </div>
+          </div>
+          <ul class="material-list" *ngFor="let item of materialList; let i = index" [ngClass]="{active: currentIndex === i}">
+            <!-- <li class="nodata" *ngIf="item.pages.length === 1" (click)="materModal.show(); setCurrentPage(i)">
+              <i class="fa fa-upload"></i>
+              <h4 class="text">点击上传材料</h4>
+            </li> -->
+            <!-- <li class="nodata" *ngIf="!item.pages">
+              <h4 class="text">暂无材料</h4>
+            </li> -->
+            <div *ngIf="item.pages">
+              <li *ngFor="let page of item.pages; let j = index">
+                <div class="material-item" title="{{ page.name }}">
+                  <div class="thumb" (click)="swiperModal.show(); openPhoto(page, j)" *ngIf="page.picURL !== ''" [ngStyle]="{'background-image': 'url('+ page.picURL +')'}"></div>
+                  <div class="thumb upload" (click)="materModal.show(); setCurrentPage(i); openPhoto(page, j)"  *ngIf="page.picURL === ''">
+                    <i class="fa fa-upload"></i>
+                    <h4 class="text">点击上传材料</h4>
+                    <span
+                      class="del-text"
+                      (click)="delete(pages); deleteMateial(item.pages, j)"
+                      *ngIf="page.isCustom"
+                    >
+                      删除此页?
+                    </span>
+                  </div>
+                  <div class="name" *ngIf="!page.isCustom">{{ page.name }}</div>
+                  <div class="name edit" *ngIf="page.isCustom">
+                    <div class="edit-btn" (click)="editName(j, i)" *ngIf="page.readonly">
+                      <i class="fa fa-pencil" tooltip="重命名" container="body"></i>
+                    </div>
+                    <div class="cancel-btn" *ngIf="!page.readonly">取消</div>
+                    <input
+                      class="form-control edit-inp"
+                      type="text"
+                      [(ngModel)]="page.name"
+                      [readonly]="page.readonly"
+                      (keyup.enter)="update(page)"
+                      (blur)="update(page)"
+                    />
+                  </div>
+                  <div class="action">
+                    <a href="javascript:;"
+                      (click)="resetPhoto(page, i, j); materModal.show(); setCurrentPage(i); openPhoto(page, j)"
+                      class="remake"
+                      tooltip="重拍"
+                      container="body"
+                      *ngIf="page.picURL !== ''"
+                    >
+                      <i class="fa fa-refresh"></i>
+                    </a>
+                    <!-- <a href="javascript:;"
+                      (click)="delete(pages); deleteMateial(item.pages, j)"
+                      class="del"
+                      tooltip="删除本页"
+                      container="body"
+                      *ngIf="page.isCustom"
+                    >
+                      &times;
+                    </a> -->
+                  </div>
+                </div>
+              </li>
+            </div>
+            <li *ngIf="item.pages">
+              <div class="add-item" *ngIf="item.canAdd" (click)="addPage(item)">
+                <i class="fa fa-plus"></i>
+                <h4 class="text">新增材料页</h4>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="action-bar">
+        <a class="btn btn-success" (click)="submit()">
+          <i class="fa fa-check"></i>&nbsp;完成上传</a>
+      </div> -->
+      <div class="text-right" style="margin-bottom: 40px;">
+        <a href="javascript:;" class="btn btn-default">返回咨询页面</a>
+        <button class="m-l btn btn-primary">保存材料</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #template> -->
+<div bsModal #materModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" (onShown)="onShown()" (onHide)="onHide()">
+  <div class="modal-dialog" style="width: 960px;">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);">
+      <!-- <div class="close" (click)="leaveModal.show()">&times;</div> -->
+      <app-photograph
+        [isMatterList]="true"
+        [deviceId]="highshotId"
+        [showDevice]="showHighShotDevice"
+        [materialPage]="page"
+        [index]="index"
+        (captureData)="captureImage($event)"
+        (hiddenModal)="hiddenModal($event)"
+        (shownModal)="shownModal($event)"
+        photoTitle="请将材料放在高拍仪面板上，点击按钮拍照"
+      ></app-photograph>
+      <button class="photo-btn btn btn-w-m btn-default" (click)="materModal.hide(); submit()">
+        <i class="fa fa-check-circle"></i>
+        关闭
+      </button>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+<!-- <ng-template #template> -->
+<div bsModal #swiperModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" style="width: 960px;">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);">
+      <div class="close" (click)="swiperModal.hide()">&times;</div>
+      <app-photo-swiper
+      (prevClick)="prev($event)"
+      (nextClick)="next($event)"
+      ></app-photo-swiper>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+<!-- <ng-template #template> -->
+<div bsModal #changeGroup="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);">
+      <div class="modal-header" style="border-bottom: 0;">
+        <h3>材料名称修改</h3>
+        <div class="close" (click)="changeGroup.hide(); removeGroup(false);">&times;</div>
+      </div>
+      <div class="modal-body" style="padding: 0 15px 15px;">
+        <input
+          class="change-modal-inp"
+          type="text"
+          placeholder="修改新增材料的名称"
+          (input)="changeGroupName($event)"
+          (keydown.enter)="changeGroup.hide(); replaceGroupName()"
+          #changeInpModal
+        >
+      </div>
+      <div class="text-center m-b">
+        <button class="btn btn-primary" (click)="changeGroup.hide(); replaceGroupName()">确认修改</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->
+
+<div bsModal #leaveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-leave">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-body leave-body">
+          <div class="leave-modal" style="background-image: url(assets/images/ask_icon.png);">
+            <h4>确定要离开吗？</h4>
+            <p class="desc">
+              暂未点击完成按钮，离开可能不会保存您的信息
+            </p>
+            <div class="leave-btn clearfix">
+              <button (click)="leave()" class="btn btn-xs btn-success pull-right">离开</button>
+              <button
+                class="btn btn-xs btn-default pull-right m-r"
+                (click)="leaveModal.hide()"
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

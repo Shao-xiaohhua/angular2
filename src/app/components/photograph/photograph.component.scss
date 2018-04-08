@@ -1,0 +1,237 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.aside-left {
+  float: left;
+  width: 230px;
+}
+.aside-right {
+  float: right;
+  width: 650px;
+  &.aside-outside {
+    float: left;
+    width: 100%;
+  }
+}
+
+.photo-content {
+  height: 510px;
+  &.photo-aside-left {
+    height: 560px;
+  }
+}
+.gray-bg {
+  background-color: #eee;
+}
+
+.ident-circle {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  &.ident-circle-lg {
+    margin: 0 auto;
+    width: 110px;
+    height: 110px;
+  }
+}
+.inside-cir {
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.photo-wrap {
+  width: 100%;
+  padding: 0 30px 30px;
+  border-radius: 6px;
+  background-color: #fff;
+  .title {
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    color: #383838;
+    &.shot-title {
+      text-align: center;
+      .close {
+        margin-top: 16px;
+        width: 30px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 30px;
+        color: $dark-gray;
+      }
+    }
+  }
+  .matter-photo {
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    background-color: #eee;
+    &.matter-photo-padding {
+      padding: 8px;
+    }
+  }
+  .matter-group {
+    padding-top: 20px;
+    .matter-info {
+      text-align: center;
+      font-size: 16px;
+      color: $text-color;
+    }
+    &:first-child {
+      padding-top: 5px;
+    }
+  }
+  .matter-frame {
+    margin-top: 10px;
+    border: 5px solid #fff;
+    background-color: #fff;
+    &.matter-add-frame {
+      cursor: pointer;
+      border: 5px dashed #fff;
+      text-align: center;
+      background-color: transparent;
+      .photo-info{
+        padding-top: 0;
+      }
+      .fa {
+        display: block;
+        margin-top: 30px;
+        text-align: center;
+        font-size: 36px;
+        color: #ccc;
+      }
+    }
+    .matter-logo {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      overflow: hidden;
+      cursor: pointer;
+      .logo {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+    }
+    &.matter-frame-active {
+      border: 5px solid $blue;
+    }
+    &:hover {
+      .matter-del {
+        left: 0;
+      }
+    }
+    .matter-del {
+      position: absolute;
+      left: -26px;
+      top: 0;
+      z-index: 50;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-radius: 0 6px 6px 0;
+      transition: all .18s ease-out;
+      background-color: $yellow;
+      color: #fff;
+      &.matter-edit {
+        top: 0;
+        background-color: $navy;
+      }
+    }
+  }
+  .ident-item {
+    margin-top: 10px;
+    width: 100%;
+    padding: 17px 16px;
+    cursor: pointer;
+    border: 3px solid #eee;
+    &:first-child {
+      margin-top: 0;
+    }
+    &.active {
+      border: 3px solid $blue;
+    }
+  }
+  .ident-info {
+    padding-left: 94px;
+    .name {
+      margin-bottom: 2px;
+      font-size: 18px;
+      font-weight: bold;
+      color: $text-color;
+    }
+    .type {
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: #888;
+    }
+    .verify {
+      font-size: 16px;
+      &.verify-success {
+        color: $navy;
+      }
+      &.verify-error {
+        color: #ef6977;
+      }
+      &.verify-doing {
+        color: $blue;
+      }
+      &.verify-wait {
+        color: #888;
+      }
+    }
+  }
+  .photo-graph {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $blue;
+  }
+}
+.button-photo {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  .btn {
+    width: 400px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .fa {
+    margin-right: 5px;
+  }
+}
+.empty-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 100%;
+  height: 100%;
+  .name {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: #ccc;
+  }
+  .state {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+    font-size: 14px;
+    color: $blue;
+  }
+}

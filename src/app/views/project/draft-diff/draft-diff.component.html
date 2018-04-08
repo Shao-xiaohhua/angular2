@@ -1,0 +1,120 @@
+<div class="draft-diff animated fadeInUp" [style.height]="docHeight + 'px'">
+  <div class="control">
+    <perfect-scrollbar [config]="config">
+      <div class="ibox no-margins">
+        <div class="ibox-content">
+          <div class="form-group">
+            <label for="start" class="control-label">翻译语种</label>
+            <input class="form-control" disabled type="text" [value]="translateLanguage">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">份数</label>
+            <input class="form-control" disabled type="text" [value]="num">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">是否认证</label>
+            <input class="form-control" disabled type="text" [value]="attestation">
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">拟稿人意见</label>
+            <textarea disabled class="form-control" cols="25" placeholder="输入备注信息">{{ draftNote }}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="start" class="control-label">审批人意见</label>
+            <textarea class="form-control" cols="25" placeholder="输入备注信息" [(ngModel)]="approveNote"></textarea>
+          </div>
+          <!-- <button style="width: 100%;" class="btn btn-primary btn-outline m-b" (click)="printApprovalList()">打印报批单</button> -->
+          <button style="width: 100%;" class="btn btn-primary btn-outline m-b" (click)="showPandect()">过程检查</button>
+          <button style="width: 100%;" class="btn btn-primary btn-outline" (click)="draftModal.show()">显示修改痕迹</button>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <div class="editor">
+    <div class="ibox no-margins" style="height: 100%;">
+      <div class="ibox-content" style="height: 100%;">
+        <div style="position: relative;">
+          <h2>
+            <i class="fa fa-tasks"></i>
+            拟稿审批
+          </h2>
+          <div class="action-bar" style="top: -5px; right: 0;">
+            <button class="btn btn-warning" (click)="print()">
+              <i class="fa fa-print"></i>&nbsp;打印文书
+            </button>
+          </div>
+        </div>
+        <div class="draft-inner">
+          <perfect-scrollbar [config]="config">
+            <div class="draft-text" contenteditable="true" [innerHTML]='content' #docDiv>
+              
+            </div>
+          </perfect-scrollbar>
+        </div>
+        <div class="text-right m-t">
+          <button class="btn btn-danger" (click)="approveDoc('NoPass')">不同意</button>
+          <button class="btn btn-success" (click)="approveDoc('Pass')">同意并打印报批单</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #template> -->
+<div bsModal #draftModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" style="width: 960px;">
+    <div class="modal-content" style="box-shadow: 0 0 50px rgba(0,0,0,.08);">
+      <div class="close" (click)="draftModal.hide()">&times;</div>
+      <h2 class="text-center">显示修改痕迹</h2>
+      <div class="draft-modal-inner">
+        <div class="draft-modal-left">
+          <div class="draft-modal-text" contenteditable="true">
+            <ng-container>
+              <textarea [(ngModel)]="left"></textarea>
+            </ng-container>
+            <!-- <textarea [(ngModel)]="left"></textarea> -->
+            <!-- <h2 class="text-center" style="font-weight: bold;">公证书</h2>
+            <p>（xxxx)沪XX证（外）第XXXX号</p>
+            <p>申请人：胡晓瑾</p>
+            <div class="m-t">
+              <p>
+                公证事项：居民身份证
+              </p>
+              <p>
+                兹证明面前的复印与XXX（申请人）持有的XX公安局（或XXX公安局XX分局）签发的编号为XX兹证明面前的复印与XXX（申请人）持有的XX公安局（或XXX公安局XX分局）签发的编号为XX
+              </p>
+              <p>
+                本公证书仅限于XX，用于其他事由无效
+              </p>
+            </div> -->
+          </div>
+        </div>
+        <div class="draft-modal-right">
+          <perfect-scrollbar [config]="config">
+            <div class="draft-modal-text">
+              <pre style="background-color: #fff; border: 0;" diff [left]="right" [right]="left"></pre>
+              <!-- <h2 class="text-center" style="font-weight: bold;">公证书</h2>
+              <p>（xxxx)沪XX证（外）第XXXX号</p>
+              <p>申请人：胡晓瑾</p>
+              <div class="m-t">
+                <p>
+                  公证事项：居民身份证
+                </p>
+                <p>
+                  兹证明面前的复印与XXX（申请人）持有的XX公安局（或XXX公安局XX分局）签发的编号为XX兹证明面前的复印与XXX（申请人）持有的XX公安局（或XXX公安局XX分局）签发的编号为XX
+                </p>
+                <p>
+                  本公证书仅限于XX，用于其他事由无效
+                </p>
+              </div> -->
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+      <div class="text-right m-b m-r">
+        <button disabled class="btn btn-default">保存修改</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </ng-template> -->

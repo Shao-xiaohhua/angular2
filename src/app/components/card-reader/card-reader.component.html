@@ -1,0 +1,60 @@
+<!-- <div class="card-reader" style="background: #fff url(assets/images/card_line.png) left top repeat;">
+  <div class="default" *ngIf="!error">
+    <div class="read" [class.animation]="isAnimate" style="background: url(assets/images/card_read_ani.png) 0 0 no-repeat;"></div>
+    <h4 class="title" *ngIf="!isAnimate">读取身份证件信息</h4>
+    <h4 class="title" *ngIf="isAnimate">正在读取...</h4>
+    <p class="desc">请将身份证件放入读卡面板</p>
+  </div>
+  <div class="success" *ngIf="!hasInfo">
+    <i class="fa fa-check-circle"></i>
+    <h4 class="title">已完成读取</h4>
+    <div class="retry"  (click)="readIDCardForUrl()">信息不准确？重新读取</div>
+  </div>
+  <div class="success" *ngIf="error">
+    <i class="fa fa-times"></i>
+    <h4 class="title">读取出错</h4>
+    <div class="m-t">
+      <button type="button" class="btn btn-sm btn-default" (click)="readIDCardForUrl()">重新读取</button>
+    </div>
+  </div>
+  <object type="application/x-eloamplugin" style="position:absolute;top:-10000px;left:-10000px;" name="view" id="{{deviceId}}"></object>
+  <div class="button-click small" tooltip="开始读取" placement="bottom" (click)="readIDCardForUrl()" *ngIf="!isAnimate && !error">
+    <i class="fa fa-wifi"></i>
+  </div>
+</div> -->
+
+<div class="card-reader">
+  <div class="default" *ngIf="!error || clear">
+    <div class="card-action">
+      <div class="card-action-cir">
+        <div class="card-action-wrap" style="background-image: url(assets/images/card_bg.png);">
+          <div class="card-action-inset" style="background-image: url(assets/images/card_pic.png);">
+            <div class="read" [class.animation]="isAnimate" style="background: url(assets/images/card_read_ani.png) 0 0 no-repeat;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-t">
+      <button
+        class="btn btn-w-m btn-success"
+        [disabled]="isAnimate"
+        (click)="readIDCardForUrl()"
+      >{{ isAnimate ? '读取中...' : '点击读取' }}</button>
+    </div>
+    <div class="m-t text-center">
+      <h4>读取身份证信息</h4>
+      <p>请将身份证放入读卡面板</p>
+    </div>
+  </div>
+  <div class="error" *ngIf="error && !clear">
+    <div class="error-icon m-b">
+      <i class="fa fa-times"></i>
+    </div>
+    <h4>抱歉，身份证信息读取失败</h4>
+    <p>点击下方按钮可重新读取</p>
+    <div class="m-t">
+      <button class="btn btn-w-m btn-success" (click)="readIDCardForUrl()">重新读取?</button>
+    </div>
+  </div>
+  <object type="application/x-eloamplugin" style="position:absolute;top:-10000px;left:-10000px;" name="view" id="{{deviceId}}"></object>
+</div>

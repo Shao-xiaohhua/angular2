@@ -1,0 +1,176 @@
+// Variables, Mixins
+@import "../../../assets/styles/imports/variables";
+@import "../../../assets/styles/imports/mixins";
+
+.file-wrap {
+  padding: 0;
+  margin: 15px 0;
+  font-size: 16px;
+  height: calc( 100% - 60px - 34px);
+}
+
+.file-code {
+  margin-left: 20px;
+  width: 300px;
+  height: 70px;
+}
+.file-explain {
+  padding-right: 60px;
+  text-align: right;
+  font-size: 16px;
+}
+.file-box {
+  float: none;
+  margin-top: 15px;
+  width: 100%;
+  border: 4px solid #000;
+}
+.file-title {
+  padding: 15px 0;
+  text-align: center;
+  h1,
+  h2 {
+    font-weight: bold;
+    color: #000;
+  }
+  h1 {
+    letter-spacing: 20px;
+  }
+  h2 {
+    margin-top: 15px;
+    letter-spacing: 40px;
+  }
+}
+.file-table {
+  margin-top: -1px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #000;
+  th,
+  td {
+    padding: 0;
+  }
+  td {
+    height: 60px;
+    border: 1px solid #000;
+    font-size: 18px;
+    color: #000;
+  }
+  .td-content {
+    td {
+      height: 30px;
+      font-weight: bold;
+      border: 0;
+      border-right: 1px solid #000;
+      font-size: 16px;
+    }
+  }
+  .file-inp {
+    padding-left: 20px;
+    width: 80px;
+    height: 20px;
+    border: 0;
+    outline: none;
+  }
+}
+.file-number {
+  margin-top: 15px;
+  overflow: auto;
+  &-table {
+    width: 40%;
+    border: 1px solid #000;
+    color: #000;
+    th {
+      height: 30px;
+      text-align: center;
+      border: 1px solid #000;
+      font-size: 14px;
+      font-weight: none;
+    }
+    td {
+      height: 60px;
+      text-align: center;
+      border: 1px solid #000;
+      font-weight: bold;
+      font-size: 32px;
+    }
+  }
+  &-text {
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+    input {
+      padding-left: 20px;
+      width: 100px;
+      border: 0;
+      outline: none;
+    }
+  }
+}
+
+.catalog-text {
+  font-size: 16px;
+  color: #000;
+}
+.catalog-title {
+  margin-bottom: 22px;
+  font-weight: bold;
+  color: #000;
+  letter-spacing: 50px;
+}
+.catalog-table {
+  margin-top: -2px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 2px solid #000;
+  th,
+  td {
+    padding: 0 15px;
+    border: 1px solid #000;
+    font-size: 18px;
+    color: #000;
+  }
+  th {
+    text-align: center;
+    height: 60px;
+  }
+  td {
+    height: 40px;
+    a {
+      color: #000;
+    }
+  }
+}
+.catalog-col {
+  td {
+    padding: 15px;
+    height: auto;
+    text-align: left;
+  }
+  &-text {
+    display: inline-block;
+    min-height: 150px;
+    font-size: 20px;
+    input {
+      border: 0;
+      outline: none;
+      width: 80px;
+      text-align: center;
+    }
+  }
+}
+.catalog-date {
+  input {
+    width: 80px;
+    text-align: center;
+    border: 0;
+    outline: none;
+  }
+}
+.file-copyright {
+  font-size: 16px;
+  color: #000;
+}
